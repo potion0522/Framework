@@ -173,6 +173,7 @@
   <ItemGroup>
     <ClInclude Include="Base.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Client.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="Data.h" />
     <ClInclude Include="Drawer.h" />
@@ -193,6 +194,7 @@
   <ItemGroup>
     <ClCompile Include="Base.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Client.cpp" />
     <ClCompile Include="Drawer.cpp" />
     <ClCompile Include="DxSetting.cpp" />
     <ClCompile Include="Image.cpp" />

@@ -2,8 +2,8 @@
 
 class Data {
 public:
-	Data( );
-	virtual ~Data( );
+	Data( ) { };
+	virtual ~Data( ) { };
 
 public:
 	virtual int getSize( ) const = 0;

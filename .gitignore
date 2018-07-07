@@ -22,3 +22,6 @@ x64/
 *.wav
 *.res
 *.aps
+.vs/Fundation2017/v15/ipch/AutoPCH/7bf41dea266ca9ae/SERVER.ipch
+.vs/Fundation2017/v15/ipch/AutoPCH/ae5d569b6e939b82/CAMERA.ipch
+.vs/Fundation2017/v15/ipch/AutoPCH/cdd54c34416172e2/CLIENT.ipch
