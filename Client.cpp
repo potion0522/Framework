@@ -58,7 +58,7 @@ void Client::update( ) {
 
 void Client::sendTcp( DataPtr data ) {
 	int result = -1;
-	NetWorkSend( _handle_tcp, data->getPtr( ), data->getSize( ) );
+	result = NetWorkSend( _handle_tcp, data->getPtr( ), data->getSize( ) );
 }
 
 void Client::readIP( ) {
