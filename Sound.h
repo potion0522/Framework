@@ -8,7 +8,7 @@ PTR( Sound );
 class Sound : public Base {
 public:
 	static SoundPtr getTask( );
-	static std::string getTag( );
+	static std::string getTag( ) { return "SOUND"; }
 
 public:
 	Sound( std::string sound_path );

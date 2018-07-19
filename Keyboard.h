@@ -9,7 +9,7 @@ PTR( Keyboard );
 class Keyboard : public Base {
 public:
 	static KeyboardPtr getTask( );
-	static std::string getTag( );
+	static std::string getTag( ) { return "KEYBOARD"; }
 
 public:
 	Keyboard( );

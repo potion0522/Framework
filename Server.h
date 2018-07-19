@@ -8,7 +8,7 @@ PTR( Data );
 class Server : public Base {
 public:
 	static ServerPtr getTask( );
-	static std::string getTag( );
+	static std::string getTag( ) { return "SERVER"; }
 
 public:
 	Server( DataPtr recvdata_tcp );

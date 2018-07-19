@@ -10,7 +10,7 @@ PTR( Image );
 class Drawer : public Base {
 public:
 	static DrawerPtr getTask( );
-	static std::string getTag( );
+	static std::string getTag( ) { return "DRAWER"; }
 
 public:
 	Drawer( std::string image_path );

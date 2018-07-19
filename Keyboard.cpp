@@ -11,10 +11,6 @@ KeyboardPtr Keyboard::getTask( ) {
 	return std::dynamic_pointer_cast< Keyboard >( Manager::getInstance( )->getTask( getTag( ) ) );
 }
 
-std::string Keyboard::getTag( ) {
-	return "KEYBOARD";
-}
-
 Keyboard::Keyboard( ) {
 	_key_string[ KEY_INPUT_0         ] = "0";
 	_key_string[ KEY_INPUT_1         ] = "1";

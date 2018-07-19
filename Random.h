@@ -15,7 +15,7 @@ PTR( Random );
 class Random : public Base {
 public:
 	static RandomPtr getTask( );
-	static std::string getTag( );
+	static std::string getTag( ) { return "RANDOM"; }
 
 public:
 	Random( );

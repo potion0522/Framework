@@ -9,7 +9,7 @@ PTR( Camera );
 class Camera : public Base {
 public:
 	static CameraPtr getTask( );
-	static std::string getTag( );
+	static std::string getTag( ) { return "CAMERA"; }
 
 public:
 	Camera( );

@@ -6,10 +6,6 @@ CameraPtr Camera::getTask( ) {
 	return std::dynamic_pointer_cast< Camera >( Manager::getInstance( )->getTask( getTag( ) ) );
 }
 
-std::string Camera::getTag( ) {
-	return "CAMERA";
-}
-
 Camera::Camera( ) {
 	_camera_up = Vector( 0, 1, 0 );
 }

@@ -9,10 +9,6 @@ DrawerPtr Drawer::getTask( ) {
 	return std::dynamic_pointer_cast< Drawer >( Manager::getInstance( )->getTask( getTag( ) ) );
 }
 
-std::string Drawer::getTag( ) {
-	return "DRAWER";
-}
-
 Drawer::Drawer( std::string image_path ) {
 	_image = ImagePtr( new Image( image_path ) );
 }

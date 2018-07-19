@@ -7,10 +7,6 @@ MousePtr Mouse::getTask( ) {
 	return std::dynamic_pointer_cast< Mouse >( Manager::getInstance( )->getTask( getTag( ) ) );
 }
 
-std::string Mouse::getTag( ) {
-	return "MOUSE_EVENT";
-}
-
 Mouse::Mouse( ) :
 _mouse( NULL ),
 _click_left( 0 ),

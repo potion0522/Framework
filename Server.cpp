@@ -12,10 +12,6 @@ ServerPtr Server::getTask( ) {
 	return std::dynamic_pointer_cast< Server >( Manager::getInstance( )->getTask( getTag( ) ) );
 }
 
-std::string Server::getTag( ) {
-	return "SERVER";
-}
-
 Server::Server( DataPtr recvdata_tcp ) :
 _recvdata_tcp( recvdata_tcp ),
 _handle( -1 ),

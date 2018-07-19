@@ -10,10 +10,6 @@ RandomPtr Random::getTask( ) {
 	return std::dynamic_pointer_cast< Random >( Manager::getInstance( )->getTask( getTag( ) ) );
 }
 
-std::string Random::getTag( ) {
-	return "RANDOM";
-}
-
 Random::Random( ) {
 	init_genrand( ( unsigned int )time( NULL ) );
 }

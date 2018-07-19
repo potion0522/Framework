@@ -8,10 +8,6 @@ SoundPtr Sound::getTask( ) {
 	return std::dynamic_pointer_cast< Sound >( Manager::getInstance( )->getTask( getTag( ) ) );
 }
 
-std::string Sound::getTag( ) {
-	return "SOUND";
-}
-
 Sound::Sound( std::string sound_path ) :
 _sound_path( sound_path ){
 }

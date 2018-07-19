@@ -8,7 +8,7 @@ PTR( Mouse );
 class Mouse : public Base {
 public:
 	static MousePtr getTask( );
-	static std::string getTag( );
+	static std::string getTag( ) { return "MOUSE"; }
 
 public:
 	Mouse( );
