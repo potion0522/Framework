@@ -25,6 +25,9 @@ public:
 	void initialize( );
 	void update( );
 
+public:
+	void sendTcp( DataPtr data );
+
 private:
 	void readIP( );
 	void connect( );

@@ -14,7 +14,7 @@ ServerPtr Server::getTask( ) {
 
 Server::Server( DataPtr recvdata_tcp ) :
 _recvdata_tcp( recvdata_tcp ),
-_recieving_tcp( false ) {
+_recieving_idx( -1 ) {
 	for ( int i = 0; i < MAX_MACHINES; i++ ) {
 		_machines[ i ] = -1;
 	}
@@ -95,7 +95,7 @@ void Server::recv( ) {
 }
 
 void Server::recvTcp( ) {
-	_recieving_tcp = false;
+	_recieving_idx = -1;
 
 	for ( int i = 0; i < MAX_MACHINES; i++ ) {
 		if ( _machines[ i ] == -1 ) {
@@ -105,14 +105,14 @@ void Server::recvTcp( ) {
 		int result = NetWorkRecv( _machines[ i ], _recvdata_tcp->getPtr( ), _recvdata_tcp->getSize( ) );
 
 		if ( result == 0 ) {
-			_recieving_tcp = true;
+			_recieving_idx = i;
 			break;
 		}
 	}
 }
 
-bool Server::isRecievingTcp( ) const {
-	return _recieving_tcp;
+int Server::getRecievingIdx( ) const {
+	return _recieving_idx;
 }
 
 std::string Server::getServerIP( ) const {

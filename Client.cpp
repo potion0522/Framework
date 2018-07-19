@@ -50,6 +50,11 @@ void Client::update( ) {
 	}
 }
 
+void Client::sendTcp( DataPtr data ) {
+	int result = -1;
+	NetWorkSend( _handle, data->getPtr( ), data->getSize( ) );
+}
+
 void Client::readIP( ) {
 	int handle = 0;
 	std::string path = IP_FILE;

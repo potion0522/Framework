@@ -34,13 +34,13 @@ private:
 	void recvTcp( );
 
 public:
-	bool isRecievingTcp( ) const;
+	int getRecievingIdx( ) const;
 	std::string getServerIP( ) const;
 	std::string getClientIP( int idx ) const;
 
 private:
 	std::array< int, MAX_MACHINES > _machines;
-	bool _recieving_tcp;
+	int _recieving_idx;
 
 	DataPtr _recvdata_tcp;
 };
