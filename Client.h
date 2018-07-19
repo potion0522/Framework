@@ -39,6 +39,7 @@ private:
 public:
 	std::string getPhase( ) const;
 	bool isRecievingTcp( ) const;
+	bool isRecievingUdp( ) const;
 
 private:
 	struct IP {
@@ -48,8 +49,10 @@ private:
 		unsigned char d4;
 	};
 
-	int _handle;
+	int _handle_tcp;
+	int _handle_udp;
 	bool _recieving_tcp;
+	bool _recieving_udp;
 
 	IP _server_ip;
 	PHASE _phase;

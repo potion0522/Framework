@@ -29,6 +29,10 @@ void Server::initialize( ) {
 }
 
 void Server::finalize( ) {
+	for ( int i = 0; i < MAX_MACHINES; i++ ) {
+		CloseNetWork( _machines[ i ] );
+	}
+
 	StopListenNetWork( );
 }
 
@@ -50,13 +54,23 @@ void Server::createIP( ) {
 }
 
 void Server::sendTcp( DataPtr data ) {
-	int result = -1;
-
 	for ( int i = 0; i < MAX_MACHINES; i++ ) {
 		if ( _machines[ i ] != -1 ) {
-			result = NetWorkSend( _machines[ i ], data->getPtr( ), data->getSize( ) );
+			NetWorkSend( _machines[ i ], data->getPtr( ), data->getSize( ) );
 		}
 	}
+}
+
+void Server::sendUdp( DataPtr data ) {
+	int handle = MakeUDPSocket( );
+
+	for ( int i = 0; i < MAX_MACHINES; i++ ) {
+		IPDATA ip = IPDATA( );
+		GetNetWorkIP( _machines[ i ], &ip );
+		NetWorkSendUDP( handle, ip, UDP_PORT, data->getPtr( ), data->getSize( ) );
+	}
+
+	DeleteUDPSocket( handle );
 }
 
 void Server::accept( ) {
@@ -98,11 +112,17 @@ void Server::recvTcp( ) {
 	_recieving_idx = -1;
 
 	for ( int i = 0; i < MAX_MACHINES; i++ ) {
-		if ( _machines[ i ] == -1 ) {
+		int handle = _machines[ i ];
+		if ( handle == -1 ) {
 			continue;
 		}
 
-		int result = NetWorkRecv( _machines[ i ], _recvdata_tcp->getPtr( ), _recvdata_tcp->getSize( ) );
+
+		if ( GetNetWorkDataLength( handle ) < 1 ) {
+			continue;
+		}
+
+		int result = NetWorkRecv( handle, _recvdata_tcp->getPtr( ), _recvdata_tcp->getSize( ) );
 
 		if ( result == 0 ) {
 			_recieving_idx = i;

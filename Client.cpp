@@ -20,8 +20,12 @@ _recvdata_tcp( recvdata_tcp ),
 _recvdata_udp( recvdata_udp ),
 _phase( Client::PHASE_READY ),
 _server_ip( IP( ) ),
-_handle( -1 ),
-_recieving_tcp( false ) {
+_handle_tcp( -1 ),
+_handle_udp( -1 ),
+_recieving_tcp( false ),
+_recieving_udp( false ) {
+	_handle_udp = MakeUDPSocket( UDP_PORT );
+
 	readIP( );
 }
 
@@ -29,6 +33,8 @@ Client::~Client( ) {
 }
 
 void Client::finalize( ) {
+	CloseNetWork( _handle_tcp );
+	DeleteUDPSocket( _handle_udp );
 }
 
 void Client::initialize( ) {
@@ -52,7 +58,7 @@ void Client::update( ) {
 
 void Client::sendTcp( DataPtr data ) {
 	int result = -1;
-	NetWorkSend( _handle, data->getPtr( ), data->getSize( ) );
+	NetWorkSend( _handle_tcp, data->getPtr( ), data->getSize( ) );
 }
 
 void Client::readIP( ) {
@@ -69,7 +75,7 @@ void Client::readIP( ) {
 }
 
 void Client::connect( ) {
-	if ( _handle != -1 ) {
+	if ( _handle_tcp != -1 ) {
 		return;
 	}
 
@@ -85,7 +91,7 @@ void Client::connect( ) {
 		return;
 	}
 
-	_handle = handle;
+	_handle_tcp = handle;
 	_phase = PHASE_CONNECTING;
 }
 
@@ -94,12 +100,12 @@ void Client::lost( ) {
 	if ( handle == -1 ) {
 		return;
 	}
-	if ( handle != _handle ) {
+	if ( handle != _handle_tcp ) {
 		return;
 	}
-	CloseNetWork( _handle );
+	CloseNetWork( _handle_tcp );
 	_phase = PHASE_READY;
-	_handle = -1;
+	_handle_tcp = -1;
 }
 
 void Client::recv( ) {
@@ -109,18 +115,30 @@ void Client::recv( ) {
 
 void Client::recvTcp( ) {
 	_recieving_tcp = false;
-	if ( _handle == -1 ) {
+	if ( _handle_tcp == -1 ) {
+		return;
+	}
+	if ( GetNetWorkDataLength( _handle_tcp ) < 1 ) {
 		return;
 	}
 
-	int result = NetWorkRecv( _handle, _recvdata_tcp->getPtr( ), _recvdata_tcp->getSize( ) );
-
+	int result = NetWorkRecv( _handle_tcp, _recvdata_tcp->getPtr( ), _recvdata_tcp->getSize( ) );
 	if ( result == 0 ) {
 		_recieving_tcp = true;
 	}
 }
 
 void Client::recvUdp( ) {
+	_recieving_udp = false;
+
+	if ( CheckNetWorkRecvUDP( _handle_udp ) != TRUE ) {
+		return;
+	}
+
+	int result = NetWorkRecvUDP( _handle_udp, NULL, NULL, _recvdata_udp->getPtr( ), _recvdata_udp->getSize( ), FALSE );
+	if ( result >= 0 ) {
+		_recieving_udp = true;
+	}
 }
 
 std::string Client::getPhase( ) const {
@@ -142,4 +160,8 @@ std::string Client::getPhase( ) const {
 
 bool Client::isRecievingTcp( ) const {
 	return _recieving_tcp;
+}
+
+bool Client::isRecievingUdp( ) const {
+	return _recieving_udp;
 }

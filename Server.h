@@ -26,6 +26,7 @@ public:
 public:
 	void createIP( );
 	void sendTcp( DataPtr data );
+	void sendUdp( DataPtr data );
 
 private:
 	void accept( );
