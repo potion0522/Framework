@@ -14,8 +14,11 @@ ServerPtr Server::getTask( ) {
 
 Server::Server( DataPtr recvdata_tcp ) :
 _recvdata_tcp( recvdata_tcp ),
-_handle( -1 ),
 _recieving_tcp( false ) {
+	for ( int i = 0; i < MAX_MACHINES; i++ ) {
+		_machines[ i ] = -1;
+	}
+
 	PreparationListenNetWork( TCP_PORT );
 }
 
@@ -46,25 +49,28 @@ void Server::createIP( ) {
 	fclose( fp );
 }
 
-int Server::sendTcp( DataPtr data ) {
+void Server::sendTcp( DataPtr data ) {
 	int result = -1;
-	if ( _handle != -1 ) {
-		result = NetWorkSend( _handle, data->getPtr( ), data->getSize( ) );
-	}
 
-	return result;
+	for ( int i = 0; i < MAX_MACHINES; i++ ) {
+		if ( _machines[ i ] != -1 ) {
+			result = NetWorkSend( _machines[ i ], data->getPtr( ), data->getSize( ) );
+		}
+	}
 }
 
 void Server::accept( ) {
-	if ( _handle != -1 ) {
-		return;
-	}
+	for ( int i = 0; i < MAX_MACHINES; i++ ) {
+		if ( _machines[ i ] != -1 ) {
+			continue;
+		}
 
-	int handle = GetNewAcceptNetWork( );
-	if ( handle == -1 ) {
-		return;
+		int handle = GetNewAcceptNetWork( );
+		if ( handle != -1 ) {
+			_machines[ i ] = handle;
+			break;
+		}
 	}
-	_handle = handle;
 }
 
 void Server::lost( ) {
@@ -72,12 +78,16 @@ void Server::lost( ) {
 	if ( handle == -1 ) {
 		return;
 	}
-	if ( handle != _handle ) {
-		return;
-	}
 
-	CloseNetWork( _handle );
-	_handle = -1;
+	for ( int i = 0; i < MAX_MACHINES; i++ ) {
+		if ( handle != _machines[ i ] ) {
+			continue;
+		}
+
+		CloseNetWork( _machines[ i ] );
+		_machines[ i ] = -1;
+		break;
+	}
 }
 
 void Server::recv( ) {
@@ -86,13 +96,18 @@ void Server::recv( ) {
 
 void Server::recvTcp( ) {
 	_recieving_tcp = false;
-	if ( _handle == -1 ) {
-		return;
-	}
-	int result = NetWorkRecv( _handle, _recvdata_tcp->getPtr( ), _recvdata_tcp->getSize( ) );
 
-	if ( result == 0 ) {
-		_recieving_tcp = true;
+	for ( int i = 0; i < MAX_MACHINES; i++ ) {
+		if ( _machines[ i ] == -1 ) {
+			continue;
+		}
+
+		int result = NetWorkRecv( _machines[ i ], _recvdata_tcp->getPtr( ), _recvdata_tcp->getSize( ) );
+
+		if ( result == 0 ) {
+			_recieving_tcp = true;
+			break;
+		}
 	}
 }
 
@@ -116,12 +131,13 @@ std::string Server::getServerIP( ) const {
 	return result;
 }
 
-std::string Server::getClientIP( ) const {
-	IPDATA ipdata = IPDATA( );
-	GetNetWorkIP( _handle, &ipdata );
-
+std::string Server::getClientIP( int idx ) const {
 	std::string result;
-	if ( _handle != -1 ) {
+
+	if ( _machines[ idx ] != -1 ) {
+		IPDATA ipdata = IPDATA( );
+		GetNetWorkIP( _machines[ idx ], &ipdata );
+
 		result += std::to_string( ipdata.d1 );
 		result += ".";
 		result += std::to_string( ipdata.d2 );
