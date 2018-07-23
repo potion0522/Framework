@@ -9,6 +9,6 @@ public:
 	virtual ~Base( );
 
 	virtual void finalize( );
-	virtual void initialize( ) = 0;
+	virtual void initialize( );
 	virtual void update( ) = 0;
 };

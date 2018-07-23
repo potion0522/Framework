@@ -20,27 +20,30 @@ _recvdata_tcp( recvdata_tcp ),
 _recvdata_udp( recvdata_udp ),
 _phase( Client::PHASE_READY ),
 _server_ip( IP( ) ),
+_connect_flag( false ),
 _handle_tcp( -1 ),
 _handle_udp( -1 ),
 _recieving_tcp( false ),
 _recieving_udp( false ) {
-	_handle_udp = MakeUDPSocket( UDP_PORT );
-
-	readIP( );
 }
 
 Client::~Client( ) {
 }
 
 void Client::finalize( ) {
-	CloseNetWork( _handle_tcp );
-	DeleteUDPSocket( _handle_udp );
+	disConnect( );
 }
 
 void Client::initialize( ) {
+	_handle_udp = MakeUDPSocket( UDP_PORT );
+	readIP( );
 }
 
 void Client::update( ) {
+	if ( !_connect_flag ) {
+		return;
+	}
+
 	switch ( _phase ) {
 	case Client::PHASE_READY:
 		connect( );
@@ -56,9 +59,24 @@ void Client::update( ) {
 	}
 }
 
+void Client::disConnect( ) {
+	CloseNetWork( _handle_tcp );
+	DeleteUDPSocket( _handle_udp );
+}
+
 void Client::sendTcp( DataPtr data ) {
 	int result = -1;
 	result = NetWorkSend( _handle_tcp, data->getPtr( ), data->getSize( ) );
+}
+
+void Client::setConnectFlag( bool connect ) {
+	_connect_flag = connect;
+
+	if ( !_connect_flag ) {
+		disConnect( );
+	} else {
+		initialize( );
+	}
 }
 
 void Client::readIP( ) {

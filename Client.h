@@ -25,8 +25,12 @@ public:
 	void initialize( );
 	void update( );
 
+private:
+	void disConnect( );
+
 public:
 	void sendTcp( DataPtr data );
+	void setConnectFlag( bool connect );
 
 private:
 	void readIP( );
@@ -49,6 +53,7 @@ private:
 		unsigned char d4;
 	};
 
+	bool _connect_flag;
 	int _handle_tcp;
 	int _handle_udp;
 	bool _recieving_tcp;
