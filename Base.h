@@ -5,10 +5,10 @@ PTR( Base );
 
 class Base {
 public:
-	Base( );
-	virtual ~Base( );
+	Base( ) { };
+	virtual ~Base( ) { };
 
-	virtual void finalize( );
-	virtual void initialize( );
+	virtual void finalize( ) { };
+	virtual void initialize( ) { };
 	virtual void update( ) = 0;
 };

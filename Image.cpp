@@ -1,85 +1,46 @@
 #include "Image.h"
 #include "DxLib.h"
-#include <errno.h>
-#include <assert.h>
-#include <Windows.h>
 
-Image::Image( std::string path ) :
-_path( path ) {
-	if ( path == "" ) {
-		return;
-	}
-	findFile( _path );
+Image::Image( ) :
+_handle( -1 ),
+_x( 0 ),
+_y( 0 ),
+_x2( 0 ),
+_y2( 0 ),
+_rect_sx( 0 ),
+_rect_sy( 0 ),
+_rect_width( 0 ),
+_rect_height( 0 ) {
 }
 
 Image::~Image( ) {
 }
 
-int Image::getImage( std::string file_name ) const {
-	if ( _images.find( file_name ) != _images.end( ) ) {
-		return _images.find( file_name )->second.handle;
+void Image::draw( ) const {
+	if ( _rect_width < 1 || _rect_height < 1 ) {
+		DrawGraph( _x, _y, _handle, TRUE );
+	} else if ( _x2 < 1 || _y2 < 1 ) {
+		DrawRectGraph( _x, _y, _rect_sx, _rect_sy, _rect_width, _rect_height, _handle, TRUE, FALSE );
+	} else {
+		DrawRectExtendGraph( _x, _y, _x2, _y2, _rect_sx, _rect_sy, _rect_width, _rect_height, _handle, TRUE );
 	}
-	return -1;
 }
 
-int Image::getImageWidth( std::string file_name ) const {
-	if ( _images.find( file_name ) != _images.end( ) ) {
-		return _images.find( file_name )->second.width;
-	}
-	return -1;
+void Image::setPos( int x, int y, int x2, int y2 ) {
+	_x  = x;
+	_y  = y;
+	_x2 = x2;
+	_y2 = y2;
 }
 
-int Image::getImageHeight( std::string file_name ) const {
-	if ( _images.find( file_name ) != _images.end( ) ) {
-		return _images.find( file_name )->second.height;
-	}
-	return -1;
+void Image::setRect( int rect_x, int rect_y, int width, int height ) {
+	_rect_sx     = rect_x;
+	_rect_sy     = rect_y;
+	_rect_width  = width ;
+	_rect_height = height;
 }
 
-void Image::findFile( std::string path ) {
-	WIN32_FIND_DATA data;
-	HANDLE handle;
-
-	path += "/";
-
-	handle = FindFirstFile( ( path + "*" ).c_str( ), &data );
-
-	errno_t find_handle = ( handle != INVALID_HANDLE_VALUE );
-	assert( find_handle );
-
-	do {
-		
-		if ( ( data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY ) ) {
-		//ディレクトリ	                  
-			std::string file_name = data.cFileName;
-			if ( file_name != "." && file_name != ".." ) {
-				//再起(サブディレクトリ検索)
-				findFile( ( path + file_name ) );
-			}
-
-		} else {
-		//ファイル
-			//名前
-			std::string file_name = data.cFileName;
-			std::string file_extension = data.cFileName;
-
-			{//ファイル名を取得
-				file_name = file_name.substr( 0, file_name.find_last_of( "." ) );
-			}
-
-			{//拡張子を取得
-				int pos = ( int )file_extension.find_last_of( "." ) + 1;
-				file_extension = file_extension.substr( pos, file_extension.length( ) - pos );
-			}
-
-			//拡張子を識別し、画像ロード
-			if ( file_extension == "png" || file_extension == "jpg" || file_extension == "jpeg" ) {
-				_images[ file_name ].handle = LoadGraph( ( path + data.cFileName ).c_str( ) );
-				GetGraphSize( _images[ file_name ].handle, &_images[ file_name ].width, &_images[ file_name ].height );
-			}
-		}
-
-	} while ( FindNextFile( handle, &data ) );
-
-	FindClose( handle );
+bool Image::load( std::string path ) {
+	_handle = LoadGraph( path.c_str( ) );
+	return ( _handle != -1 );
 }

@@ -22,7 +22,6 @@
     <ClInclude Include="Client.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Base.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Drawer.cpp" />
     <ClCompile Include="DxSetting.cpp" />

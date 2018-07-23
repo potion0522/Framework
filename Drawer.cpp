@@ -9,46 +9,11 @@ DrawerPtr Drawer::getTask( ) {
 	return std::dynamic_pointer_cast< Drawer >( Manager::getInstance( )->getTask( getTag( ) ) );
 }
 
-Drawer::Drawer( std::string image_path ) {
-	_image = ImagePtr( new Image( image_path ) );
+Drawer::Drawer( std::string image_directory ) :
+_image_directory( image_directory ) {
 }
 
 Drawer::~Drawer( ) {
-}
-
-void Drawer::initialize( ) {
-}
-
-void Drawer::finalize( ) {
-}
-
-void Drawer::update( ) {
-
-}
-
-void Drawer::drawGraph( int x, int y, int handle, bool transflag ) {
-	checkHandle( handle );
-	DrawGraph( x, y, handle, transflag );
-}
-
-void Drawer::drawGraph( float x, float y, int handle, bool transflag ) {
-	checkHandle( handle );
-	DrawGraphF( x, y, handle, transflag );
-}
-
-void Drawer::drawRotaGraph( float x, float y, double exrate, double angle, int handle, bool transflag ) {
-	checkHandle( handle );
-	DrawRotaGraphF( x, y, exrate, angle, handle, transflag );
-}
-
-void Drawer::drawRectGraph( float screen_x, float screen_y, int lx, int ly, int width, int height, int handle, bool transflag, bool turnflag ) {
-	checkHandle( handle );
-	DrawRectGraphF( screen_x, screen_y, lx, ly, width, height, handle, transflag, turnflag );
-}
-
-void Drawer::drawExtendGraph( float x1, float y1, float x2, float y2, int handle, bool transflag ) {
-	checkHandle( handle );
-	DrawExtendGraphF( x1, y1, x2, y2, handle, transflag );
 }
 
 void Drawer::drawBox( float x1, float y1, float x2, float y2, int color, bool fillflag ) {
@@ -103,49 +68,21 @@ void Drawer::drawFormatStringCenter( float x, float y, unsigned int color, const
 	DrawStringF( x - gap_x, y, buf, color );
 }
 
-void Drawer::drawBillBoard3D( Vector pos, float cx, float cy, float size, float angle, int handle, bool transflag ) {
-	VECTOR vec = VECTOR( );
-	vec.x = ( float )pos.x;
-	vec.y = ( float )pos.y;
-	vec.z = ( float )pos.z;
-
-	DrawBillboard3D( vec, cx, cy, size, angle, handle, transflag );
-}
-
-void Drawer::drawShere3D( Vector pos, float r, int div_num, int dif_color, int spc_color, bool fillflag ) {
-	VECTOR vec = VECTOR( );
-	vec.x = ( float )pos.x;
-	vec.y = ( float )pos.y;
-	vec.z = ( float )pos.z;
-	DrawSphere3D( vec, r, div_num, dif_color, spc_color, fillflag );
-}
-
-void Drawer::setGraphAlpha( int alpha ) {
-	if ( alpha == 0 ) {
-		SetDrawBlendMode( DX_BLENDMODE_NOBLEND, alpha );
-		return;
-	}
-	SetDrawBlendMode( DX_BLENDMODE_ALPHA, alpha );
-}
-
 void Drawer::flip( ) {
 	ScreenFlip( );
 	ClearDrawScreen( );
 }
 
-void Drawer::checkHandle( int handle ) {
-	errno_t not_find_handle = handle;
-	assert( not_find_handle != -1 );
-}
+ImagePtr Drawer::getImage( std::string file_name ) {
+	ImagePtr image = ImagePtr( new Image );
 
-int Drawer::getImage( std::string file_name ) const {
-	return _image->getImage( file_name );
-}
+	std::string path = _image_directory + "/" + file_name;
+	bool success = image->load( path );
 
-int Drawer::getImageWidth( std::string file_name ) const {
-	return _image->getImageWidth( file_name );
-}
+	ImagePtr result = image;
+	if ( !success ) {
+		result = ImagePtr( );
+	}
 
-int Drawer::getImageHeight( std::string file_name ) const {
-	return _image->getImageHeight( file_name );
+	return result;
 }
