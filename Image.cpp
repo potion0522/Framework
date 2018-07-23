@@ -3,41 +3,61 @@
 
 Image::Image( ) :
 _handle( -1 ),
-_x( 0 ),
-_y( 0 ),
-_x2( 0 ),
-_y2( 0 ),
-_rect_sx( 0 ),
-_rect_sy( 0 ),
-_rect_width( 0 ),
-_rect_height( 0 ) {
+_alpha( 255 ) {
+	_screen = Screen( );
+	_rect = Rect( );
+	_rgb = Bright( );
 }
 
 Image::~Image( ) {
 }
 
 void Image::draw( ) const {
-	if ( _rect_width < 1 || _rect_height < 1 ) {
-		DrawGraph( _x, _y, _handle, TRUE );
-	} else if ( _x2 < 1 || _y2 < 1 ) {
-		DrawRectGraph( _x, _y, _rect_sx, _rect_sy, _rect_width, _rect_height, _handle, TRUE, FALSE );
+	if ( _alpha != 255 ) {
+		SetDrawBlendMode( DX_BLENDMODE_ALPHA, _alpha );
+	}
+	if ( _rgb.flag ) {
+		SetDrawBright( _rgb.red, _rgb.green, _rgb.blue );
+	}
+
+
+	if ( _rect.width < 1 || _rect.height < 1 ) {
+		DrawGraph( _screen.x, _screen.y, _handle, TRUE );
+	} else if ( _screen.x2 < 1 || _screen.y2 < 1 ) {
+		DrawRectGraph( _screen.x, _screen.y, _rect.x, _rect.y, _rect.width, _rect.height, _handle, TRUE, FALSE );
 	} else {
-		DrawRectExtendGraph( _x, _y, _x2, _y2, _rect_sx, _rect_sy, _rect_width, _rect_height, _handle, TRUE );
+		DrawRectExtendGraph( _screen.x, _screen.y, _screen.x2, _screen.y2, _rect.x, _rect.y, _rect.width, _rect.height, _handle, TRUE );
+	}
+
+
+	if ( _alpha != 255 ) {
+		SetDrawBlendMode( DX_BLENDMODE_NOBLEND, 0 );
+	}
+	if ( _rgb.flag ) {
+		SetDrawBright( 255, 255, 255 );
 	}
 }
 
 void Image::setPos( int x, int y, int x2, int y2 ) {
-	_x  = x;
-	_y  = y;
-	_x2 = x2;
-	_y2 = y2;
+	_screen.x  = x;
+	_screen.y  = y;
+	_screen.x2 = x2;
+	_screen.y2 = y2;
 }
 
 void Image::setRect( int rect_x, int rect_y, int width, int height ) {
-	_rect_sx     = rect_x;
-	_rect_sy     = rect_y;
-	_rect_width  = width ;
-	_rect_height = height;
+	_rect.x      = rect_x;
+	_rect.y      = rect_y;
+	_rect.width  = width ;
+	_rect.height = height;
+}
+
+void Image::setBlendMode( bool blend, unsigned char alpha ) {
+	if ( !blend ) {
+		_alpha = 255;
+	} else {
+		_alpha = alpha;
+	}
 }
 
 bool Image::load( std::string path ) {

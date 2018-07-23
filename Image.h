@@ -15,6 +15,7 @@ public:
 public:
 	void setPos( int x, int y, int x2 = 0, int y2 = 0 );
 	void setRect( int rect_x, int rect_y, int width, int height );
+	void setBlendMode( bool blend, unsigned char alpha = 255 );
 
 public:
 	bool load( std::string path );
@@ -22,14 +23,34 @@ public:
 private:
 	int _handle;
 	
-	int _x;
-	int _y;
-	int _x2;
-	int _y2;
+	struct Screen {
+		int x;
+		int y;
+		int x2;
+		int y2;
+	} _screen;
 
-	int _rect_sx;
-	int _rect_sy;
-	int _rect_width;
-	int _rect_height;
+	struct Rect {
+		int x;
+		int y;
+		int width;
+		int height;
+	} _rect;
+
+	struct Bright {
+		bool flag;
+		unsigned char red;
+		unsigned char green;
+		unsigned char blue;
+
+		Bright( ) :
+		flag( false ),
+		red  ( 255 ),
+		green( 255 ),
+		blue ( 255 ) {
+		}
+	} _rgb;
+
+	unsigned char _alpha;
 };
 
