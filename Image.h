@@ -17,12 +17,14 @@ public:
 	void setRect( int rect_x, int rect_y, int width, int height );
 	void setBlendMode( unsigned char alpha = 255 );
 	void setBright( unsigned char red = 255, unsigned char green = 255, unsigned char blue = 255 );
+	void setCentral( bool center_draw );
 
 public:
 	bool load( std::string path );
 
 private:
 	int _handle;
+	bool _draw_center;
 	
 	struct Screen {
 		int x;

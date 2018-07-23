@@ -3,7 +3,8 @@
 
 Image::Image( ) :
 _handle( -1 ),
-_alpha( 255 ) {
+_alpha( 255 ),
+_draw_center( false ){
 	_screen = Screen( );
 	_rect = Rect( );
 	_rgb = Bright( );
@@ -20,8 +21,9 @@ void Image::draw( ) const {
 		SetDrawBright( _rgb.red, _rgb.green, _rgb.blue );
 	}
 
-
-	if ( _rect.width < 1 || _rect.height < 1 ) {
+	if ( _draw_center ) {
+		DrawRotaGraph( _screen.x, _screen.y, 1, 0, _handle, TRUE );
+	} else if ( _rect.width < 1 || _rect.height < 1 ) {
 		DrawGraph( _screen.x, _screen.y, _handle, TRUE );
 	} else if ( _screen.x2 < 1 || _screen.y2 < 1 ) {
 		DrawRectGraph( _screen.x, _screen.y, _rect.x, _rect.y, _rect.width, _rect.height, _handle, TRUE, FALSE );
@@ -60,6 +62,10 @@ void Image::setBright( unsigned char red, unsigned char green, unsigned char blu
 	_rgb.red   = red;
 	_rgb.green = green;
 	_rgb.blue  = blue;
+}
+
+void Image::setCentral( bool center_draw ) {
+	_draw_center = center_draw;
 }
 
 bool Image::load( std::string path ) {
