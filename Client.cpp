@@ -35,6 +35,11 @@ void Client::finalize( ) {
 }
 
 void Client::initialize( ) {
+	_phase = Client::PHASE_READY;
+	_server_ip = IP( );
+	_recieving_tcp = false;
+	_recieving_udp = false;
+
 	_handle_udp = MakeUDPSocket( UDP_PORT );
 	readIP( );
 }
@@ -61,7 +66,10 @@ void Client::update( ) {
 
 void Client::disConnect( ) {
 	CloseNetWork( _handle_tcp );
+	_handle_tcp = -1;
+
 	DeleteUDPSocket( _handle_udp );
+	_handle_udp = -1;
 }
 
 void Client::sendTcp( DataPtr data ) {
