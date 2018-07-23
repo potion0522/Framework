@@ -15,7 +15,8 @@ public:
 public:
 	void setPos( int x, int y, int x2 = 0, int y2 = 0 );
 	void setRect( int rect_x, int rect_y, int width, int height );
-	void setBlendMode( bool blend, unsigned char alpha = 255 );
+	void setBlendMode( unsigned char alpha = 255 );
+	void setBright( unsigned char red = 255, unsigned char green = 255, unsigned char blue = 255 );
 
 public:
 	bool load( std::string path );
@@ -38,13 +39,11 @@ private:
 	} _rect;
 
 	struct Bright {
-		bool flag;
 		unsigned char red;
 		unsigned char green;
 		unsigned char blue;
 
 		Bright( ) :
-		flag( false ),
 		red  ( 255 ),
 		green( 255 ),
 		blue ( 255 ) {

@@ -16,7 +16,7 @@ void Image::draw( ) const {
 	if ( _alpha != 255 ) {
 		SetDrawBlendMode( DX_BLENDMODE_ALPHA, _alpha );
 	}
-	if ( _rgb.flag ) {
+	if ( _rgb.red != 255 || _rgb.green != 255 || _rgb.blue != 255 ) {
 		SetDrawBright( _rgb.red, _rgb.green, _rgb.blue );
 	}
 
@@ -33,7 +33,7 @@ void Image::draw( ) const {
 	if ( _alpha != 255 ) {
 		SetDrawBlendMode( DX_BLENDMODE_NOBLEND, 0 );
 	}
-	if ( _rgb.flag ) {
+	if ( _rgb.red != 255 || _rgb.green != 255 || _rgb.blue != 255 ) {
 		SetDrawBright( 255, 255, 255 );
 	}
 }
@@ -52,12 +52,14 @@ void Image::setRect( int rect_x, int rect_y, int width, int height ) {
 	_rect.height = height;
 }
 
-void Image::setBlendMode( bool blend, unsigned char alpha ) {
-	if ( !blend ) {
-		_alpha = 255;
-	} else {
-		_alpha = alpha;
-	}
+void Image::setBlendMode( unsigned char alpha ) {
+	_alpha = alpha;
+}
+
+void Image::setBright( unsigned char red, unsigned char green, unsigned char blue ) {
+	_rgb.red   = red;
+	_rgb.green = green;
+	_rgb.blue  = blue;
 }
 
 bool Image::load( std::string path ) {
