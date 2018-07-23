@@ -1,8 +1,8 @@
 #include "DxSetting.h"
 #include "DxLib.h"
 
-const int DEFAULT_GRAPH_WIDTH   = 1280;
-const int DEFAULT_GRAPH_HEIGHT  = 720;
+const int DEFAULT_GRAPH_WIDTH   = 1920;
+const int DEFAULT_GRAPH_HEIGHT  = 1080;
 const int DEFAULT_GRAPH_DEPTH   = 32;
 const int DEFAULT_SCREEN_WIDTH  = 1280;
 const int DEFAULT_SCREEN_HEIGHT = 720;
@@ -15,8 +15,8 @@ _window_height( DEFAULT_SCREEN_HEIGHT ),
 _screen_width( DEFAULT_GRAPH_WIDTH ),
 _screen_height( DEFAULT_GRAPH_HEIGHT ),
 _draw_screen( DX_SCREEN_BACK ) {
-	changeWindowMode( DEFAULT_WINDOW_MODE );
-	setGraphMode( _screen_width, _screen_height );
+	ChangeWindowMode( DEFAULT_WINDOW_MODE );
+	SetGraphMode( _screen_width, _screen_height, 32 );
 	DxLib_Init( );
 	initialize( );
 }
