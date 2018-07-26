@@ -1,8 +1,8 @@
 #pragma once
 #include "Base.h"
 #include <unordered_map>
-#include <vector>
 #include <string>
+#include <vector>
 
 PTR( Keyboard );
 
@@ -21,19 +21,19 @@ public:
 	void update( );
 
 public:
-	int getState( std::string key ) const;
+	int getKeyState( std::string key ) const;
 	std::string getString( ) const;
 	bool getKeyUp( std::string key ) const;
 	bool getKeyDown( std::string key ) const;
-	bool isKeyDownFunction( int num ) const;
-	int getBackSpace( ) const;
 
 private:
-	std::unordered_map< int, std::string > _key_string;
-	std::unordered_map< int, std::string > _numpad_string;
-	std::unordered_map< std::string, int > _key_state;
-	std::unordered_map< std::string, int > _numpad_state;
-	std::unordered_map< int, int > _command;
-	std::vector< std::string > _key_up;
+	// ƒL[ŒŸõBŒ©‚Â‚©‚Á‚½ê‡•ÏŠ·Œã‚Ì•¶š‚ª‘æ“ñˆø”‚É‘ã“ü‚³‚ê‚é
+	bool isExistKeyCode( std::string find_key, std::string &conv_str ) const;
+
+private:
+	static const int KEY_MAX = 256;
+	int _key_state[ KEY_MAX ];
+	std::unordered_map< std::string, int > _key_code;
+	std::vector< int > _key_up;
 };
 
