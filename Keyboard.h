@@ -29,11 +29,13 @@ public:
 private:
 	// ƒL[ŒŸõBŒ©‚Â‚©‚Á‚½ê‡•ÏŠ·Œã‚Ì•¶š‚ª‘æ“ñˆø”‚É‘ã“ü‚³‚ê‚é
 	bool isExistKeyCode( std::string find_key, std::string &conv_str ) const;
+	bool isExistKeyCodeNumpad( std::string find_key, std::string &conv_str ) const;
 
 private:
 	static const int KEY_MAX = 256;
 	int _key_state[ KEY_MAX ];
-	std::unordered_map< std::string, int > _key_code;
+	std::unordered_map< std::string, int > _keycode;
+	std::unordered_map< std::string, int > _keycode_numpad;
 	std::vector< int > _key_up;
 };
 

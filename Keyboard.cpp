@@ -14,65 +14,82 @@ KeyboardPtr Keyboard::getTask( ) {
 Keyboard::Keyboard( ) {
 	memset( _key_state, 0, sizeof( int ) * KEY_MAX );
 
-	_key_code[ "0"     ] = KEY_INPUT_0         ;
-	_key_code[ "1"     ] = KEY_INPUT_1         ;
-	_key_code[ "2"     ] = KEY_INPUT_2         ;
-	_key_code[ "3"     ] = KEY_INPUT_3         ;
-	_key_code[ "4"     ] = KEY_INPUT_4         ;
-	_key_code[ "5"     ] = KEY_INPUT_5         ;
-	_key_code[ "6"     ] = KEY_INPUT_6         ;
-	_key_code[ "7"     ] = KEY_INPUT_7         ;
-	_key_code[ "8"     ] = KEY_INPUT_8         ;
-	_key_code[ "9"     ] = KEY_INPUT_9         ;
-	_key_code[ "a"     ] = KEY_INPUT_A         ;
-	_key_code[ "b"     ] = KEY_INPUT_B         ;
-	_key_code[ "c"     ] = KEY_INPUT_C         ;
-	_key_code[ "d"     ] = KEY_INPUT_D         ;
-	_key_code[ "e"     ] = KEY_INPUT_E         ;
-	_key_code[ "f"     ] = KEY_INPUT_F         ;
-	_key_code[ "g"     ] = KEY_INPUT_G         ;
-	_key_code[ "h"     ] = KEY_INPUT_H         ;
-	_key_code[ "i"     ] = KEY_INPUT_I         ;
-	_key_code[ "j"     ] = KEY_INPUT_J         ;
-	_key_code[ "k"     ] = KEY_INPUT_K         ;
-	_key_code[ "l"     ] = KEY_INPUT_L         ;
-	_key_code[ "m"     ] = KEY_INPUT_M         ;
-	_key_code[ "n"     ] = KEY_INPUT_N         ;
-	_key_code[ "o"     ] = KEY_INPUT_O         ;
-	_key_code[ "p"     ] = KEY_INPUT_P         ;
-	_key_code[ "q"     ] = KEY_INPUT_Q         ;
-	_key_code[ "r"     ] = KEY_INPUT_R         ;
-	_key_code[ "s"     ] = KEY_INPUT_S         ;
-	_key_code[ "t"     ] = KEY_INPUT_T         ;
-	_key_code[ "u"     ] = KEY_INPUT_U         ;
-	_key_code[ "v"     ] = KEY_INPUT_V         ;
-	_key_code[ "w"     ] = KEY_INPUT_W         ;
-	_key_code[ "x"     ] = KEY_INPUT_X         ;
-	_key_code[ "y"     ] = KEY_INPUT_Y         ;
-	_key_code[ "z"     ] = KEY_INPUT_Z         ;
-	_key_code[ "-"     ] = KEY_INPUT_MINUS     ;
-	_key_code[ "."     ] = KEY_INPUT_PERIOD    ;
-	_key_code[ "/"     ] = KEY_INPUT_SLASH     ;
-	_key_code[ "\\"    ] = KEY_INPUT_BACKSLASH ;
-	_key_code[ "ENTER" ] = KEY_INPUT_RETURN    ;
-	_key_code[ "UP"	   ] = KEY_INPUT_UP        ;
-	_key_code[ "DOWN"  ] = KEY_INPUT_DOWN	   ;
-	_key_code[ "RIGHT" ] = KEY_INPUT_RIGHT     ;
-	_key_code[ "LEFT"  ] = KEY_INPUT_LEFT	   ;
-	_key_code[ "SPACE" ] = KEY_INPUT_SPACE     ;
-	_key_code[ "BACK"  ] = KEY_INPUT_BACK      ;
-	_key_code[ "F1"    ] = KEY_INPUT_F1        ;
-	_key_code[ "F2"    ] = KEY_INPUT_F2        ;
-	_key_code[ "F3"    ] = KEY_INPUT_F3        ;
-	_key_code[ "F4"    ] = KEY_INPUT_F4        ;
-	_key_code[ "F5"    ] = KEY_INPUT_F5        ;
-	_key_code[ "F6"    ] = KEY_INPUT_F6        ;
-	_key_code[ "F8"    ] = KEY_INPUT_F8        ;
-	_key_code[ "F9"    ] = KEY_INPUT_F9        ;
-	_key_code[ "F7"    ] = KEY_INPUT_F7        ;
-	_key_code[ "F10"   ] = KEY_INPUT_F10       ;
-	_key_code[ "F11"   ] = KEY_INPUT_F11       ;
-	_key_code[ "F12"   ] = KEY_INPUT_F12       ;
+	_keycode[ "0"     ] = KEY_INPUT_0         ;
+	_keycode[ "1"     ] = KEY_INPUT_1         ;
+	_keycode[ "2"     ] = KEY_INPUT_2         ;
+	_keycode[ "3"     ] = KEY_INPUT_3         ;
+	_keycode[ "4"     ] = KEY_INPUT_4         ;
+	_keycode[ "5"     ] = KEY_INPUT_5         ;
+	_keycode[ "6"     ] = KEY_INPUT_6         ;
+	_keycode[ "7"     ] = KEY_INPUT_7         ;
+	_keycode[ "8"     ] = KEY_INPUT_8         ;
+	_keycode[ "9"     ] = KEY_INPUT_9         ;
+	_keycode[ "a"     ] = KEY_INPUT_A         ;
+	_keycode[ "b"     ] = KEY_INPUT_B         ;
+	_keycode[ "c"     ] = KEY_INPUT_C         ;
+	_keycode[ "d"     ] = KEY_INPUT_D         ;
+	_keycode[ "e"     ] = KEY_INPUT_E         ;
+	_keycode[ "f"     ] = KEY_INPUT_F         ;
+	_keycode[ "g"     ] = KEY_INPUT_G         ;
+	_keycode[ "h"     ] = KEY_INPUT_H         ;
+	_keycode[ "i"     ] = KEY_INPUT_I         ;
+	_keycode[ "j"     ] = KEY_INPUT_J         ;
+	_keycode[ "k"     ] = KEY_INPUT_K         ;
+	_keycode[ "l"     ] = KEY_INPUT_L         ;
+	_keycode[ "m"     ] = KEY_INPUT_M         ;
+	_keycode[ "n"     ] = KEY_INPUT_N         ;
+	_keycode[ "o"     ] = KEY_INPUT_O         ;
+	_keycode[ "p"     ] = KEY_INPUT_P         ;
+	_keycode[ "q"     ] = KEY_INPUT_Q         ;
+	_keycode[ "r"     ] = KEY_INPUT_R         ;
+	_keycode[ "s"     ] = KEY_INPUT_S         ;
+	_keycode[ "t"     ] = KEY_INPUT_T         ;
+	_keycode[ "u"     ] = KEY_INPUT_U         ;
+	_keycode[ "v"     ] = KEY_INPUT_V         ;
+	_keycode[ "w"     ] = KEY_INPUT_W         ;
+	_keycode[ "x"     ] = KEY_INPUT_X         ;
+	_keycode[ "y"     ] = KEY_INPUT_Y         ;
+	_keycode[ "z"     ] = KEY_INPUT_Z         ;
+	_keycode[ " "     ] = KEY_INPUT_SPACE     ;
+	_keycode[ "-"     ] = KEY_INPUT_MINUS     ;
+	_keycode[ "."     ] = KEY_INPUT_PERIOD    ;
+	_keycode[ "/"     ] = KEY_INPUT_SLASH     ;
+	_keycode[ "\\"    ] = KEY_INPUT_BACKSLASH ;
+	_keycode[ "ENTER" ] = KEY_INPUT_RETURN    ;
+	_keycode[ "UP"	   ] = KEY_INPUT_UP       ;
+	_keycode[ "DOWN"  ] = KEY_INPUT_DOWN      ;
+	_keycode[ "RIGHT" ] = KEY_INPUT_RIGHT     ;
+	_keycode[ "LEFT"  ] = KEY_INPUT_LEFT      ;
+	_keycode[ "BACK"  ] = KEY_INPUT_BACK      ;
+	_keycode[ "F1"    ] = KEY_INPUT_F1        ;
+	_keycode[ "F2"    ] = KEY_INPUT_F2        ;
+	_keycode[ "F3"    ] = KEY_INPUT_F3        ;
+	_keycode[ "F4"    ] = KEY_INPUT_F4        ;
+	_keycode[ "F5"    ] = KEY_INPUT_F5        ;
+	_keycode[ "F6"    ] = KEY_INPUT_F6        ;
+	_keycode[ "F8"    ] = KEY_INPUT_F8        ;
+	_keycode[ "F9"    ] = KEY_INPUT_F9        ;
+	_keycode[ "F7"    ] = KEY_INPUT_F7        ;
+	_keycode[ "F10"   ] = KEY_INPUT_F10       ;
+	_keycode[ "F11"   ] = KEY_INPUT_F11       ;
+	_keycode[ "F12"   ] = KEY_INPUT_F12       ;
+
+	_keycode_numpad[ "0" ] = KEY_INPUT_NUMPAD0 ;
+	_keycode_numpad[ "1" ] = KEY_INPUT_NUMPAD1 ;
+	_keycode_numpad[ "2" ] = KEY_INPUT_NUMPAD2 ;
+	_keycode_numpad[ "3" ] = KEY_INPUT_NUMPAD3 ;
+	_keycode_numpad[ "4" ] = KEY_INPUT_NUMPAD4 ;
+	_keycode_numpad[ "5" ] = KEY_INPUT_NUMPAD5 ;
+	_keycode_numpad[ "6" ] = KEY_INPUT_NUMPAD6 ;
+	_keycode_numpad[ "7" ] = KEY_INPUT_NUMPAD7 ;
+	_keycode_numpad[ "8" ] = KEY_INPUT_NUMPAD8 ;
+	_keycode_numpad[ "9" ] = KEY_INPUT_NUMPAD9 ;
+	_keycode_numpad[ "*" ] = KEY_INPUT_MULTIPLY;
+	_keycode_numpad[ "+" ] = KEY_INPUT_ADD     ;
+	_keycode_numpad[ "-" ] = KEY_INPUT_SUBTRACT;
+	_keycode_numpad[ "." ] = KEY_INPUT_DECIMAL ;
+	_keycode_numpad[ "/" ] = KEY_INPUT_DIVIDE  ;
+	_keycode_numpad[ "ENTER" ] = KEY_INPUT_NUMPADENTER;
 }
 
 Keyboard::~Keyboard( ) {
@@ -108,33 +125,55 @@ int Keyboard::getKeyState( std::string key ) const {
 	// キーが見つかった場合、値を代入
 	std::string conv;
 	if ( isExistKeyCode( key, conv ) ) {
-		int key_code = _key_code.at( conv );
-		state = _key_state[ key_code ];
+		int keycode = _keycode.at( conv );
+		state = _key_state[ keycode ];
 	}
 
-	return state;
+	// numpad
+	int state_numpad = 0;
+	if ( isExistKeyCodeNumpad( key, conv ) ) {
+		int keycode = _keycode_numpad.at( conv );
+		state_numpad = _key_state[ keycode ];
+	}
+
+	int result = state;
+	if ( state == 0 || ( state_numpad != 0 && state_numpad < state ) ) {
+		result = state_numpad;
+	}
+
+	return result;
 }
 
 std::string Keyboard::getString( ) const {
-	int key_code = -1;
+	int keycode = -1;
 	int count = -1;
 	for ( int i = 0; i < KEY_MAX; i++ ) {
 		if ( _key_state[ i ] != 0 ) {
 			// 値が最小のキーを取得
 			if ( _key_state[ i ] < count || count == -1 ) {
 				count = _key_state[ i ];
-				key_code = i;
+				keycode = i;
 			}
 		}
 	}
 
 	std::string input;
 	// 文字を取得
-	if ( key_code != -1 ) {
-		for ( std::pair< std::string, int > map : _key_code ) {
-			if ( map.second == key_code ) {
+	if ( keycode != -1 ) {
+		for ( std::pair< std::string, int > map : _keycode ) {
+			if ( map.second == keycode ) {
 				input = map.first;
 				break;
+			}
+		}
+
+		// 取得できなかったらテンキーのキーコードを検索
+		if ( input.empty( ) ) {
+			for ( std::pair< std::string, int > map : _keycode_numpad ) {
+				if ( map.second == keycode ) {
+					input = map.first;
+					break;
+				}
 			}
 		}
 
@@ -153,14 +192,20 @@ bool Keyboard::getKeyUp( std::string key ) const {
 	bool key_up = false;
 
 	std::string conv;
-	if ( isExistKeyCode( key, conv ) ) {
-		int key_code = _key_code.at( conv );
+	int keycode = -1;
+	int keycode_numpad = -1;
 
-		for ( int i = 0; i < size; i++ ) {
-			if ( _key_up[ i ] == key_code ) {
-				key_up = true;
-				break;
-			}
+	if ( isExistKeyCode( key, conv ) ) {
+		keycode = _keycode.at( conv );
+	}
+	if ( isExistKeyCodeNumpad( key, conv ) ) {
+		keycode_numpad = _keycode_numpad.at( conv );
+	}
+
+	for ( int key_up_code : _key_up ) {
+		if ( key_up_code == keycode || key_up_code == keycode_numpad ) {
+			key_up = true;
+			break;
 		}
 	}
 
@@ -172,9 +217,18 @@ bool Keyboard::getKeyDown( std::string key ) const {
 
 	std::string conv;
 	if ( isExistKeyCode( key, conv ) ) {
-		int key_code = _key_code.at( conv );
-		if ( _key_state[ key_code ] == 1 ) {
+		int keycode = _keycode.at( conv );
+		if ( _key_state[ keycode ] == 1 ) {
 			key_down = true;
+		}
+	}
+
+	if ( !key_down ) {
+		if ( isExistKeyCodeNumpad( key, conv ) ) {
+			int keycode = _keycode_numpad.at( conv );
+			if ( _key_state[ keycode ] == 1 ) {
+				key_down = true;
+			}
 		}
 	}
 
@@ -185,10 +239,29 @@ bool Keyboard::isExistKeyCode( std::string find_key, std::string &conv_key ) con
 	bool exist = true;
 
 	std::string find = find_key;
-	if ( _key_code.find( find ) == _key_code.end( ) ) {
+	if ( _keycode.find( find ) == _keycode.end( ) ) {
 		// 小文字にする
 		std::transform( find.cbegin( ), find.cend( ), find.begin( ), tolower );
-		if ( _key_code.find( find ) == _key_code.end( ) ) {
+		if ( _keycode.find( find ) == _keycode.end( ) ) {
+			exist = false;
+		}
+	}
+
+	if ( exist ) {
+		conv_key = find;
+	}
+
+	return exist;
+}
+
+bool Keyboard::isExistKeyCodeNumpad( std::string find_key, std::string &conv_key ) const {
+	bool exist = true;
+
+	std::string find = find_key;
+	if ( _keycode_numpad.find( find ) == _keycode_numpad.end( ) ) {
+		// 小文字にする
+		std::transform( find.cbegin( ), find.cend( ), find.begin( ), tolower );
+		if ( _keycode_numpad.find( find ) == _keycode_numpad.end( ) ) {
 			exist = false;
 		}
 	}
