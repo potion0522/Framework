@@ -17,6 +17,7 @@ _screen_height( DEFAULT_GRAPH_HEIGHT ),
 _draw_screen( DX_SCREEN_BACK ) {
 	ChangeWindowMode( DEFAULT_WINDOW_MODE );
 	SetGraphMode( _screen_width, _screen_height, 32 );
+	SetWindowSize( _window_width, _window_height );
 	SetDoubleStartValidFlag( TRUE );
 	SetAlwaysRunFlag( TRUE );
 	int result = DxLib_Init( );
