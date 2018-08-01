@@ -13,6 +13,7 @@ public:
 	void draw( ) const;
 
 public:
+	void setHandle( int handle );
 	void setPos( int x, int y, int x2 = 0, int y2 = 0 );
 	void setRect( int rect_x, int rect_y, int width, int height );
 	void setBlendMode( unsigned char alpha = 255 );
@@ -20,6 +21,7 @@ public:
 	void setCentral( bool center_draw );
 
 public:
+	int getHandle( ) const;
 	bool load( std::string path );
 
 private:

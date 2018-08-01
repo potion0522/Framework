@@ -40,6 +40,10 @@ void Image::draw( ) const {
 	}
 }
 
+void Image::setHandle( int handle ) {
+	_handle = handle;
+}
+
 void Image::setPos( int x, int y, int x2, int y2 ) {
 	_screen.x  = x;
 	_screen.y  = y;
@@ -66,6 +70,10 @@ void Image::setBright( unsigned char red, unsigned char green, unsigned char blu
 
 void Image::setCentral( bool center_draw ) {
 	_draw_center = center_draw;
+}
+
+int Image::getHandle( ) const {
+	return _handle;
 }
 
 bool Image::load( std::string path ) {
