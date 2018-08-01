@@ -82,7 +82,6 @@ void Client::setConnectFlag( bool connect ) {
 
 	if ( !_connect_flag ) {
 		disConnect( );
-	} else {
 		initialize( );
 	}
 }

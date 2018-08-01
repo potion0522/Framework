@@ -18,7 +18,7 @@ _recieving_idx( -1 ) {
 	for ( int i = 0; i < MAX_MACHINES; i++ ) {
 		_machines[ i ] = -1;
 	}
-
+	_handle_udp = MakeUDPSocket( );
 	PreparationListenNetWork( TCP_PORT );
 }
 
@@ -33,6 +33,7 @@ void Server::finalize( ) {
 		CloseNetWork( _machines[ i ] );
 	}
 
+	DeleteUDPSocket( _handle_udp );
 	StopListenNetWork( );
 }
 
@@ -62,15 +63,12 @@ void Server::sendTcp( DataPtr data ) {
 }
 
 void Server::sendUdp( DataPtr data ) {
-	int handle = MakeUDPSocket( );
-
 	for ( int i = 0; i < MAX_MACHINES; i++ ) {
 		IPDATA ip = IPDATA( );
 		GetNetWorkIP( _machines[ i ], &ip );
-		NetWorkSendUDP( handle, ip, UDP_PORT, data->getPtr( ), data->getSize( ) );
+		NetWorkSendUDP( _handle_udp, ip, UDP_PORT, data->getPtr( ), data->getSize( ) );
 	}
 
-	DeleteUDPSocket( handle );
 }
 
 void Server::accept( ) {
