@@ -20,10 +20,16 @@ public:
 	void setCentral( bool center_draw );
 
 public:
+	int getImageWidth( );
+	int getImageHeight( );
+
+public:
 	bool load( std::string path );
 
 private:
 	int _handle;
+	int _width;
+	int _height;
 	bool _draw_center;
 	
 	struct Screen {

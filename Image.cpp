@@ -72,3 +72,13 @@ bool Image::load( std::string path ) {
 	_handle = LoadGraph( path.c_str( ) );
 	return ( _handle != -1 );
 }
+
+int Image::getImageWidth( ) {
+	GetGraphSize( _handle, &_width, &_height );
+	return _width;
+}
+
+int Image::getImageHeight( ) {
+	GetGraphSize( _handle, &_width, &_height );
+	return _height;
+}
