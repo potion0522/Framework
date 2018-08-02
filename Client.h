@@ -29,6 +29,7 @@ private:
 	void disConnect( );
 
 public:
+	void readIP( std::string ip );
 	void sendTcp( DataPtr data );
 	void setConnectFlag( bool connect );
 
@@ -41,6 +42,8 @@ private:
 	void recvUdp( );
 
 public:
+	std::string getClientIP( ) const;
+	std::string getServerIP( ) const;
 	std::string getPhase( ) const;
 	bool isRecievingTcp( ) const;
 	bool isRecievingUdp( ) const;

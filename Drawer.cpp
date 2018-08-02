@@ -4,6 +4,7 @@
 #include "Image.h"
 #include <errno.h>
 #include <assert.h>
+#include <stdarg.h>
 
 DrawerPtr Drawer::getTask( ) {
 	return std::dynamic_pointer_cast< Drawer >( Manager::getInstance( )->getTask( getTag( ) ) );
@@ -77,12 +78,9 @@ ImagePtr Drawer::getImage( std::string file_name ) {
 	ImagePtr image = ImagePtr( new Image );
 
 	std::string path = _image_directory + "/" + file_name;
-	bool success = image->load( path );
+	
+	errno_t load_imagefile = image->load( path );
+	assert( load_imagefile );
 
-	ImagePtr result = image;
-	if ( !success ) {
-		result = ImagePtr( );
-	}
-
-	return result;
+	return image;
 }

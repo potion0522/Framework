@@ -82,9 +82,27 @@ void Client::setConnectFlag( bool connect ) {
 
 	if ( !_connect_flag ) {
 		disConnect( );
-	} else {
 		initialize( );
 	}
+}
+
+void Client::readIP( std::string ip ) {
+	int size = ( int )ip.length( );
+
+	const int MAX_IDX = 4;
+	unsigned char num[ MAX_IDX ] = { };
+	for ( int i = 0; i < MAX_IDX; i++ ) {
+		size_t pos = ip.find_first_of( '.' );
+		if ( pos == std::string::npos && i != MAX_IDX - 1 ) {
+			break;
+		}
+		num[ i ] = std::atoi( ip.substr( 0, pos ).c_str( ) );
+		ip = ip.substr( pos + 1, ip.length( ) - pos - 1 );
+	}
+	_server_ip.d1 = num[ 0 ];
+	_server_ip.d2 = num[ 1 ];
+	_server_ip.d3 = num[ 2 ];
+	_server_ip.d4 = num[ 3 ];
 }
 
 void Client::readIP( ) {
@@ -165,6 +183,35 @@ void Client::recvUdp( ) {
 	if ( result >= 0 ) {
 		_recieving_udp = true;
 	}
+}
+
+std::string Client::getServerIP( ) const {
+	std::string ip;
+	ip += std::to_string( _server_ip.d1 );
+	ip += ".";
+	ip += std::to_string( _server_ip.d2 );
+	ip += ".";
+	ip += std::to_string( _server_ip.d3 );
+	ip += ".";
+	ip += std::to_string( _server_ip.d4 );
+
+	return ip;
+}
+
+std::string Client::getClientIP( ) const {
+	IPDATA ip = IPDATA( );
+	GetMyIPAddress( &ip );
+
+	std::string ip_str;
+	ip_str += std::to_string( ip.d1 );
+	ip_str += ".";
+	ip_str += std::to_string( ip.d2 );
+	ip_str += ".";
+	ip_str += std::to_string( ip.d3 );
+	ip_str += ".";
+	ip_str += std::to_string( ip.d4 );
+
+	return ip_str;
 }
 
 std::string Client::getPhase( ) const {

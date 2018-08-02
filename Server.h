@@ -41,6 +41,7 @@ public:
 
 private:
 	std::array< int, MAX_MACHINES > _machines;
+	int _handle_udp;
 	int _recieving_idx;
 
 	DataPtr _recvdata_tcp;
