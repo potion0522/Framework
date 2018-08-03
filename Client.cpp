@@ -87,8 +87,6 @@ void Client::setConnectFlag( bool connect ) {
 }
 
 void Client::readIP( std::string ip ) {
-	int size = ( int )ip.length( );
-
 	const int MAX_IDX = 4;
 	unsigned char num[ MAX_IDX ] = { };
 	for ( int i = 0; i < MAX_IDX; i++ ) {
