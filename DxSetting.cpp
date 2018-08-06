@@ -7,6 +7,8 @@ const int DEFAULT_GRAPH_DEPTH   = 32;
 const int DEFAULT_SCREEN_WIDTH  = 1280;
 const int DEFAULT_SCREEN_HEIGHT = 720;
 const int DEFAULT_WINDOW_MODE   = 1;
+const float DEFAULT_CAMERA_NEAR = 1.0f;
+const float DEFAULT_CAMERA_FAR  = 50.0f;
 
 DxSetting::DxSetting( ) :
 _window_mode( TRUE ),
@@ -14,7 +16,9 @@ _window_width( DEFAULT_SCREEN_WIDTH ),
 _window_height( DEFAULT_SCREEN_HEIGHT ),
 _screen_width( DEFAULT_GRAPH_WIDTH ),
 _screen_height( DEFAULT_GRAPH_HEIGHT ),
-_draw_screen( DX_SCREEN_BACK ) {
+_draw_screen( DX_SCREEN_BACK ),
+_camera_near( DEFAULT_CAMERA_NEAR ),
+_camera_far( DEFAULT_CAMERA_FAR ) {
 	ChangeWindowMode( DEFAULT_WINDOW_MODE );
 	SetGraphMode( _screen_width, _screen_height, 32 );
 	SetWindowSize( _window_width, _window_height );
@@ -32,9 +36,14 @@ void DxSetting::finalize( ) {
 }
 
 void DxSetting::initialize( ) {
+	SetUseLighting( FALSE );
+	SetLightEnable( FALSE );
+	SetUseZBuffer3D( TRUE );
+	SetWriteZBuffer3D( TRUE );
 	SetDoubleStartValidFlag( TRUE );
 	SetAlwaysRunFlag( TRUE );
 	SetDrawScreen( _draw_screen );
+	SetCameraNearFar( _camera_near, _camera_far );
 }
 
 void DxSetting::changeWindowMode( bool flag ) {
@@ -59,17 +68,10 @@ void DxSetting::setWindowSize( int width, int height ) {
 	SetWindowSize( width, height );
 }
 
-void DxSetting::setCameraNearFar( float near_length, float far_length ) {
-	SetCameraNearFar( near_length, far_length );
-}
-
-void DxSetting::setUseLighting( bool flag ) {
-	SetUseLighting( flag );
-}
-
-void DxSetting::setUseZBuffer( bool flag ) {
-	SetUseZBufferFlag( flag );
-	SetWriteZBufferFlag( flag );
+void DxSetting::setCameraNearFar( float camera_near, float camera_far ) {
+	_camera_near = camera_near;
+	_camera_far = camera_far;
+	initialize( );
 }
 
 int DxSetting::getWindowWidth ( ) const {

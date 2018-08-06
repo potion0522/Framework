@@ -69,6 +69,11 @@ void Drawer::drawFormatStringCenter( float x, float y, unsigned int color, const
 	DrawStringF( x - gap_x, y, buf, color );
 }
 
+void Drawer::drawSphere( Vector pos, float radius, int div_num, unsigned int color, bool fillflag ) {
+	VECTOR sphere_pos = VGet( ( float )pos.x, ( float )pos.y, ( float )pos.z );
+	DrawSphere3D( sphere_pos, radius, div_num, color, color, fillflag );
+}
+
 void Drawer::flip( ) {
 	ScreenFlip( );
 	ClearDrawScreen( );

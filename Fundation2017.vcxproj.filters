@@ -20,6 +20,7 @@
     <ClInclude Include="Sound.h" />
     <ClInclude Include="Vector.h" />
     <ClInclude Include="Client.h" />
+    <ClInclude Include="Model.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
@@ -36,5 +37,6 @@
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="WinMain.cpp" />
     <ClCompile Include="Client.cpp" />
+    <ClCompile Include="Model.cpp" />
   </ItemGroup>
 </Project>

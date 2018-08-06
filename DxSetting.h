@@ -20,9 +20,7 @@ public:
 	void setWindowSize( int width, int height );
 
 public:
-	void setCameraNearFar( float near_length, float far_length );
-	void setUseLighting( bool flag );
-	void setUseZBuffer( bool flag );
+	void setCameraNearFar( float camera_near, float camera_far );
 
 public:
 	int getWindowWidth ( ) const;
@@ -37,5 +35,7 @@ private:
 	int _screen_width;
 	int _screen_height;
 	int _draw_screen;
+	float _camera_near;
+	float _camera_far;
 };
 

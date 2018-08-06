@@ -82,6 +82,10 @@ void Manager::changeWindowMode( bool flag ) {
 	_setting->changeWindowMode( flag );
 }
 
+void Manager::setCameraNearFar( float camera_near, float camera_far ) {
+	_setting->setCameraNearFar( camera_near, camera_far );
+}
+
 int Manager::getWindowWidth ( ) const {
 	return _setting->getWindowWidth( );
 }

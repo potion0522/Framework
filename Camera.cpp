@@ -22,6 +22,11 @@ void Camera::finalize( ) {
 void Camera::update( ) {
 }
 
+void Camera::setNearFar( float camera_near, float camera_far ) {
+	ManagerPtr manager = Manager::getInstance( );
+	manager->setCameraNearFar( camera_near, camera_far );
+}
+
 void Camera::setCameraUp( Vector up ) {
 	_camera_up = up;
 }

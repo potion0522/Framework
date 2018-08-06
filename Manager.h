@@ -27,6 +27,7 @@ public:
 	void setWindowSize( int width, int height );
 	void setScreenSize( int width, int height );
 	void changeWindowMode( bool flag );
+	void setCameraNearFar( float camera_near, float camera_far );
 
 public:
 	int getWindowWidth ( ) const;

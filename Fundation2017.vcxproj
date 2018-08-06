@@ -183,6 +183,7 @@
     <ClInclude Include="LoadCSV.h" />
     <ClInclude Include="Manager.h" />
     <ClInclude Include="MersenneTwister.h" />
+    <ClInclude Include="Model.h" />
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="MultiThreadLoad.h" />
     <ClInclude Include="Random.h" />
@@ -200,6 +201,7 @@
     <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="LoadCSV.cpp" />
     <ClCompile Include="Manager.cpp" />
+    <ClCompile Include="Model.cpp" />
     <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="MultiThreadLoad.cpp" />
     <ClCompile Include="Random.cpp" />

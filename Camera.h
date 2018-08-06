@@ -21,6 +21,7 @@ public:
 	void update( );
 
 public:
+	void setNearFar( float camera_near, float camera_far );
 	void setCameraUp( Vector up );
 	void setCamera( Vector pos, Vector target );
 
