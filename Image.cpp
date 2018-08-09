@@ -4,10 +4,12 @@
 Image::Image( ) :
 _handle( -1 ),
 _alpha( 255 ),
-_draw_center( false ){
-	_screen = Screen( );
-	_rect = Rect( );
-	_rgb = Bright( );
+_draw_center( false ),
+_width( 0 ) ,
+_height( 0 ),
+_screen( Screen( ) ),
+_rect( Rect( ) ),
+_rgb( Bright( ) ) {
 }
 
 Image::~Image( ) {

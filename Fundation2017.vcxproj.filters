@@ -21,6 +21,8 @@
     <ClInclude Include="Vector.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="Model.h" />
+    <ClInclude Include="Button.h" />
+    <ClInclude Include="Event.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
@@ -38,5 +40,6 @@
     <ClCompile Include="WinMain.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="Model.cpp" />
+    <ClCompile Include="Button.cpp" />
   </ItemGroup>
 </Project>
