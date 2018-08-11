@@ -184,6 +184,7 @@
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="LoadCSV.h" />
     <ClInclude Include="Manager.h" />
+    <ClInclude Include="Matrix.h" />
     <ClInclude Include="MersenneTwister.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="Mouse.h" />

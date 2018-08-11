@@ -23,6 +23,7 @@
     <ClInclude Include="Model.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="Event.h" />
+    <ClInclude Include="Matrix.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />

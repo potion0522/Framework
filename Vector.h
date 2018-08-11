@@ -23,13 +23,13 @@ struct Vector {
 	}
 
 	// ë´ÇµéZ
-	inline Vector add( const Vector &vec ) {
+	inline Vector add( const Vector &vec ) const {
 		return Vector( 
 			x + vec.x,
 			y + vec.y,
 			z + vec.z );
 	}
-	inline Vector operator+( const Vector &vec ) {
+	inline Vector operator+( const Vector &vec ) const {
 		return add( vec );
 	}
 	inline Vector operator+=( const Vector &vec ) {
@@ -38,13 +38,13 @@ struct Vector {
 	}
 
 	// à¯Ç´éZ
-	inline Vector sub( const Vector &vec ) {
+	inline Vector sub( const Vector &vec ) const {
 		return Vector( 
 			this->x - vec.x,
 			this->y - vec.y,
 			this->z - vec.z );
 	}
-	inline Vector operator-( const Vector &vec ) {
+	inline Vector operator-( const Vector &vec ) const {
 		return sub( vec );
 	}
 	inline Vector operator-=( const Vector &vec ) {
@@ -53,14 +53,14 @@ struct Vector {
 	}
 
 	// ä|ÇØéZ
-	inline Vector mult( const double &num ) {
+	inline Vector multiply( const double &num ) const {
 		return Vector( 
 			x * num,
 			y * num,
 			z * num );
 	}
-	inline Vector operator*( const double &num ) {
-		return mult( num );
+	inline Vector operator*( const double &num ) const {
+		return multiply( num );
 	}
 	inline Vector operator*=( const double &num ) {
 		*this = *this * num;
@@ -68,7 +68,7 @@ struct Vector {
 	}
 
 	// î‰är ==
-	inline bool operator==( const Vector &vec ) {
+	inline bool operator==( const Vector &vec ) const {
 		return ( 
 			x == vec.x &&
 			y == vec.y &&
@@ -76,7 +76,7 @@ struct Vector {
 	}
 
 	// î‰är !=
-	inline bool operator!=( const Vector &vec ) {
+	inline bool operator!=( const Vector &vec ) const {
 		return (
 			x != vec.x ||
 			y != vec.y ||
@@ -110,7 +110,7 @@ struct Vector {
 	}
 
 	// ê≥ãKâª
-	inline Vector normalize( ) {
+	inline Vector normalize( ) const {
 		double len = getLength( );
 		Vector normal = Vector( x / len, y / len, z / len );
 
@@ -118,7 +118,7 @@ struct Vector {
 	}
 
 	// ì‡êœ
-	inline double dot( const Vector &vec ) {
+	inline double dot( const Vector &vec ) const {
 		return x * vec.x + y * vec.y + z * vec.z;
 	}
 };
