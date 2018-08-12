@@ -6,7 +6,8 @@
 class ModelData {
 public:
 	unsigned int _polygon_num;
-	VERTEX3D *vertex;
+	VERTEX3D *origin;
+	VERTEX3D *view;
 };
 
 Model::Model( ) {
@@ -14,17 +15,19 @@ Model::Model( ) {
 }
 
 Model::~Model( ) {
-	delete [ ] _model->vertex;
+	delete [ ] _model->origin;
+	delete [ ] _model->view;
 }
 
 void Model::setPolygon( int num ) {
 	_model->_polygon_num = num;
-	_model->vertex = new VERTEX3D[ num * 3 ];
+	_model->origin = new VERTEX3D[ num * 3 ];
+	_model->view   = new VERTEX3D[ num * 3 ];
 }
 
 void Model::setVertex( int vertex_num, Vertex in_vertex ) {
 	VERTEX3D vertex = VERTEX3D( );
-	VECTOR pos = VGet( ( float )in_vertex.pos.x, ( float )in_vertex.pos.y, ( float )in_vertex.pos.z );
+	VECTOR pos  = VGet( ( float )in_vertex.pos.x , ( float )in_vertex.pos.y , ( float )in_vertex.pos.z );
 	VECTOR norm = VGet( ( float )in_vertex.norm.x, ( float )in_vertex.norm.y, ( float )in_vertex.norm.z );
 	vertex.pos = pos;
 	vertex.u = in_vertex.u;
@@ -32,13 +35,24 @@ void Model::setVertex( int vertex_num, Vertex in_vertex ) {
 	vertex.norm = norm;
 	vertex.dif = GetColorU8( 255, 255, 255, 255 );
 
-	_model->vertex[ vertex_num ] = vertex;
+	_model->origin[ vertex_num ] = vertex;
+	_model->view  [ vertex_num ] = vertex;
 }
 
 void Model::setImage( ImageConstPtr image ) {
 	_image = image;
 }
 
+void Model::draw( const Vector &pos, const Matrix &mat ) const {
+	for ( int i = 0; i < ( int )_model->_polygon_num * 3; i++ ) {
+		Vector origin = Vector( _model->origin[ i ].pos.x, _model->origin[ i ].pos.y, _model->origin[ i ].pos.z );
+		Vector conv   = mat.multiply( origin );
+		_model->view[ i ].pos = VGet( ( float )conv.x, ( float )conv.y, ( float )conv.z );
+	}
+
+	draw( );
+}
+
 void Model::draw( ) const {
-	DrawPolygon3D( _model->vertex, _model->_polygon_num, _image->getHandle( ), FALSE );
+	DrawPolygon3D( _model->view, _model->_polygon_num, _image->getHandle( ), FALSE );
 }

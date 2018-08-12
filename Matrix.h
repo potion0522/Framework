@@ -43,11 +43,46 @@ struct Matrix {
 		return mat;
 	}
 
+	inline static Matrix makeTransformScaling( const Vector &in_vec ) {
+		Matrix mat;
+		mat.matrix[ 0 ][ 0 ] = in_vec.x;
+		mat.matrix[ 1 ][ 1 ] = in_vec.y;
+		mat.matrix[ 2 ][ 2 ] = in_vec.z;
+		return mat;
+	}
+
+	inline static Matrix makeTransformTranslation( const Vector &in_vec ) {
+
+	}
+
 	inline Vector multiply( const Vector &in_vec ) const {
 		Vector result;
 		result.x = in_vec.x * matrix[ 0 ][ 0 ] + in_vec.y * matrix[ 0 ][ 1 ] + in_vec.z * matrix[ 0 ][ 2 ];
 		result.y = in_vec.x * matrix[ 1 ][ 0 ] + in_vec.y * matrix[ 1 ][ 1 ] + in_vec.z * matrix[ 1 ][ 2 ];
 		result.z = in_vec.x * matrix[ 2 ][ 0 ] + in_vec.y * matrix[ 2 ][ 1 ] + in_vec.z * matrix[ 2 ][ 2 ];
 		return result;
+	}
+
+	inline Matrix multiply( const Matrix &in_mat ) const {
+		Matrix mat;
+
+		for ( int i = 0; i < 3; i++ ) {
+			for ( int j = 0; j < 3; j++ ) {
+				mat.matrix[ i ][ j ] = 0;
+				for ( int k = 0; k < 3; k++ ) {
+					mat.matrix[ i ][ j ] += matrix[ i ][ k ] * in_mat.matrix[ k ][ j ];
+				}
+			}
+		}
+
+		return mat;
+	}
+
+	inline Matrix operator*( const Matrix &in_mat ) const {
+		return this->multiply( in_mat );
+	}
+	inline Matrix operator*=( const Matrix &in_mat ) {
+		*this = *this * in_mat;
+		return *this;
 	}
 };

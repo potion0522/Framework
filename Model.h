@@ -1,6 +1,7 @@
 #pragma once
 #include "smart_ptr.h"
 #include "Vector.h"
+#include "Matrix.h"
 
 PTR( Model );
 PTR( Image );
@@ -39,6 +40,7 @@ public:
 	void setImage( ImageConstPtr image );
 
 public:
+	void draw( const Vector &pos, const Matrix &mat = Matrix( ) ) const;
 	void draw( ) const;
 
 private:
