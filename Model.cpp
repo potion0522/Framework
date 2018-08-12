@@ -45,9 +45,16 @@ void Model::setImage( ImageConstPtr image ) {
 
 void Model::draw( const Vector &pos, const Matrix &mat ) const {
 	for ( int i = 0; i < ( int )_model->_polygon_num * 3; i++ ) {
-		Vector origin = Vector( _model->origin[ i ].pos.x, _model->origin[ i ].pos.y, _model->origin[ i ].pos.z );
-		Vector conv   = mat.multiply( origin );
-		_model->view[ i ].pos = VGet( ( float )conv.x, ( float )conv.y, ( float )conv.z );
+		Vector origin_pos  = Vector( _model->origin[ i ].pos.x, _model->origin[ i ].pos.y, _model->origin[ i ].pos.z );
+		Vector origin_norm = Vector( _model->view[ i ].norm.x, _model->view[ i ].norm.y, _model->view[ i ].norm.z );
+
+		Matrix matrix = mat * Matrix::makeTransformTranslation( pos );
+
+		Vector conv_pos  = matrix.multiply( origin_pos  );
+		Vector conv_norm = matrix.multiply( origin_norm );
+
+		_model->view[ i ].pos  = VGet( ( float )conv_pos.x , ( float )conv_pos.y , ( float )conv_pos.z  );
+		_model->view[ i ].norm = VGet( ( float )conv_norm.x, ( float )conv_norm.y, ( float )conv_norm.z );
 	}
 
 	draw( );

@@ -2,17 +2,15 @@
 #include "Vector.h"
 
 struct Matrix {
-	double matrix[ 3 ][ 3 ];
+	double matrix[ 4 ][ 4 ];
 
 	Matrix( ) {
 		// ’PˆÊs—ñ‚ğ¶¬
-		for ( int i = 0; i < 3; i++ ) {
-			for ( int j = 0; j < 3; j++ ) {
+		for ( int i = 0; i < 4; i++ ) {
+			for ( int j = 0; j < 4; j++ ) {
 				matrix[ i ][ j ] = 0;
 			}
-		}
 
-		for ( int i = 0; i < 3; i++ ) {
 			matrix[ i ][ i ] = 1;
 		}
 	}
@@ -52,24 +50,28 @@ struct Matrix {
 	}
 
 	inline static Matrix makeTransformTranslation( const Vector &in_vec ) {
-
+		Matrix mat;
+		mat.matrix[ 3 ][ 0 ] = in_vec.x;
+		mat.matrix[ 3 ][ 1 ] = in_vec.y;
+		mat.matrix[ 3 ][ 2 ] = in_vec.z;
+		return mat;
 	}
 
 	inline Vector multiply( const Vector &in_vec ) const {
 		Vector result;
-		result.x = in_vec.x * matrix[ 0 ][ 0 ] + in_vec.y * matrix[ 0 ][ 1 ] + in_vec.z * matrix[ 0 ][ 2 ];
-		result.y = in_vec.x * matrix[ 1 ][ 0 ] + in_vec.y * matrix[ 1 ][ 1 ] + in_vec.z * matrix[ 1 ][ 2 ];
-		result.z = in_vec.x * matrix[ 2 ][ 0 ] + in_vec.y * matrix[ 2 ][ 1 ] + in_vec.z * matrix[ 2 ][ 2 ];
+		result.x = in_vec.x * matrix[ 0 ][ 0 ] + in_vec.y * matrix[ 1 ][ 0 ] + in_vec.z * matrix[ 2 ][ 0 ] + 1 * matrix[ 3 ][ 0 ];
+		result.y = in_vec.x * matrix[ 0 ][ 1 ] + in_vec.y * matrix[ 1 ][ 1 ] + in_vec.z * matrix[ 2 ][ 1 ] + 1 * matrix[ 3 ][ 1 ];
+		result.z = in_vec.x * matrix[ 0 ][ 2 ] + in_vec.y * matrix[ 1 ][ 2 ] + in_vec.z * matrix[ 2 ][ 2 ] + 1 * matrix[ 3 ][ 2 ];
 		return result;
 	}
 
 	inline Matrix multiply( const Matrix &in_mat ) const {
 		Matrix mat;
 
-		for ( int i = 0; i < 3; i++ ) {
-			for ( int j = 0; j < 3; j++ ) {
+		for ( int i = 0; i < 4; i++ ) {
+			for ( int j = 0; j < 4; j++ ) {
 				mat.matrix[ i ][ j ] = 0;
-				for ( int k = 0; k < 3; k++ ) {
+				for ( int k = 0; k < 4; k++ ) {
 					mat.matrix[ i ][ j ] += matrix[ i ][ k ] * in_mat.matrix[ k ][ j ];
 				}
 			}
