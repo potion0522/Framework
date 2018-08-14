@@ -6,6 +6,6 @@ public:
 	virtual ~Event( ) { };
 
 public:
-	virtual void onEvent( ) = 0;
+	virtual void start( ) = 0;
 };
 
