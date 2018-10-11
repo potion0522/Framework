@@ -6,6 +6,6 @@ public:
 	virtual ~Event( ) { };
 
 public:
-	virtual void start( ) = 0;
+	virtual void activate( ) = 0;
 };
 

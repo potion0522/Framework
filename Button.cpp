@@ -88,7 +88,7 @@ void Button::updatePush( ) {
 
 	// event
 	if ( _event != EventPtr( ) ) {
-		_event->start( );
+		_event->activate( );
 	}
 }
 

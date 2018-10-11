@@ -21,15 +21,15 @@ public:
 	void update( );
 
 public:
-	int getKeyState( std::string key ) const;
+	int getKeyState( const std::string& key ) const;
 	std::string getString( ) const;
-	bool getKeyUp( std::string key ) const;
-	bool getKeyDown( std::string key ) const;
+	bool getKeyUp( const std::string& key ) const;
+	bool getKeyDown( const std::string& key ) const;
 
 private:
 	// ƒL[ŒŸõBŒ©‚Â‚©‚Á‚½ê‡•ÏŠ·Œã‚Ì•¶š‚ª‘æ“ñˆø”‚É‘ã“ü‚³‚ê‚é
-	bool isExistKeyCode( std::string find_key, std::string &conv_str ) const;
-	bool isExistKeyCodeNumpad( std::string find_key, std::string &conv_str ) const;
+	bool isExistKeyCode( const std::string& find_key, std::string& output ) const;
+	bool isExistKeyCodeNumpad( const std::string& find_key, std::string& output ) const;
 
 private:
 	static const int KEY_MAX = 256;

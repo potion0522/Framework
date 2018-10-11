@@ -56,7 +56,7 @@ Keyboard::Keyboard( ) {
 	_keycode[ "/"     ] = KEY_INPUT_SLASH     ;
 	_keycode[ "\\"    ] = KEY_INPUT_BACKSLASH ;
 	_keycode[ "ENTER" ] = KEY_INPUT_RETURN    ;
-	_keycode[ "UP"	   ] = KEY_INPUT_UP       ;
+	_keycode[ "UP"	  ] = KEY_INPUT_UP        ;
 	_keycode[ "DOWN"  ] = KEY_INPUT_DOWN      ;
 	_keycode[ "RIGHT" ] = KEY_INPUT_RIGHT     ;
 	_keycode[ "LEFT"  ] = KEY_INPUT_LEFT      ;
@@ -120,7 +120,11 @@ void Keyboard::update( ) {
 	}
 }
 
-int Keyboard::getKeyState( std::string key ) const {
+int Keyboard::getKeyState( const std::string& key ) const {
+	if ( key.empty( ) ) {
+		return 0;
+	}
+
 	int state = 0;
 	// キーが見つかった場合、値を代入
 	std::string conv;
@@ -186,7 +190,11 @@ std::string Keyboard::getString( ) const {
 	return input;
 }
 
-bool Keyboard::getKeyUp( std::string key ) const {
+bool Keyboard::getKeyUp( const std::string& key ) const {
+	if ( key.empty( ) ) {
+		return false;
+	}
+
 	int size = ( int )_key_up.size( );
 
 	bool key_up = false;
@@ -212,7 +220,11 @@ bool Keyboard::getKeyUp( std::string key ) const {
 	return key_up;
 }
 
-bool Keyboard::getKeyDown( std::string key ) const {
+bool Keyboard::getKeyDown( const std::string& key ) const {
+	if ( key.empty( ) ) {
+		return false;
+	}
+
 	bool key_down = false;
 
 	std::string conv;
@@ -235,7 +247,7 @@ bool Keyboard::getKeyDown( std::string key ) const {
 	return key_down;
 }
 
-bool Keyboard::isExistKeyCode( std::string find_key, std::string &conv_key ) const {
+bool Keyboard::isExistKeyCode( const std::string& find_key, std::string& output ) const {
 	bool exist = true;
 
 	std::string find = find_key;
@@ -248,13 +260,13 @@ bool Keyboard::isExistKeyCode( std::string find_key, std::string &conv_key ) con
 	}
 
 	if ( exist ) {
-		conv_key = find;
+		output = find;
 	}
 
 	return exist;
 }
 
-bool Keyboard::isExistKeyCodeNumpad( std::string find_key, std::string &conv_key ) const {
+bool Keyboard::isExistKeyCodeNumpad( const std::string& find_key, std::string& output ) const {
 	bool exist = true;
 
 	std::string find = find_key;
@@ -267,7 +279,7 @@ bool Keyboard::isExistKeyCodeNumpad( std::string find_key, std::string &conv_key
 	}
 
 	if ( exist ) {
-		conv_key = find;
+		output = find;
 	}
 
 	return exist;
