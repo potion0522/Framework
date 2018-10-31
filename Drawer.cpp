@@ -84,6 +84,7 @@ ImagePtr Drawer::getImage( std::string file_name ) {
 
 	std::string path = _image_directory + "/" + file_name;
 	
+	// ファイルがうまく読み込めなかったらエラーを出す
 	errno_t load_imagefile = image->load( path );
 	assert( load_imagefile );
 

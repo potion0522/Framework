@@ -1,5 +1,10 @@
 #pragma once
 
+/*
+	ネットワーク通信に使用するクラス
+	このクラスを継承したクラスを使用してClientとServerからデータの送受信をする
+*/
+
 class Data {
 public:
 	Data( ) { };

@@ -175,7 +175,6 @@
     <ClInclude Include="Button.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Client.h" />
-    <ClInclude Include="Collider.h" />
     <ClInclude Include="Data.h" />
     <ClInclude Include="Drawer.h" />
     <ClInclude Include="DxSetting.h" />
@@ -188,7 +187,6 @@
     <ClInclude Include="MersenneTwister.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="Mouse.h" />
-    <ClInclude Include="MultiThreadLoad.h" />
     <ClInclude Include="Random.h" />
     <ClInclude Include="Server.h" />
     <ClInclude Include="smart_ptr.h" />
@@ -207,7 +205,6 @@
     <ClCompile Include="Manager.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="Mouse.cpp" />
-    <ClCompile Include="MultiThreadLoad.cpp" />
     <ClCompile Include="Random.cpp" />
     <ClCompile Include="Server.cpp" />
     <ClCompile Include="Sound.cpp" />
