@@ -1,103 +1,147 @@
 #include "Manager.h"
 #include "Base.h"
-#include "DxSetting.h"
+#include "DxLib.h"
 
-ManagerPtr Manager::_instance;
+Manager* Manager::_instance = nullptr;
+
+const int DEFAULT_GRAPH_WIDTH   = 1920;
+const int DEFAULT_GRAPH_HEIGHT  = 1080;
+const int DEFAULT_GRAPH_DEPTH   = 32;
+const int DEFAULT_SCREEN_WIDTH  = 1280;
+const int DEFAULT_SCREEN_HEIGHT = 720;
+const int DEFAULT_WINDOW_MODE   = 1;
+const float DEFAULT_CAMERA_NEAR = 1.0f;
+const float DEFAULT_CAMERA_FAR  = 50.0f;
 
 Manager::Manager( ) :
-_fin( false ) {
-	_setting = DxSettingPtr( new DxSetting( ) );
+_window_mode( TRUE ),
+_window_width( DEFAULT_SCREEN_WIDTH ),
+_window_height( DEFAULT_SCREEN_HEIGHT ),
+_screen_width( DEFAULT_GRAPH_WIDTH ),
+_screen_height( DEFAULT_GRAPH_HEIGHT ),
+_draw_screen( DX_SCREEN_BACK ),
+_camera_near( DEFAULT_CAMERA_NEAR ),
+_camera_far( DEFAULT_CAMERA_FAR ) {
+	ChangeWindowMode( TRUE );
+	SetGraphMode( _screen_width, _screen_height, 32 );
+	SetWindowSize( _window_width, _window_height );
+	SetDoubleStartValidFlag( TRUE );
+	SetAlwaysRunFlag( TRUE );
+
+	DxLib_Init( );
+	initializeDxlib( );
 }
 
 Manager::~Manager( ) {
-	std::map< std::string, BasePtr >::iterator ite;
-	ite = _exe.begin( );
-
-	for ( ite; ite != _exe.end( ); ite++ ) {
-		ite->second->finalize( );
-	}
-
-	_setting->finalize( );
+	DxLib_End( );
 }
 
-ManagerPtr Manager::getInstance( ) {
-	return _instance;
-}
-
-void Manager::initialize( ) {
+Manager* Manager::getInstance( ) {
 	if ( !_instance ) {
-		_instance = ManagerPtr( new Manager( ) );
+		_instance = new Manager;
 	}
+	return _instance;
 }
 
 void Manager::finalize( ) {
 	if ( _instance ) {
-		_instance.reset( );
+		delete _instance;
+		_instance = nullptr;
 	}
 }
 
-void Manager::allInitialize( ) {
-	std::map< std::string, BasePtr >::iterator ite;
-	ite = _exe.begin( );
+void Manager::initializeDxlib( ) {
+	SetUseLighting( FALSE );
+	SetLightEnable( FALSE );
+	SetUseZBuffer3D( TRUE );
+	SetWriteZBuffer3D( TRUE );
+	SetDoubleStartValidFlag( TRUE );
+	SetAlwaysRunFlag( TRUE );
+	SetDrawScreen( _draw_screen );
+	SetCameraNearFar( _camera_near, _camera_far );
+}
 
-	for ( ite; ite != _exe.end( ); ite++ ) {
-		ite->second->initialize( );
+void Manager::startGame( ) {
+	initializeTasks( );
+
+	// main loop
+	while ( !CheckHitKey( KEY_INPUT_ESCAPE ) ) {
+		updateTasks( );
+	}
+
+	finalizeTasks( );
+}
+
+void Manager::initializeTasks( ) {
+	for ( std::pair< std::string, BasePtr > task : _tasks ) {
+		task.second->initialize( );
 	}
 }
 
-void Manager::update( ) {
-	std::map< std::string, BasePtr >::iterator ite;
-	ite = _exe.begin( );
+void Manager::finalizeTasks( ) {
+	for ( std::pair< std::string, BasePtr > task : _tasks ) {
+		task.second->finalize( );
+	}
+}
 
-	for ( ite; ite != _exe.end( ); ite++ ) {
-		ite->second->update( );
+void Manager::updateTasks( ) {
+	for ( std::pair< std::string, BasePtr > task : _tasks ) {
+		task.second->update( );
 	}
 }
 
 void Manager::add( std::string tag, BasePtr ptr ) {
-	_exe[ tag ] =  ptr;
+	_tasks[ tag ] = ptr;
 }
 
 BasePtr Manager::getTask( std::string tag ) {
-	if ( _exe.find( tag ) == _exe.end( ) ) {
+	if ( _tasks.count( tag ) < 1 ) {
 		return BasePtr( );
 	}
 
-	return _exe[ tag ];
-}
-
-bool Manager::isFin( ) const {
-	return _fin;
-}
-
-void Manager::setWindowSize( int width, int height ) {
-	_setting->setWindowSize( width, height );
-}
-
-void Manager::setScreenSize( int width, int height ) {
-	_setting->setGraphMode( width, height );
+	return _tasks[ tag ];
 }
 
 void Manager::changeWindowMode( bool flag ) {
-	_setting->changeWindowMode( flag );
+	_window_mode = ( flag ? TRUE : FALSE );
+	ChangeWindowMode( _window_mode );
+	initializeDxlib( );
+}
+
+void Manager::setWindowSize( int width, int height ) {
+	_window_width = width;
+	_window_height = height;
+
+	SetWindowSize( width, height );
+}
+
+void Manager::setScreenSize( int width, int height ) {
+	_screen_width  = width;
+	_screen_height = height;
+
+	SetGraphMode( _screen_width, _screen_height, 32 );
+	setWindowSize( _screen_width, _screen_height );
+	initializeDxlib( );
 }
 
 void Manager::setCameraNearFar( float camera_near, float camera_far ) {
-	_setting->setCameraNearFar( camera_near, camera_far );
+	_camera_near = camera_near;
+	_camera_far = camera_far;
+	initializeDxlib( );
 }
 
 int Manager::getWindowWidth ( ) const {
-	return _setting->getWindowWidth( );
+	return _window_width;
 }
 
 int Manager::getWindowHeight( ) const {
-	return _setting->getWindowHeight( );
+	return _window_width;
 }
 
 int Manager::getScreenWidth ( ) const {
-	return _setting->getScreenWidth( );
+	return _window_width;
 }
 
 int Manager::getScreenHeight( ) const {
-	return _setting->getScreenHeight( );
+	return _window_width;
 }

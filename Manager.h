@@ -1,27 +1,26 @@
 #pragma once
-#include "smart_ptr.h"
 #include "Base.h"
 #include <map>
 
-PTR( Manager );
-PTR( DxSetting );
-
 class Manager {
-public:
+private:
 	Manager( );
-	virtual ~Manager( );
+	~Manager( );
 
 public:
-	static ManagerPtr getInstance( );
-	static void initialize( );
-	static void finalize( );
+	static Manager* getInstance( );
 
 public:
-	void update( );
-	void allInitialize( );
+	void startGame( );
+	void finalize( );
 	void add( std::string tag, BasePtr ptr );
 	BasePtr getTask( std::string tag );
-	bool isFin( ) const;
+
+private:
+	void initializeDxlib( );
+	void updateTasks( );
+	void initializeTasks( );
+	void finalizeTasks( );
 
 public:
 	void setWindowSize( int width, int height );
@@ -36,9 +35,16 @@ public:
 	int getScreenHeight( ) const;
 
 private:
-	bool _fin;
-	static ManagerPtr _instance;
-	DxSettingPtr _setting;
-	std::map< std::string, BasePtr > _exe;
+	static Manager* _instance;
+	std::map< std::string, BasePtr > _tasks;
+	
+	int _window_mode;
+	int _window_width;
+	int _window_height;
+	int _screen_width;
+	int _screen_height;
+	int _draw_screen;
+	float _camera_near;
+	float _camera_far;
 };
 
