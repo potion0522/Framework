@@ -16,25 +16,29 @@ public:
 	};
 
 public:
-	Button( Vector center_pos );
+	Button( );
 	virtual ~Button( );
 
 public:
 	void update( );
+	void draw( ) const;
 
 public:
-	void setDefaultImagePath( std::string path );
-	void setClickedImagePath( std::string path );
-	void setEvent( EventPtr event );
+	void setDefaultImage( ImagePtr image );
+	void setPushImage( ImagePtr image );
+	void setSize( int width, int height );
 
 public:
-	ImageConstPtr getImage( ) const;
+	ImagePtr getDefaultImage( );
+	ImagePtr getPushImage( );
 
 private:
 	void updateDefault( );
 	void updatePush( );
+	void updateClicked( );
 
 private:
+	// mouseÇ™É{É^Éìè„Ç…Ç†ÇÈÇ©Ç«Ç§Ç©
 	bool onButton( ) const;
 
 public:
@@ -43,10 +47,10 @@ public:
 private:
 	STATE _state;
 	Vector _pos;
-	Vector _size;
+	int _width;
+	int _height;
 
-	EventPtr _event;
-	std::string _default_button_path;
-	std::string _clicked_button_path;
+	ImagePtr _default_image;
+	ImagePtr _push_image;
 };
 

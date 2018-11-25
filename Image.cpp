@@ -211,6 +211,10 @@ int Image::getHandle( ) const {
 }
 
 bool Image::load( const char* path ) {
+	if ( _handle != -1 ) {
+		DeleteGraph( _handle );
+	}
+
 	_handle = LoadGraph( path );
 
 	// image size ‚ðŽæ“¾
