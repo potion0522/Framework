@@ -15,6 +15,9 @@ _rgb( Bright( ) ) {
 }
 
 Image::~Image( ) {
+	if ( _handle != -1 ) {
+		DeleteGraph( _handle );
+	}
 }
 
 void Image::draw( ) const {
@@ -167,16 +170,6 @@ void Image::drawRectExtend( ) const {
 		_handle, TRUE, _flip );
 }
 
-
-void Image::setHandle( int handle ) {
-	_handle = handle;
-
-	// image size ‚ðŽæ“¾
-	if ( _handle != -1 ) {
-		GetGraphSize( _handle, &_width, &_height );
-	}
-}
-
 void Image::setPos( int x, int y, int x2, int y2 ) {
 	_screen.x  = x;
 	_screen.y  = y;
@@ -217,8 +210,14 @@ int Image::getHandle( ) const {
 	return _handle;
 }
 
-bool Image::load( std::string& path ) {
-	setHandle( LoadGraph( path.c_str( ) ) );
+bool Image::load( const char* path ) {
+	_handle = LoadGraph( path );
+
+	// image size ‚ðŽæ“¾
+	if ( _handle != -1 ) {
+		GetGraphSize( _handle, &_width, &_height );
+	}
+
 	return ( _handle != -1 );
 }
 

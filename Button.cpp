@@ -35,7 +35,7 @@ void Button::setDefaultImagePath( std::string path ) {
 	
 	// ƒTƒCƒY‚ðŽæ“¾
 	DrawerPtr drawer = Drawer::getTask( );
-	ImagePtr image = drawer->getImage( path );
+	ImagePtr image = drawer->getImage( path.c_str( ) );
 
 	_size = Vector( image->getImageWidth( ), image->getImageHeight( ) );
 }
@@ -52,7 +52,7 @@ ImageConstPtr Button::getImage( ) const {
 	DrawerPtr drawer = Drawer::getTask( );
 
 	std::string path = ( _state != STATE_PUSH ? _default_button_path : _clicked_button_path );
-	ImagePtr image = drawer->getImage( path );
+	ImagePtr image = drawer->getImage( path.c_str( ) );
 
 	Vector half_size = _size;
 	half_size *= 0.5;

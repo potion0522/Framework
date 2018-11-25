@@ -1,8 +1,11 @@
 #pragma once
 #include "smart_ptr.h"
-#include <string>
 
 PTR( Image );
+
+/*
+  デストラクタでメモリを解放するためハンドルだけを渡すのは禁止
+*/
 
 class Image {
 private:
@@ -30,7 +33,6 @@ private:
 	void drawRectExtend( ) const;
 
 public:
-	void setHandle( int handle );
 	// 描画座標: x,y　右下頂点(拡大時): x2,y2
 	void setPos( int x, int y, int x2 = 0, int y2 = 0 );
 	// 切り取り始めの頂点: recv_x,rect_y　横幅・縦幅: width,height
@@ -44,7 +46,7 @@ public:
 	void setFlipX( bool flip );
 
 public:
-	bool load( std::string& path );
+	bool load( const char* path );
 	int getImageWidth( ) const;
 	int getImageHeight( ) const;
 	int getHandle( ) const;

@@ -10,8 +10,8 @@ DrawerPtr Drawer::getTask( ) {
 	return std::dynamic_pointer_cast< Drawer >( Manager::getInstance( )->getTask( getTag( ) ) );
 }
 
-Drawer::Drawer( std::string image_directory ) :
-_image_directory( image_directory ) {
+Drawer::Drawer( const char* directory ) :
+_directory( directory ) {
 }
 
 Drawer::~Drawer( ) {
@@ -29,11 +29,11 @@ void Drawer::drawLine( float x1, float y1, float x2, float y2, int color ) {
 	DrawLineAA( x1, y1, x2, y2, color );
 }
 
-void Drawer::drawString( float x, float y, std::string str, unsigned int color ) {
-	DrawStringF( x, y, str.c_str( ), color );
+void Drawer::drawString( float x, float y, const char* str, unsigned int color ) {
+	DrawStringF( x, y, str, color );
 }
 
-void Drawer::drawFormatString( float x, float y, unsigned int color, const char *str, ... ) {
+void Drawer::drawFormatString( float x, float y, unsigned int color, const char* str, ... ) {
 
 	const int BUF_MAX = 1024;
 	char buf[ BUF_MAX ] = { };
@@ -50,7 +50,7 @@ void Drawer::drawFormatString( float x, float y, unsigned int color, const char 
 	DrawStringF( x, y, buf, color );
 }
 
-void Drawer::drawFormatStringCenter( float x, float y, unsigned int color, const char *str, ... ) {
+void Drawer::drawFormatStringCenter( float x, float y, unsigned int color, const char* str, ... ) {
 	const int BUF_MAX = 1024;
 	char buf[ BUF_MAX ] = { };
 
@@ -79,13 +79,13 @@ void Drawer::flip( ) {
 	ClearDrawScreen( );
 }
 
-ImagePtr Drawer::getImage( std::string file_name ) {
+ImagePtr Drawer::getImage( const char* file_name ) {
 	ImagePtr image = ImagePtr( new Image );
 
-	std::string path = _image_directory + "/" + file_name;
+	std::string path = _directory + "/" + file_name;
 	
 	// ファイルがうまく読み込めなかったらエラーを出す
-	errno_t load_imagefile = image->load( path );
+	errno_t load_imagefile = image->load( path.c_str( ) );
 	assert( load_imagefile );
 
 	return image;
