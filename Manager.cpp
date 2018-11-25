@@ -135,13 +135,13 @@ int Manager::getWindowWidth ( ) const {
 }
 
 int Manager::getWindowHeight( ) const {
-	return _window_width;
+	return _window_height;
 }
 
 int Manager::getScreenWidth ( ) const {
-	return _window_width;
+	return _screen_width;
 }
 
 int Manager::getScreenHeight( ) const {
-	return _window_width;
+	return _screen_height;
 }

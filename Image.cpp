@@ -7,6 +7,8 @@ _alpha( 255 ),
 _draw_center( false ),
 _width( 0 ) ,
 _height( 0 ),
+_angle( 0 ),
+_flip( false ),
 _screen( Screen( ) ),
 _rect( Rect( ) ),
 _rgb( Bright( ) ) {
@@ -16,34 +18,163 @@ Image::~Image( ) {
 }
 
 void Image::draw( ) const {
-	if ( _alpha != 255 ) {
-		SetDrawBlendMode( DX_BLENDMODE_ALPHA, _alpha );
-	}
-	if ( _rgb.red != 255 || _rgb.green != 255 || _rgb.blue != 255 ) {
-		SetDrawBright( _rgb.red, _rgb.green, _rgb.blue );
-	}
+	{ // ï`âÊê›íË
 
-	if ( _draw_center ) {
-		DrawRotaGraph( _screen.x, _screen.y, 1, 0, _handle, TRUE );
-	} else if ( _rect.width < 1 || _rect.height < 1 ) {
-		DrawGraph( _screen.x, _screen.y, _handle, TRUE );
-	} else if ( _screen.x2 < 1 || _screen.y2 < 1 ) {
-		DrawRectGraph( _screen.x, _screen.y, _rect.x, _rect.y, _rect.width, _rect.height, _handle, TRUE, FALSE );
-	} else {
-		DrawRectExtendGraph( _screen.x, _screen.y, _screen.x2, _screen.y2, _rect.x, _rect.y, _rect.width, _rect.height, _handle, TRUE );
+		// ìßñæìx
+		if ( _alpha != 255 ) {
+			SetDrawBlendMode( DX_BLENDMODE_ALPHA, _alpha );
+		}
+		// RGB
+		if ( _rgb.red != 255 || _rgb.green != 255 || _rgb.blue != 255 ) {
+			SetDrawBright( _rgb.red, _rgb.green, _rgb.blue );
+		}
 	}
 
 
-	if ( _alpha != 255 ) {
-		SetDrawBlendMode( DX_BLENDMODE_NOBLEND, 0 );
+
+	{ // ï`âÊ
+		switch ( selectDrawMode( ) ) {
+			case DRAW_MODE_NORMAL: { // í èÌ
+				drawNormal( );
+			} break;
+
+			case DRAW_MODE_ROTATE: { // âÒì]
+				drawRotate( );
+			} break;
+
+			case DRAW_MODE_RECT: { // êÿÇËéÊÇË
+				drawRect( );
+			} break;
+			
+			case DRAW_MODE_EXTEND: { // é©óRïœå`(ägëÂ)
+				drawExtend( );
+			} break;
+			
+			case DRAW_MODE_RECT_EXTEND: { // êÿÇËéÊÇË&é©óRïœå`(ägëÂ)
+				drawRectExtend( );
+			} break;
+		}
 	}
-	if ( _rgb.red != 255 || _rgb.green != 255 || _rgb.blue != 255 ) {
-		SetDrawBright( 255, 255, 255 );
+
+
+	{ // ï`âÊê›íËÉäÉZÉbÉg
+
+		// ìßñæìxÇñﬂÇ∑
+		if ( _alpha != 255 ) {
+			SetDrawBlendMode( DX_BLENDMODE_NOBLEND, 0 );
+		}
+		// RGBÇñﬂÇ∑
+		if ( _rgb.red != 255 || _rgb.green != 255 || _rgb.blue != 255 ) {
+			SetDrawBright( 255, 255, 255 );
+		}
 	}
 }
 
+Image::DRAW_MODE Image::selectDrawMode( ) const {
+	DRAW_MODE mode = DRAW_MODE( );
+
+	// angle Ç™Ç†ÇÍÇŒâÒì]ï`âÊ
+	if ( _angle != 0 ) {
+		mode = DRAW_MODE_ROTATE;
+	}
+
+	// rect Ç™ê›íËÇ≥ÇÍÇƒÇ¢ÇΩÇÁêÿÇËéÊÇË
+	if ( _rect.width > 0 && _rect.height > 0 ) {
+		mode = DRAW_MODE_RECT;
+	}
+
+	// pos ÇÃëÊìÒïœêîÇ™ê›íËÇ≥ÇÍÇƒÇ¢ÇΩÇÁägëÂ
+	if ( _screen.x < _screen.x2 && _screen.y < _screen.y2 ) {
+		mode = DRAW_MODE_EXTEND;
+	}
+
+	// ägëÂÇ∆êÿÇËéÊÇËÅAÇ‹ÇΩÇÕâÒì]Ç»ÇÁ
+	if ( ( _screen.x < _screen.x2 && _screen.y < _screen.y2 ) &&
+		 ( _rect.width > 0        && _rect.height > 0 )       ||
+		 ( _angle != 0 ) ) {
+		mode = DRAW_MODE_RECT_EXTEND;
+	}
+
+	return mode;
+}
+
+
+void Image::drawNormal( ) const {
+	Screen draw_pos = _screen;
+
+	// ç¿ïWí≤êÆ
+	if ( _draw_center ) {
+		draw_pos.x -= _width / 2;
+		draw_pos.y -= _height / 2;
+	}
+
+	// îΩì]èàóù
+	if ( _flip ) {
+		DrawTurnGraph( draw_pos.x, draw_pos.y, _handle, TRUE );
+	} else {
+		DrawGraph( draw_pos.x, draw_pos.y, _handle, TRUE );
+	}
+}
+
+void Image::drawRotate( ) const {
+	Screen draw_pos = _screen;
+	DrawRotaGraph( draw_pos.x, draw_pos.y, 1, _angle, _handle, TRUE, _flip );
+}
+
+void Image::drawRect( ) const {
+	Screen draw_pos = _screen;
+	if ( _draw_center ) {
+		draw_pos.x -= ( int )( _rect.width  / 2 );
+		draw_pos.y -= ( int )( _rect.height / 2 );
+	}
+	DrawRectGraph( draw_pos.x, draw_pos.y, _rect.x, _rect.y, _rect.width, _rect.height, _handle, TRUE, _flip );
+}
+
+void Image::drawExtend( ) const {
+	Screen draw_pos = _screen;
+
+	if ( _flip ) {
+		Screen tmp = draw_pos;
+		draw_pos.x = draw_pos.x2;
+		draw_pos.y = draw_pos.y2;
+		draw_pos.x2 = tmp.x;
+		draw_pos.y2 = tmp.y;
+	}
+	DrawExtendGraph( draw_pos.x, draw_pos.y, draw_pos.x2, draw_pos.y2, _handle, TRUE );
+}
+
+void Image::drawRectExtend( ) const {
+	Screen draw_pos = _screen;
+
+	// êÿÇËéÊÇË
+	Rect rect = _rect;
+	if ( rect.width < 1 || rect.height < 1 ) {
+		rect.width  = _width;
+		rect.height = _height;
+	}
+
+	// ägëÂó¶
+	double rate_x = ( double )( draw_pos.x2 - draw_pos.x ) / rect.width;
+	double rate_y = ( double )( draw_pos.y2 - draw_pos.y ) / rect.height;
+
+	// ï`âÊç¿ïWÅAêÿÇËéÊÇËÅAâÊëúâÒì]íÜêSÅAägëÂó¶ÅAâÒì]ó¶ÅAâÊëúÅEìßâﬂÅEîΩì]
+	DrawRectRotaGraph3( 
+		draw_pos.x, draw_pos.y,
+		rect.x, rect.y, rect.width, rect.height,
+		rect.width / 2, rect.height / 2, 
+		rate_x, rate_y, 
+		_angle, 
+		_handle, TRUE, _flip );
+}
+
+
 void Image::setHandle( int handle ) {
 	_handle = handle;
+
+	// image size ÇéÊìæ
+	if ( _handle != -1 ) {
+		GetGraphSize( _handle, &_width, &_height );
+	}
 }
 
 void Image::setPos( int x, int y, int x2, int y2 ) {
@@ -60,6 +191,10 @@ void Image::setRect( int rect_x, int rect_y, int width, int height ) {
 	_rect.height = height;
 }
 
+void Image::setAngle( double angle ) {
+	_angle = angle;
+}
+
 void Image::setBlendMode( unsigned char alpha ) {
 	_alpha = alpha;
 }
@@ -74,21 +209,23 @@ void Image::setCentral( bool center_draw ) {
 	_draw_center = center_draw;
 }
 
+void Image::setFlipX( bool flip ) {
+	_flip = flip;
+}
+
 int Image::getHandle( ) const {
 	return _handle;
 }
 
-bool Image::load( std::string path ) {
-	_handle = LoadGraph( path.c_str( ) );
+bool Image::load( std::string& path ) {
+	setHandle( LoadGraph( path.c_str( ) ) );
 	return ( _handle != -1 );
 }
 
-int Image::getImageWidth( ) {
-	GetGraphSize( _handle, &_width, &_height );
+int Image::getImageWidth( ) const {
 	return _width;
 }
 
-int Image::getImageHeight( ) {
-	GetGraphSize( _handle, &_width, &_height );
+int Image::getImageHeight( ) const {
 	return _height;
 }
