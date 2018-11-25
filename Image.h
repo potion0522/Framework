@@ -11,9 +11,7 @@ class Image {
 private:
 	enum DRAW_MODE {
 		DRAW_MODE_NORMAL,
-		DRAW_MODE_ROTATE,
 		DRAW_MODE_RECT,
-		DRAW_MODE_EXTEND,
 		DRAW_MODE_RECT_EXTEND
 	};
 
@@ -27,21 +25,21 @@ public:
 private:
 	DRAW_MODE selectDrawMode( ) const;
 	void drawNormal( ) const;
-	void drawRotate( ) const;
 	void drawRect( ) const;
-	void drawExtend( ) const;
 	void drawRectExtend( ) const;
 
 public:
-	// 描画座標: x,y　右下頂点(拡大時): x2,y2
-	void setPos( int x, int y, int x2 = 0, int y2 = 0 );
+	// 描画座標: x,y
+	void setPos( int x, int y );
+	// 拡大率
+	void setExtendRate( double rate_x, double rate_y );
 	// 切り取り始めの頂点: recv_x,rect_y　横幅・縦幅: width,height
 	void setRect( int rect_x, int rect_y, int width, int height );
 	// ラジアンを指定
-	void setAngle( double angle );
+	void setRotate( double radian );
 	void setBlendMode( unsigned char alpha = 255 );
 	void setBright( unsigned char red = 255, unsigned char green = 255, unsigned char blue = 255 );
-	// setPos( x, y ) で指定した座標を中心にします(通常・切り取り描画のみ)
+	// setPos( x, y ) で指定した座標を中心にする(通常・切り取り描画のみ)
 	void setCentral( bool center_draw );
 	void setFlipX( bool flip );
 
@@ -53,18 +51,15 @@ public:
 
 private:
 	int _handle;
-	int _width;
-	int _height;
+	int _sx;
+	int _sy;
+	double _rate_x;
+	double _rate_y;
+	int _image_width;
+	int _image_height;
 	double _angle;
 	bool _draw_center;
 	bool _flip;
-	
-	struct Screen {
-		int x;
-		int y;
-		int x2;
-		int y2;
-	} _screen;
 
 	struct Rect {
 		int x;

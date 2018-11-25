@@ -3,13 +3,16 @@
 
 Image::Image( ) :
 _handle( -1 ),
+_sx( 0 ),
+_sy( 0 ),
+_rate_x( 1 ),
+_rate_y( 1 ),
 _alpha( 255 ),
 _draw_center( false ),
-_width( 0 ) ,
-_height( 0 ),
+_image_width( 0 ) ,
+_image_height( 0 ),
 _angle( 0 ),
 _flip( false ),
-_screen( Screen( ) ),
 _rect( Rect( ) ),
 _rgb( Bright( ) ) {
 }
@@ -41,16 +44,8 @@ void Image::draw( ) const {
 				drawNormal( );
 			} break;
 
-			case DRAW_MODE_ROTATE: { // ‰ñ“]
-				drawRotate( );
-			} break;
-
 			case DRAW_MODE_RECT: { // Ø‚èæ‚è
 				drawRect( );
-			} break;
-			
-			case DRAW_MODE_EXTEND: { // ©—R•ÏŒ`(Šg‘å)
-				drawExtend( );
 			} break;
 			
 			case DRAW_MODE_RECT_EXTEND: { // Ø‚èæ‚è&©—R•ÏŒ`(Šg‘å)
@@ -74,28 +69,16 @@ void Image::draw( ) const {
 }
 
 Image::DRAW_MODE Image::selectDrawMode( ) const {
-	DRAW_MODE mode = DRAW_MODE( );
-
-	// angle ‚ª‚ ‚ê‚Î‰ñ“]•`‰æ
-	if ( _angle != 0 ) {
-		mode = DRAW_MODE_ROTATE;
-	}
+	DRAW_MODE mode = DRAW_MODE_NORMAL;
 
 	// rect ‚ªİ’è‚³‚ê‚Ä‚¢‚½‚çØ‚èæ‚è
 	if ( _rect.width > 0 && _rect.height > 0 ) {
 		mode = DRAW_MODE_RECT;
-	}
 
-	// pos ‚Ì‘æ“ñ•Ï”‚ªİ’è‚³‚ê‚Ä‚¢‚½‚çŠg‘å
-	if ( _screen.x < _screen.x2 && _screen.y < _screen.y2 ) {
-		mode = DRAW_MODE_EXTEND;
-	}
-
-	// Šg‘å‚ÆØ‚èæ‚èA‚Ü‚½‚Í‰ñ“]‚È‚ç
-	if ( ( _screen.x < _screen.x2 && _screen.y < _screen.y2 ) &&
-		 ( _rect.width > 0        && _rect.height > 0 )       ||
-		 ( _angle != 0 ) ) {
-		mode = DRAW_MODE_RECT_EXTEND;
+		// ‚³‚ç‚ÉŠg‘å—¦‚Ü‚Å‚ ‚é‚È‚ç rect extend
+		if ( _rate_x != 1 || _rate_y != 1 ) {
+			mode = DRAW_MODE_RECT_EXTEND;
+		}
 	}
 
 	return mode;
@@ -103,78 +86,104 @@ Image::DRAW_MODE Image::selectDrawMode( ) const {
 
 
 void Image::drawNormal( ) const {
-	Screen draw_pos = _screen;
+	int sx = _sx;
+	int sy = _sy;
 
 	// À•W’²®
+	int adjust_x = 0;
+	int adjust_y = 0;
 	if ( _draw_center ) {
-		draw_pos.x -= _width / 2;
-		draw_pos.y -= _height / 2;
-	}
+		adjust_x = _image_width  / 2 * -1;
+		adjust_y = _image_height / 2 * -1;
 
-	// ”½“]ˆ—
-	if ( _flip ) {
-		DrawTurnGraph( draw_pos.x, draw_pos.y, _handle, TRUE );
+		// RotaGraph‚Í^‚ñ’†À•W‚ğw’è‚·‚é‚½‚ß‰½‚à‚µ‚È‚¢
+		if ( _angle != 0 ) {
+			adjust_x = 0;
+			adjust_y = 0;
+		}
+	} else if ( _angle != 0 ) {
+		// RotaGraph‚Í^‚ñ’†À•W‚ğw’è‚·‚é‚½‚ß‘«‚µZ
+		adjust_x = _image_width  / 2;
+		adjust_y = _image_height / 2;
+	}
+	sx += adjust_x;
+	sy += adjust_y;
+
+
+	if ( _angle != 0 ) {
+		// ‰ñ“]•`‰æ
+		DrawRotaGraph( sx, sy, 1, _angle, _handle, TRUE, _flip );
 	} else {
-		DrawGraph( draw_pos.x, draw_pos.y, _handle, TRUE );
+		// ’Êí•`‰æ
+		if ( _flip ) {
+			DrawTurnGraph( sx, sy, _handle, TRUE );
+		} else {
+			DrawGraph( sx, sy, _handle, TRUE );
+		}
 	}
-}
-
-void Image::drawRotate( ) const {
-	Screen draw_pos = _screen;
-	DrawRotaGraph( draw_pos.x, draw_pos.y, 1, _angle, _handle, TRUE, _flip );
 }
 
 void Image::drawRect( ) const {
-	Screen draw_pos = _screen;
+	int sx = _sx;
+	int sy = _sy;
+
+	// À•W’²®
+	int adjust_x = 0;
+	int adjust_y = 0;
 	if ( _draw_center ) {
-		draw_pos.x -= ( int )( _rect.width  / 2 );
-		draw_pos.y -= ( int )( _rect.height / 2 );
-	}
-	DrawRectGraph( draw_pos.x, draw_pos.y, _rect.x, _rect.y, _rect.width, _rect.height, _handle, TRUE, _flip );
-}
+		adjust_x = _rect.width  / 2 * -1;
+		adjust_y = _rect.height / 2 * -1;
 
-void Image::drawExtend( ) const {
-	Screen draw_pos = _screen;
-
-	if ( _flip ) {
-		Screen tmp = draw_pos;
-		draw_pos.x = draw_pos.x2;
-		draw_pos.y = draw_pos.y2;
-		draw_pos.x2 = tmp.x;
-		draw_pos.y2 = tmp.y;
+		// RotaGraph‚Í^‚ñ’†À•W‚ğw’è‚·‚é‚½‚ß‰½‚à‚µ‚È‚¢
+		if ( _angle != 0 ) {
+			adjust_x = 0;
+			adjust_y = 0;
+		}
+	} else if ( _angle != 0 ) {
+		// RotaGraph‚Í^‚ñ’†À•W‚ğw’è‚·‚é‚½‚ß‘«‚µZ
+		adjust_x = _rect.width  / 2;
+		adjust_y = _rect.height / 2;
 	}
-	DrawExtendGraph( draw_pos.x, draw_pos.y, draw_pos.x2, draw_pos.y2, _handle, TRUE );
+	sx += adjust_x;
+	sy += adjust_y;
+
+	if ( _angle != 0 ) {
+		// ‰ñ“]•`‰æ
+		DrawRectRotaGraph( sx, sy, _rect.x, _rect.y, _rect.width, _rect.height, 1, _angle, _handle, TRUE, _flip );
+	} else {
+		// ’Êí•`‰æ
+		DrawRectGraph( sx, sy, _rect.x, _rect.y, _rect.width, _rect.height, _handle, TRUE, _flip );
+	}
 }
 
 void Image::drawRectExtend( ) const {
-	Screen draw_pos = _screen;
+	int sx = _sx;
+	int sy = _sy;
 
-	// Ø‚èæ‚è
-	Rect rect = _rect;
-	if ( rect.width < 1 || rect.height < 1 ) {
-		rect.width  = _width;
-		rect.height = _height;
+	// À•W’²®
+	if ( !_draw_center ) {
+		// ‘S‘Ì‚Ì‘å‚«‚³*Rate ‚Ì”¼•ª‚¸‚ç‚·
+		int adjust_x = ( int )( _rect.width  * _rate_x * 0.5 );
+		int adjust_y = ( int )( _rect.height * _rate_y * 0.5 );
+		
+		sx = _sx + adjust_x;
+		sy = _sy + adjust_y;
 	}
 
-	// Šg‘å—¦
-	double rate_x = ( double )( draw_pos.x2 - draw_pos.x ) / rect.width;
-	double rate_y = ( double )( draw_pos.y2 - draw_pos.y ) / rect.height;
-
-	// •`‰æÀ•WAØ‚èæ‚èA‰æ‘œ‰ñ“]’†SAŠg‘å—¦A‰ñ“]—¦A‰æ‘œE“§‰ßE”½“]
+	// •`‰æÀ•WAØ‚èæ‚èŠJnÀ•WAØ‚èæ‚è•A‰æ‘œ‰ñ“]’†SAŠg‘å—¦A‰ñ“]—¦A‰æ‘œE“§‰ßE”½“]
 	DrawRectRotaGraph3( 
-		draw_pos.x, draw_pos.y,
-		rect.x, rect.y, rect.width, rect.height,
-		rect.width / 2, rect.height / 2, 
-		rate_x, rate_y, 
+		sx, sy,
+		_rect.x, _rect.y, 
+		_rect.width, _rect.height,
+		_rect.width / 2, _rect.height / 2, 
+		_rate_x, _rate_y, 
 		_angle, 
 		_handle, TRUE, _flip );
 }
 
-void Image::setPos( int x, int y, int x2, int y2 ) {
-	_screen.x  = x;
-	_screen.y  = y;
-	_screen.x2 = x2;
-	_screen.y2 = y2;
+void Image::setPos( int x, int y ) {
+	_sx = x;
+	_sy = y;
 }
 
 void Image::setRect( int rect_x, int rect_y, int width, int height ) {
@@ -184,8 +193,13 @@ void Image::setRect( int rect_x, int rect_y, int width, int height ) {
 	_rect.height = height;
 }
 
-void Image::setAngle( double angle ) {
-	_angle = angle;
+void Image::setExtendRate( double rate_x, double rate_y ) {
+	_rate_x = rate_x;
+	_rate_y = rate_y;
+}
+
+void Image::setRotate( double radian ) {
+	_angle = radian;
 }
 
 void Image::setBlendMode( unsigned char alpha ) {
@@ -219,16 +233,16 @@ bool Image::load( const char* path ) {
 
 	// image size ‚ğæ“¾
 	if ( _handle != -1 ) {
-		GetGraphSize( _handle, &_width, &_height );
+		GetGraphSize( _handle, &_image_width, &_image_height );
 	}
 
 	return ( _handle != -1 );
 }
 
 int Image::getImageWidth( ) const {
-	return _width;
+	return _image_width;
 }
 
 int Image::getImageHeight( ) const {
-	return _height;
+	return _image_height;
 }

@@ -1,7 +1,7 @@
 #pragma once
 #include "Vector.h"
 #include "smart_ptr.h"
-#include <string>
+#include "Matrix.h"
 
 PTR( Image );
 PTR( Event );
@@ -24,13 +24,16 @@ public:
 	void draw( ) const;
 
 public:
-	void setDefaultImage( ImagePtr image );
-	void setPushImage( ImagePtr image );
-	void setSize( int width, int height );
+	void setPos( const Vector& pos );
+	void setAlpha( unsigned char alpha );
+	void setRotate( double radian );
 
-public:
-	ImagePtr getDefaultImage( );
-	ImagePtr getPushImage( );
+	// 当たり判定の幅
+	void setCollisionSize( int width, int height );
+
+	// ボタンイメージ
+	void setDefaultImage( const char* path );
+	void setPushImage( const char* path );
 
 private:
 	void updateDefault( );
@@ -47,6 +50,8 @@ public:
 private:
 	STATE _state;
 	Vector _pos;
+	Matrix _mat_rot;
+	bool _rotate;
 	int _width;
 	int _height;
 
