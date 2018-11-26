@@ -18,7 +18,6 @@ public:
 
 private:
 	void initializeDxlib( );
-	void updateTasks( );
 	void initializeTasks( );
 	void finalizeTasks( );
 

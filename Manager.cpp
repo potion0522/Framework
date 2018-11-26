@@ -66,7 +66,9 @@ void Manager::startGame( ) {
 
 	// main loop
 	while ( !CheckHitKey( KEY_INPUT_ESCAPE ) ) {
-		updateTasks( );
+		for ( std::pair< std::string, BasePtr > task : _tasks ) {
+			task.second->update( );
+		}
 	}
 
 	finalizeTasks( );
@@ -81,12 +83,6 @@ void Manager::initializeTasks( ) {
 void Manager::finalizeTasks( ) {
 	for ( std::pair< std::string, BasePtr > task : _tasks ) {
 		task.second->finalize( );
-	}
-}
-
-void Manager::updateTasks( ) {
-	for ( std::pair< std::string, BasePtr > task : _tasks ) {
-		task.second->update( );
 	}
 }
 

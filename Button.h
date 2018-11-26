@@ -4,7 +4,6 @@
 #include "Matrix.h"
 
 PTR( Image );
-PTR( Event );
 
 class Button {
 public:

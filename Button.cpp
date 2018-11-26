@@ -2,7 +2,6 @@
 #include "Mouse.h"
 #include "Image.h"
 #include "Drawer.h"
-#include "Event.h"
 
 Button::Button( ) :
 _state( STATE_NONE ),
