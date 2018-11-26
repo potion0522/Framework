@@ -23,6 +23,9 @@ public:
 	void update( );
 	void draw( ) const;
 
+	// 当たり判定を描画
+	void drawCollider( ) const;
+
 public:
 	void setPos( const Vector& pos );
 	void setAlpha( unsigned char alpha );
@@ -50,10 +53,10 @@ public:
 private:
 	STATE _state;
 	Vector _pos;
-	Matrix _mat_rot;
-	bool _rotate;
 	int _width;
 	int _height;
+	// メモリ削減のため必要なタイミングのみ保有
+	std::shared_ptr< Matrix > _mat_rot;
 
 	ImagePtr _default_image;
 	ImagePtr _push_image;

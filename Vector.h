@@ -23,52 +23,52 @@ struct Vector {
 	}
 
 	// ‘«‚µZ
-	inline Vector add( const Vector &vec ) const {
+	inline Vector add( const Vector& vec ) const {
 		return Vector( 
 			x + vec.x,
 			y + vec.y,
 			z + vec.z );
 	}
-	inline Vector operator+( const Vector &vec ) const {
+	inline Vector operator+( const Vector& vec ) const {
 		return add( vec );
 	}
-	inline Vector operator+=( const Vector &vec ) {
+	inline Vector operator+=( const Vector& vec ) {
 		*this = *this + vec;
 		return *this;
 	}
 
 	// ˆø‚«Z
-	inline Vector sub( const Vector &vec ) const {
+	inline Vector sub( const Vector& vec ) const {
 		return Vector( 
 			this->x - vec.x,
 			this->y - vec.y,
 			this->z - vec.z );
 	}
-	inline Vector operator-( const Vector &vec ) const {
+	inline Vector operator-( const Vector& vec ) const {
 		return sub( vec );
 	}
-	inline Vector operator-=( const Vector &vec ) {
+	inline Vector operator-=( const Vector& vec ) {
 		*this = *this - vec;
 		return *this;
 	}
 
 	// Š|‚¯Z
-	inline Vector multiply( const double &num ) const {
+	inline Vector multiply( const double& num ) const {
 		return Vector( 
 			x * num,
 			y * num,
 			z * num );
 	}
-	inline Vector operator*( const double &num ) const {
+	inline Vector operator*( const double& num ) const {
 		return multiply( num );
 	}
-	inline Vector operator*=( const double &num ) {
+	inline Vector operator*=( const double& num ) {
 		*this = *this * num;
 		return *this;
 	}
 
 	// ”äŠr ==
-	inline bool operator==( const Vector &vec ) const {
+	inline bool operator==( const Vector& vec ) const {
 		return ( 
 			x == vec.x &&
 			y == vec.y &&
@@ -76,7 +76,7 @@ struct Vector {
 	}
 
 	// ”äŠr !=
-	inline bool operator!=( const Vector &vec ) const {
+	inline bool operator!=( const Vector& vec ) const {
 		return (
 			x != vec.x ||
 			y != vec.y ||
@@ -118,7 +118,21 @@ struct Vector {
 	}
 
 	// “àÏ
-	inline double dot( const Vector &vec ) const {
+	inline double dot( const Vector& vec ) const {
 		return x * vec.x + y * vec.y + z * vec.z;
+	}
+
+	// ŠOÏ 3D
+	inline Vector cross( const Vector& vec ) const {
+		return Vector(
+			y * vec.z - z * vec.y,
+			z * vec.x - x * vec.z,
+			x * vec.y - y * vec.x
+		);
+	}
+
+	// ŠOÏ 2D ( •Ô‚è’l‚ÍsinƒÆ )
+	inline double cross2D( const Vector& vec ) const {
+		return x * vec.y - vec.x * y;
 	}
 };

@@ -8,7 +8,6 @@ Button::Button( ) :
 _state( STATE_NONE ),
 _pos( ),
 _mat_rot( ),
-_rotate( false ),
 _width( 0 ),
 _height( 0 ) {
 }
@@ -80,12 +79,13 @@ void Button::setPos( const Vector& pos ) {
 }
 
 void Button::setRotate( double radian ) {
-	if ( radian == 0 ) {
-		_rotate = false;
-	} else {
-		_rotate = true;
-		_mat_rot = Matrix::makeTransformRotation( Vector( 0, 0, 1 ), radian );
+	if ( _mat_rot ) {
+		_mat_rot.reset( );
 	}
+	if ( radian != 0 ) {
+		_mat_rot = std::shared_ptr< Matrix >( new Matrix( Matrix::makeTransformRotation( Vector( 0, 0, -1 ), radian ) ) );
+	}
+
 	_default_image->setRotate( radian );
 	_push_image   ->setRotate( radian );
 }
@@ -124,23 +124,43 @@ bool Button::onButton( ) const {
 	int half_width = _width / 2;
 	int half_height = _height / 2;
 
-	Vector left_up    = Vector( _pos.x - half_width, _pos.y - half_height );
-	Vector right_down = Vector( _pos.x + half_width, _pos.y + half_height );
+	if ( _mat_rot ) {
+		// 回転があった場合は外積で当たり判定を取る
+		Vector points[ 4 ] = {
+			 Vector( -half_width, -half_height ), // 左上
+			 Vector( -half_width,  half_height ), // 左下
+			 Vector(  half_width,  half_height ), // 右下
+			 Vector(  half_width, -half_height ), // 右上
+		};
 
-	// いったん保留
-	//if ( _rotate ) {
-	//	left_up = _mat_rot.multiply( left_up );
-	//	right_down = _mat_rot.multiply( right_down );
-	//}
-	
-	if ( mouse_pos.x < left_up.x ||
-		 mouse_pos.y < left_up.y ) {
-		return false;
-	}
+		// 回転させて中点を足す
+		for ( int i = 0; i < 4; i++ ) {
+			points[ i ] = _mat_rot->multiply( points[ i ] ) + _pos;
+		}
 
-	if ( mouse_pos.x > right_down.x ||
-		 mouse_pos.y > right_down.y ) {
-		return false;
+		// 外積
+		for ( int i = 0; i < 4; i++ ) {
+			int idx1 = i;
+			int idx2 = ( i + 1 ) % 4;
+			Vector a = points[ idx1 ];
+			Vector b = points[ idx2 ];
+			double cross = ( b - a ).cross2D( mouse_pos - b );
+			if ( cross > 0 ) {
+				return false;
+			}
+		}
+
+	} else {
+		// 回転がない場合は単純な条件
+		if ( mouse_pos.x < _pos.x - half_width ||
+			 mouse_pos.y < _pos.y - half_height ) {
+			return false;
+		}
+
+		if ( mouse_pos.x > _pos.x + half_width ||
+			 mouse_pos.y > _pos.y + half_height ) {
+			return false;
+		}
 	}
 
 	return true;
@@ -148,4 +168,32 @@ bool Button::onButton( ) const {
 
 bool Button::isClicked( ) const {
 	return ( _state == STATE_CLICKED );
+}
+
+void Button::drawCollider( ) const {
+	int half_width = _width / 2;
+	int half_height = _height / 2;
+
+	Vector points[ 4 ] = {
+		Vector( -half_width, -half_height ), // 左上
+		Vector( -half_width,  half_height ), // 左下
+		Vector(  half_width,  half_height ), // 右下
+		Vector(  half_width, -half_height ), // 右上
+	};
+
+	if ( _mat_rot ) {
+		for ( int i = 0; i < 4; i++ ) {
+			points[ i ] = _mat_rot->multiply( points[ i ] ) + _pos;
+		}
+	}
+
+
+	DrawerPtr drawer = Drawer::getTask( );
+	for ( int i = 0; i < 4; i++ ) {
+		int idx1 = i;
+		int idx2 = ( i + 1 ) % 4;
+		Vector a = points[ idx1 ];
+		Vector b = points[ idx2 ];
+		drawer->drawLine( ( float )a.x, ( float )a.y, ( float )b.x, ( float )b.y, 0xff0000 );
+	}
 }
