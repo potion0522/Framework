@@ -66,6 +66,10 @@ void Manager::startGame( ) {
 
 	// main loop
 	while ( !CheckHitKey( KEY_INPUT_ESCAPE ) ) {
+		if ( ProcessMessage( ) != 0 ) {
+			break;	
+		}
+
 		for ( std::pair< std::string, BasePtr > task : _tasks ) {
 			task.second->update( );
 		}

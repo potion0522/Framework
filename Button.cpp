@@ -182,17 +182,16 @@ void Button::drawCollider( ) const {
 
 	if ( _mat_rot ) {
 		for ( int i = 0; i < 4; i++ ) {
-			points[ i ] = _mat_rot->multiply( points[ i ] ) + _pos;
+			points[ i ] = _mat_rot->multiply( points[ i ] );
 		}
 	}
-
 
 	DrawerPtr drawer = Drawer::getTask( );
 	for ( int i = 0; i < 4; i++ ) {
 		int idx1 = i;
 		int idx2 = ( i + 1 ) % 4;
-		Vector a = points[ idx1 ];
-		Vector b = points[ idx2 ];
+		Vector a = points[ idx1 ] + _pos;
+		Vector b = points[ idx2 ] + _pos;
 		drawer->drawLine( ( float )a.x, ( float )a.y, ( float )b.x, ( float )b.y, 0xff0000 );
 	}
 }

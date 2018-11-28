@@ -54,7 +54,7 @@ public:
 		Vector mouse_pos = Mouse::getTask( )->getPoint( );
 
 		// “à‘¤‚É‚ ‚é‚©‚Ç‚¤‚©‚ðŠi”[‚·‚é bool
-		bool in_side = true;
+		bool inside = true;
 
 		// “àŠO”»’è
 		for ( int i = 0; i < MAX_VERTEX; i++ ) {
@@ -68,14 +68,14 @@ public:
 			Vector b = mouse_pos - vertex_b;
 
 			if ( a.x * b.y - b.x * a.y > 0 ) {
-				in_side = false;
+				inside = false;
 				break;
 			}
 		}
 
 		// “à‘¤‚É‚ ‚Á‚½‚ç•¶Žš‚ð•\Ž¦
 		DrawerPtr drawer = Drawer::getTask( );
-		if ( in_side ) {
+		if ( inside ) {
 			drawer->drawString( 20, 20, "!! HIT !!", 0xff0000 );
 		}
 
