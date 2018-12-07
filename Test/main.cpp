@@ -9,95 +9,50 @@
 PTR( Test );
 
 class Test : public Base {
-	// Base
 public:
-	static TestPtr getTask( ) {
-		return std::dynamic_pointer_cast< Test >( Manager::getInstance( )->getTask( getTag( ) ) );
-	}
+	static TestPtr getTask( ) { return std::dynamic_pointer_cast< Test >( Manager::getInstance( )->getTask( getTag( ) ) ); }
+	static std::string getTag( ) { return "TEST"; }
 
-	static std::string getTag( ) { 
-		return "TEST";
-	}
-
-
-	// constructor & destructor
 public:
-	Test( ) {
-	}
-	~Test( ) {
-	}
+	Test( ) { }
+	~Test( ) { }
 
-
-	// function
 public:
 	void initialize( ) {
 	}
 
 	void update( ) {
-		// 1辺の長さ
-		const int SQUARE_SIZE = 100;
-		const int MAX_VERTEX = 4;
+		MousePtr mouse = Mouse::getTask( );
 
-		// 四角の中心
-		const Vector BASE_POS = Vector( 100, 100 );
+		int click_right = mouse->getClickingRight( );
+		int click_left = mouse->getClickingLeft( );
+		bool down_right = mouse->isClickDownRight( );
+		bool down_left = mouse->isClickDownLeft( );
+		bool up_right = mouse->isClickUpRight( );
+		bool up_left = mouse->isClickUpLeft( );
 
-		// 四隅
-		int half_size = SQUARE_SIZE / 2;
-		Vector points[ MAX_VERTEX ] = {
-			Vector( -half_size, -half_size ) + BASE_POS, // 左上
-			Vector( -half_size,  half_size ) + BASE_POS, // 左下
-			Vector(  half_size,  half_size ) + BASE_POS, // 右下
-			Vector(  half_size, -half_size ) + BASE_POS, // 右上
-		};
+		static int down_right_cnt = 0;
+		static int down_left_cnt = 0;
+		static int up_right_cnt = 0;
+		static int up_left_cnt = 0;
 
-		// マウス座標取得
-		Vector mouse_pos = Mouse::getTask( )->getPoint( );
+		down_right_cnt += ( down_right ? 1 : 0 );
+		down_left_cnt += ( down_left ? 1 : 0 );
+		up_right_cnt += ( up_right ? 1 : 0 );
+		up_left_cnt += ( up_left ? 1 : 0 );
 
-		// 内側にあるかどうかを格納する bool
-		bool inside = true;
-
-		// 内外判定
-		for ( int i = 0; i < MAX_VERTEX; i++ ) {
-			int idx1 = i;
-			int idx2 = ( i + 1 ) % MAX_VERTEX;
-
-			Vector vertex_a = points[ idx1 ];
-			Vector vertex_b = points[ idx2 ];
-
-			Vector a = vertex_b - vertex_a;
-			Vector b = mouse_pos - vertex_b;
-
-			if ( a.x * b.y - b.x * a.y > 0 ) {
-				inside = false;
-				break;
-			}
-		}
-
-		// 内側にあったら文字を表示
 		DrawerPtr drawer = Drawer::getTask( );
-		if ( inside ) {
-			drawer->drawString( 20, 20, "!! HIT !!", 0xff0000 );
-		}
-
-		// 四角を描画
-		for ( int i = 0; i < MAX_VERTEX; i++ ) {
-			int idx1 = i;
-			int idx2 = ( i + 1 ) % MAX_VERTEX;
-
-			Vector vertex_a = points[ idx1 ];
-			Vector vertex_b = points[ idx2 ];
-
-			drawer->drawLine( 
-				( float )vertex_a.x, ( float )vertex_a.y, 
-				( float )vertex_b.x, ( float )vertex_b.y, 
-				0xffffff );
-		}
+		const unsigned int WHITE = 0xffffff;
+		drawer->drawFormatString( 20, 20, WHITE, "click_right : %d", click_right );
+		drawer->drawFormatString( 20, 40, WHITE, "click_left : %d", click_left );
+		drawer->drawFormatString( 20, 60, WHITE, "down_right : %d", down_right_cnt );
+		drawer->drawFormatString( 20, 80, WHITE, "down_left : %d", down_left_cnt );
+		drawer->drawFormatString( 20, 100, WHITE, "up_right : %d", up_right_cnt );
+		drawer->drawFormatString( 20, 120, WHITE, "up_left : %d", up_left_cnt );
 
 		drawer->flip( );
 	}
 
-
-	// value
 private:
 };
 

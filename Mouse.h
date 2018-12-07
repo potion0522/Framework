@@ -19,8 +19,8 @@ public:
 	void update( );
 
 private:
-	void calcLeftClick( );
-	void calcRightClick( );
+	void updateClickingLeft( const int& mouse_data );
+	void updateClickingRight( const int& mouse_data );
 
 public:
 	Vector getPoint( ) const;
@@ -32,10 +32,8 @@ public:
 	int getClickingRight( ) const;
 
 private:
-	Vector _pos;
-	int _mouse;
-	int _click_left;
-	int _click_right;
+	unsigned short _click_left;
+	unsigned short _click_right;
 	bool _clickup_left;
 	bool _clickup_right;
 };
