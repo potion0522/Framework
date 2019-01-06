@@ -1,7 +1,7 @@
 #include "DxLib.h"
 #include "Manager.h"
 
-extern void main( );
+extern int main( );
 
 int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow ) {
 	Manager* manager = Manager::getInstance( );

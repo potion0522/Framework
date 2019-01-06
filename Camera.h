@@ -1,7 +1,7 @@
 #pragma once
 #include "Base.h"
 #include "smart_ptr.h"
-#include "Vector.h"
+#include "Mathematics.h"
 #include <string>
 
 PTR( Camera );

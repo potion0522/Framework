@@ -7,6 +7,8 @@ class ModelData {
 public:
 	unsigned int _polygon_num;
 	VERTEX3D *origin;
+
+	// •`‰æ—p
 	VERTEX3D *view;
 };
 
@@ -19,10 +21,10 @@ Model::~Model( ) {
 	delete [ ] _model->view;
 }
 
-void Model::setPolygon( int num ) {
-	_model->_polygon_num = num;
-	_model->origin = new VERTEX3D[ num * 3 ];
-	_model->view   = new VERTEX3D[ num * 3 ];
+void Model::alloc( int polygon_num ) {
+	_model->_polygon_num = polygon_num;
+	_model->origin = new VERTEX3D[ polygon_num * 3 ];
+	_model->view   = new VERTEX3D[ polygon_num * 3 ];
 }
 
 void Model::setVertex( int vertex_num, Vertex in_vertex ) {

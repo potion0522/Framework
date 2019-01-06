@@ -28,17 +28,14 @@
     <ClInclude Include="Event.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="Keyboard.h" />
-    <ClInclude Include="LoadCSV.h" />
     <ClInclude Include="Manager.h" />
-    <ClInclude Include="Matrix.h" />
+    <ClInclude Include="Mathematics.h" />
     <ClInclude Include="MersenneTwister.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="Mouse.h" />
-    <ClInclude Include="Random.h" />
     <ClInclude Include="Server.h" />
     <ClInclude Include="smart_ptr.h" />
     <ClInclude Include="Sound.h" />
-    <ClInclude Include="Vector.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Button.cpp" />
@@ -47,11 +44,9 @@
     <ClCompile Include="Drawer.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="Keyboard.cpp" />
-    <ClCompile Include="LoadCSV.cpp" />
     <ClCompile Include="Manager.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="Mouse.cpp" />
-    <ClCompile Include="Random.cpp" />
     <ClCompile Include="Server.cpp" />
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="WinMain.cpp" />

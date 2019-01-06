@@ -1,7 +1,6 @@
 #pragma once
 #include "smart_ptr.h"
-#include "Vector.h"
-#include "Matrix.h"
+#include "Mathematics.h"
 
 PTR( Model );
 PTR( Image );
@@ -35,7 +34,7 @@ public:
 	virtual ~Model( );
 
 public:
-	void setPolygon( int num );
+	void alloc( int polygon_num );
 	void setVertex( int vertex_num, Vertex in_vertex );
 	void setImage( ImageConstPtr image );
 

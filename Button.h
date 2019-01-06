@@ -1,7 +1,6 @@
 #pragma once
-#include "Vector.h"
+#include "Mathematics.h"
 #include "smart_ptr.h"
-#include "Matrix.h"
 
 PTR( Image );
 
