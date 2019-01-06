@@ -28,7 +28,7 @@ public:
 	void drawFormatStringCenter( float x, float y, unsigned int color, const char* str, ... );
 
 public:
-	void drawSphere( Vector pos, float radius, int div_num, unsigned int color = 0xff0000, bool fillflag = false );
+	void drawSphere( const Vector& pos, float radius, int div_num, unsigned int color = 0xff0000, bool fillflag = false );
 
 public:
 	void flip( );
