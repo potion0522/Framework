@@ -16,9 +16,9 @@ public:
 	virtual ~Camera( );
 
 public:
-	void initialize( );
-	void finalize( );
-	void update( );
+	void initialize( ) { };
+	void finalize( ) { };
+	void update( ) { };
 
 public:
 	void setNearFar( float camera_near, float camera_far );

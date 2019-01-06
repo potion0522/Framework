@@ -41,8 +41,8 @@ void Model::setVertex( int vertex_num, Vertex in_vertex ) {
 	_model->view  [ vertex_num ] = vertex;
 }
 
-void Model::setImage( ImageConstPtr image ) {
-	_image = image;
+void Model::setTexture( ImageConstPtr texture ) {
+	_texture = texture;
 }
 
 void Model::draw( const Vector &pos, const Matrix &mat ) const {
@@ -63,5 +63,5 @@ void Model::draw( const Vector &pos, const Matrix &mat ) const {
 }
 
 void Model::draw( ) const {
-	DrawPolygon3D( _model->view, _model->_polygon_num, _image->getHandle( ), FALSE );
+	DrawPolygon3D( _model->view, _model->_polygon_num, _texture->getHandle( ), FALSE );
 }

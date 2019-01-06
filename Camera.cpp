@@ -13,15 +13,6 @@ Camera::Camera( ) {
 Camera::~Camera( ) {
 }
 
-void Camera::initialize( ) {
-}
-
-void Camera::finalize( ) {
-}
-
-void Camera::update( ) {
-}
-
 void Camera::setNearFar( float camera_near, float camera_far ) {
 	Manager* manager = Manager::getInstance( );
 	manager->setCameraNearFar( camera_near, camera_far );

@@ -6,6 +6,13 @@ PTR( Model );
 PTR( Image );
 PTR( ModelData );
 
+/*
+
+	modelの数によってDrawPolygon3Dが重いかもしれない
+	10000ポリゴン描画するのに、1回DrawPolygon3Dを呼ぶのと、10000回DrawPolygon3Dを呼ぶとでは後者の方が重いため
+
+*/
+
 class Model {
 public:
 	struct Vertex {
@@ -36,14 +43,14 @@ public:
 public:
 	void alloc( int polygon_num );
 	void setVertex( int vertex_num, Vertex in_vertex );
-	void setImage( ImageConstPtr image );
+	void setTexture( ImageConstPtr texture );
 
 public:
 	void draw( const Vector &pos, const Matrix &mat = Matrix( ) ) const;
 	void draw( ) const;
 
 private:
-	ImageConstPtr _image;
+	ImageConstPtr _texture;
 	ModelDataPtr _model;
 };
 
