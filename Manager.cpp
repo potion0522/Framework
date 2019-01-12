@@ -59,6 +59,7 @@ void Manager::initializeDxlib( ) {
 	SetAlwaysRunFlag( TRUE );
 	SetDrawScreen( _draw_screen );
 	SetCameraNearFar( _camera_near, _camera_far );
+	SetUseBackCulling( TRUE );
 }
 
 void Manager::startGame( ) {
