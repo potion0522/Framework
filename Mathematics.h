@@ -1,7 +1,7 @@
 #pragma once
 #include <math.h>
 
-const double PI = 31.4159265;
+const double PI = 3.14159265;
 
 // ƒxƒNƒgƒ‹ /////////////////////////////////////////////
 struct Vector {
