@@ -146,3 +146,7 @@ int Manager::getScreenWidth ( ) const {
 int Manager::getScreenHeight( ) const {
 	return _screen_height;
 }
+
+int Manager::getNowCount( ) const {
+	return GetNowCount( );
+}

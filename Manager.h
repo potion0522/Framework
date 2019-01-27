@@ -32,6 +32,7 @@ public:
 	int getWindowHeight( ) const;
 	int getScreenWidth ( ) const;
 	int getScreenHeight( ) const;
+	int getNowCount( ) const; // ƒ~ƒŠ•b‚ð•Ô‚·
 
 private:
 	static Manager* _instance;
