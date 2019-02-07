@@ -125,18 +125,13 @@ struct Vector {
 		return x * vec.x + y * vec.y + z * vec.z;
 	}
 
-	// 外積 3D
+	// 外積
 	inline Vector cross( const Vector& vec ) const {
 		return Vector(
 			y * vec.z - z * vec.y,
 			z * vec.x - x * vec.z,
 			x * vec.y - y * vec.x
 		);
-	}
-
-	// 外積 2D ( 返り値はsinθ )
-	inline double cross2D( const Vector& vec ) const {
-		return x * vec.y - vec.x * y;
 	}
 };
 

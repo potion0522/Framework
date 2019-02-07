@@ -248,17 +248,19 @@ bool Keyboard::getKeyDown( const std::string& key ) const {
 }
 
 bool Keyboard::isExistKeyCode( const std::string& find_key, std::string& output ) const {
+	// キーコードが登録されているかどうかを返す
 	bool exist = true;
 
 	std::string find = find_key;
 	if ( _keycode.find( find ) == _keycode.end( ) ) {
-		// 小文字にする
+		// 見つからなかったら小文字にして再検索
 		std::transform( find.cbegin( ), find.cend( ), find.begin( ), tolower );
 		if ( _keycode.find( find ) == _keycode.end( ) ) {
 			exist = false;
 		}
 	}
 
+	// 見つかったキーを代入
 	if ( exist ) {
 		output = find;
 	}

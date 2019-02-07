@@ -143,7 +143,7 @@ bool Button::onButton( ) const {
 			int idx2 = ( i + 1 ) % 4;
 			Vector a = points[ idx1 ];
 			Vector b = points[ idx2 ];
-			double cross = ( b - a ).cross2D( mouse_pos - b );
+			double cross = ( b - a ).cross( mouse_pos - b ).z;
 			if ( cross > 0 ) {
 				return false;
 			}
