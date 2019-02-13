@@ -34,11 +34,12 @@ void Button::update( ) {
 }
 
 void Button::updateDefault( ) {
-	if ( !onButton( ) ) {
-		return;
-	}
 	MousePtr mouse = Mouse::getTask( );
 	if ( !mouse->isClickDownLeft( ) ) {
+		return;
+	}
+
+	if ( !onButton( ) ) {
 		return;
 	}
 
@@ -46,13 +47,13 @@ void Button::updateDefault( ) {
 }
 
 void Button::updatePush( ) {
-	if ( !onButton( ) ) {
-		_state = STATE_NONE;
+	MousePtr mouse = Mouse::getTask( );
+	if ( !mouse->isClickUpLeft( ) ) {
 		return;
 	}
 
-	MousePtr mouse = Mouse::getTask( );
-	if ( !mouse->isClickUpLeft( ) ) {
+	if ( !onButton( ) ) {
+		_state = STATE_NONE;
 		return;
 	}
 
