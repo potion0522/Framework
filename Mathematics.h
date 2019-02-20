@@ -1,7 +1,7 @@
 #pragma once
 #include <math.h>
 
-const double PI = 3.14159265;
+const double PI = 3.1415926535897932384626433832795;
 const double PI2 = PI * 2;
 
 // ベクトル /////////////////////////////////////////////
@@ -167,6 +167,7 @@ struct Matrix {
 		double value_sin = sin( radian );
 		double value_cos = cos( radian );
 
+		// 行列の作成
 		Matrix mat;
 		mat.matrix[ 0 ][ 0 ] = value_cos + axis.x * axis.x * value;
 		mat.matrix[ 0 ][ 1 ] = axis.x * axis.y * value - axis.z * value_sin;
