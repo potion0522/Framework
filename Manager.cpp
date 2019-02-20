@@ -131,6 +131,10 @@ void Manager::setCameraNearFar( float camera_near, float camera_far ) {
 	initializeDxlib( );
 }
 
+void Manager::setUseBackCulling( bool flag ) {
+	SetUseBackCulling( flag );
+}
+
 int Manager::getWindowWidth ( ) const {
 	return _window_width;
 }

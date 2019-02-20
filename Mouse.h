@@ -30,6 +30,7 @@ public:
 	bool isClickUpRight( ) const;
 	int getClickingLeft( ) const;
 	int getClickingRight( ) const;
+	void setMousePoint( const int& x, const int& y );
 
 private:
 	unsigned short _click_left;

@@ -96,3 +96,7 @@ int Mouse::getClickingLeft( ) const {
 int Mouse::getClickingRight( ) const {
 	return _click_right;
 }
+
+void Mouse::setMousePoint( const int& x, const int& y ) {
+	SetMousePoint( x, y );
+}

@@ -2,6 +2,7 @@
 #include <math.h>
 
 const double PI = 3.14159265;
+const double PI2 = PI * 2;
 
 // ƒxƒNƒgƒ‹ /////////////////////////////////////////////
 struct Vector {
@@ -115,6 +116,10 @@ struct Vector {
 	// ³‹K‰»
 	inline Vector normalize( ) const {
 		double len = getLength( );
+		if ( len <= 0 ) {
+			return Vector( );
+		}
+
 		Vector normal = Vector( x / len, y / len, z / len );
 
 		return normal;
