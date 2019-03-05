@@ -25,8 +25,9 @@ public:
 	void setWindowSize( int width, int height );
 	void setScreenSize( int width, int height );
 	void changeWindowMode( bool flag );
-	void setCameraNearFar( float camera_near, float camera_far );
 	void setUseBackCulling( bool flag );
+	void setWriteZBaffur( bool flag );
+	void setUseZBaffur( bool flag );
 
 public:
 	int getWindowWidth ( ) const;

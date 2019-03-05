@@ -14,8 +14,7 @@ Camera::~Camera( ) {
 }
 
 void Camera::setNearFar( float camera_near, float camera_far ) {
-	Manager* manager = Manager::getInstance( );
-	manager->setCameraNearFar( camera_near, camera_far );
+	SetCameraNearFar( camera_near, camera_far );
 }
 
 void Camera::setCameraUp( Vector up ) {

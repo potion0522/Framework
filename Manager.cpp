@@ -53,13 +53,10 @@ void Manager::finalize( ) {
 void Manager::initializeDxlib( ) {
 	SetUseLighting( FALSE );
 	SetLightEnable( FALSE );
-	SetUseZBuffer3D( TRUE );
-	SetWriteZBuffer3D( TRUE );
 	SetDoubleStartValidFlag( TRUE );
 	SetAlwaysRunFlag( TRUE );
 	SetDrawScreen( _draw_screen );
-	SetCameraNearFar( _camera_near, _camera_far );
-	SetUseBackCulling( TRUE );
+	SetUseBackCulling( FALSE );
 }
 
 void Manager::startGame( ) {
@@ -125,14 +122,16 @@ void Manager::setScreenSize( int width, int height ) {
 	initializeDxlib( );
 }
 
-void Manager::setCameraNearFar( float camera_near, float camera_far ) {
-	_camera_near = camera_near;
-	_camera_far = camera_far;
-	initializeDxlib( );
-}
-
 void Manager::setUseBackCulling( bool flag ) {
 	SetUseBackCulling( flag );
+}
+
+void Manager::setUseZBaffur( bool flag ) {
+	SetUseZBuffer3D( flag );
+}
+
+void Manager::setWriteZBaffur( bool flag ) {
+	SetWriteZBuffer3D( flag );
 }
 
 int Manager::getWindowWidth ( ) const {
