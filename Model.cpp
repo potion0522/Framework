@@ -6,10 +6,10 @@
 class ModelData {
 public:
 	unsigned int _polygon_num;
-	VERTEX3D *origin;
+	VERTEX3D* origin;
 
 	// •`‰æ—p
-	VERTEX3D *view;
+	VERTEX3D* view;
 };
 
 Model::Model( ) {
@@ -46,17 +46,21 @@ void Model::setTexture( ImageConstPtr texture ) {
 }
 
 void Model::draw( const Vector &pos, const Matrix &mat ) const {
+	Matrix trans_matrix = Matrix::makeTransformTranslation( pos );
+	Matrix all_matrix   = mat * trans_matrix;
+
+	MATRIX trans_matrix_dxlib;
+	MATRIX all_matrix_dxlib;
+	for ( int i = 0; i < 4; i++ ) {
+		for ( int j = 0; j < 4; j++ ) {
+			trans_matrix_dxlib.m[ i ][ j ] = ( float )trans_matrix.matrix[ i ][ j ];
+			all_matrix_dxlib.m[ i ][ j ]   = ( float )all_matrix.matrix[ i ][ j ];
+		}
+	}
+
 	for ( int i = 0; i < ( int )_model->_polygon_num * 3; i++ ) {
-		Vector origin_pos  = Vector( _model->origin[ i ].pos.x, _model->origin[ i ].pos.y, _model->origin[ i ].pos.z );
-		Vector origin_norm = Vector( _model->view[ i ].norm.x, _model->view[ i ].norm.y, _model->view[ i ].norm.z );
-
-		Matrix matrix = mat * Matrix::makeTransformTranslation( pos );
-
-		Vector conv_pos  = matrix.multiply( origin_pos  );
-		Vector conv_norm = matrix.multiply( origin_norm );
-
-		_model->view[ i ].pos  = VGet( ( float )conv_pos.x , ( float )conv_pos.y , ( float )conv_pos.z  );
-		_model->view[ i ].norm = VGet( ( float )conv_norm.x, ( float )conv_norm.y, ( float )conv_norm.z );
+		VectorTransform( &_model->view[ i ].pos , &_model->origin[ i ].pos , &all_matrix_dxlib );
+		VectorTransform( &_model->view[ i ].norm, &_model->origin[ i ].norm, &trans_matrix_dxlib );
 	}
 
 	draw( );
