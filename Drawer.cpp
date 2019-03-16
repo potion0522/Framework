@@ -15,7 +15,6 @@ DrawerPtr Drawer::getTask( ) {
 
 Drawer::Drawer( const char* directory ) :
 _directory( directory ),
-_refresh_count( 0 ),
 _frame_count( 0 ),
 _fps( 0.0f ) {
 	_start_time = GetNowCount( );

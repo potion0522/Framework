@@ -40,7 +40,6 @@ public:
 
 private:
 	std::string _directory;
-	int _refresh_count;
 	int _start_time;
 	int _frame_count;
 	float _fps;
