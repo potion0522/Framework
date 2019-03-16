@@ -18,6 +18,7 @@
     <ClInclude Include="Button.h" />
     <ClInclude Include="Base.h" />
     <ClInclude Include="Mathematics.h" />
+    <ClInclude Include="Random.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp" />
@@ -32,5 +33,6 @@
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Button.cpp" />
+    <ClCompile Include="Random.cpp" />
   </ItemGroup>
 </Project>

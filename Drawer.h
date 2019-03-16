@@ -16,9 +16,11 @@ public:
 	virtual ~Drawer( );
 
 public:
-	void update( ) { };
+	void update( );
 
 public:
+	void waitForSync( );
+	void drawFPS( );
 	void drawBox( float x1, float y1, float x2, float y2, int color, bool fillflag );
 	void drawCircle( float x, float y, float r, int color, bool fillflag );
 	void drawLine( float x1, float y1, float x2, float y2, int color );
@@ -38,4 +40,8 @@ public:
 
 private:
 	std::string _directory;
+	int _refresh_count;
+	int _start_time;
+	int _frame_count;
+	float _fps;
 };

@@ -6,15 +6,48 @@
 #include <assert.h>
 #include <stdarg.h>
 
+const int FPS = 30;
+const double FRAME_TIME = 1000.0 / FPS;
+
 DrawerPtr Drawer::getTask( ) {
 	return std::dynamic_pointer_cast< Drawer >( Manager::getInstance( )->getTask( getTag( ) ) );
 }
 
 Drawer::Drawer( const char* directory ) :
-_directory( directory ) {
+_directory( directory ),
+_refresh_count( 0 ),
+_frame_count( 0 ),
+_fps( 0.0f ) {
+	_start_time = GetNowCount( );
 }
 
 Drawer::~Drawer( ) {
+}
+
+void Drawer::update( ) {
+	if ( _frame_count == 0 ) {
+		int now_time = GetNowCount( );
+		int time = now_time - _start_time;
+
+		_fps = 1000.0f / ( float )time * ( float )FPS;
+		_frame_count = 0;
+		_start_time = now_time;
+	}
+	_frame_count = ( _frame_count + 1 ) % FPS;
+}
+
+void Drawer::waitForSync( ) {
+	int now_time = GetNowCount( ); // ŽÀÛ‚É‚©‚©‚Á‚½ŽžŠÔ
+	int time = 1000 / FPS * _frame_count + _start_time; // –{—ˆ‚ÌŽžŠÔ
+	int sleep_time = time - now_time;
+
+	if ( sleep_time > 0 ) {
+		Sleep( sleep_time );
+	}
+}
+
+void Drawer::drawFPS( ) {
+	this->drawFormatString( 20, 20, 0xff0000, "FPS : %.3f", _fps );
 }
 
 void Drawer::drawBox( float x1, float y1, float x2, float y2, int color, bool fillflag ) {
