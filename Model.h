@@ -44,12 +44,14 @@ public:
 	void alloc( int polygon_num );
 	void setVertex( int vertex_num, Vertex in_vertex );
 	void setTexture( ImageConstPtr texture );
+	void setTransparent( bool flag );
 
 public:
 	void draw( const Vector &pos, const Matrix &mat = Matrix( ) ) const;
 	void draw( ) const;
 
 private:
+	bool _transparent;
 	ImageConstPtr _texture;
 	ModelDataPtr _model;
 };

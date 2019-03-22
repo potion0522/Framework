@@ -14,7 +14,8 @@ Random::~Random( ) {
 }
 
 long Random::getRand( long min, long max ) const {
-	if ( min == max ) {
+	if ( min == max &&
+		 min == 0 && max == 0 ) {
 		return genrand_int31( );
 	}
 	return ( min + ( genrand_int31( ) % ( max + 1 - min ) ) );

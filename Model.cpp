@@ -12,7 +12,8 @@ public:
 	VERTEX3D* view;
 };
 
-Model::Model( ) {
+Model::Model( ) :
+_transparent( true ) {
 	_model = ModelDataPtr( new ModelData );
 }
 
@@ -45,6 +46,10 @@ void Model::setTexture( ImageConstPtr texture ) {
 	_texture = texture;
 }
 
+void Model::setTransparent( bool flag ) {
+	_transparent = flag;
+}
+
 void Model::draw( const Vector &pos, const Matrix &mat ) const {
 	Matrix trans_matrix = Matrix::makeTransformTranslation( pos );
 	Matrix all_matrix   = mat * trans_matrix;
@@ -67,5 +72,5 @@ void Model::draw( const Vector &pos, const Matrix &mat ) const {
 }
 
 void Model::draw( ) const {
-	DrawPolygon3D( _model->view, _model->_polygon_num, _texture->getHandle( ), FALSE );
+	DrawPolygon3D( _model->view, _model->_polygon_num, _texture->getHandle( ), _transparent );
 }
