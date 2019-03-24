@@ -28,6 +28,7 @@
     <ClInclude Include="Event.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="Keyboard.h" />
+    <ClInclude Include="LoadCSV.h" />
     <ClInclude Include="Manager.h" />
     <ClInclude Include="Mathematics.h" />
     <ClInclude Include="MersenneTwister.h" />

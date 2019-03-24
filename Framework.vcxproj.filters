@@ -19,6 +19,7 @@
     <ClInclude Include="Base.h" />
     <ClInclude Include="Mathematics.h" />
     <ClInclude Include="Random.h" />
+    <ClInclude Include="LoadCSV.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp" />

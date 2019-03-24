@@ -1,27 +1,66 @@
 #pragma once
-#include "smart_ptr.h"
-#include <string>
 #include <vector>
-
-PTR( LoadCSV );
+#include <string>
 
 struct CsvData {
-	std::string tag;
-	std::vector< std::string > values;
-};
+	std::vector< std::vector< std::string > > data;
 
-class LoadCSV {
-public:
-	LoadCSV( std::string path = "" );
-	virtual ~LoadCSV( );
 
-public:
-	//参照で値を直接入れるため引数必須
-	void read( std::vector< CsvData > &list, std::string file_name );
+	CsvData( ) { }
+	CsvData( const char* file_path ) {
+		load( file_path );
+	}
 
-private:
-	void findComma( std::vector< std::string > &value, std::string str );
+	inline void clear( ) {
+		data.clear( );
+	}
 
-private:
-	std::string _path;
+	inline void load( const char* file_path ) {
+		// データのクリア
+		clear( );
+		
+		FILE* fp;
+		if ( fopen_s( &fp, file_path, "r" ) != 0 ) {
+			// error
+			return;
+		}
+
+		// 1行のデータ
+		std::vector< std::string > row_data;
+		// 単語ごとのデータ
+		std::string word_data;
+
+		char c = '\0';
+		bool loop = true;
+		while ( loop ) {
+			// データの読み込み
+			c = getc( fp );
+
+			// 読み取った文字に対して処理を変える
+			switch ( c ) {
+			case ',': // 単語区切り
+				row_data.push_back( word_data );
+				word_data.clear( );
+				break;
+
+			case '\n': // 行末
+				row_data.push_back( word_data );
+				data.push_back( row_data );
+				row_data.clear( );
+				word_data.clear( );
+				break;
+
+			case EOF: // 終了
+				loop = false;
+				data.push_back( row_data );
+				break;
+
+			default: // 文字追加
+				word_data += c;
+				break;
+			}
+		}
+
+		fclose( fp );
+	}
 };
