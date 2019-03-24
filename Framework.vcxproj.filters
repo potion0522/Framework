@@ -10,7 +10,6 @@
     <ClInclude Include="Manager.h" />
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="Image.h" />
-    <ClInclude Include="Event.h" />
     <ClInclude Include="Drawer.h" />
     <ClInclude Include="Data.h" />
     <ClInclude Include="Client.h" />

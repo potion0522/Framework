@@ -12,6 +12,9 @@ _click_left( 0 ),
 _click_right( 0 ),
 _clickup_left( false ),
 _clickup_right( false ) {
+	#ifdef FULLSCREEN
+		SetMouseDispFlag( TRUE );
+	#endif
 }
 
 Mouse::~Mouse( ) {
@@ -58,6 +61,10 @@ void Mouse::updateClickingRight( const int& mouse_data ) {
 	} else {
 		_clickup_right = false;
 	}
+}
+
+void Mouse::setMouseDraw( bool flag ) {
+	SetMouseDispFlag( flag );
 }
 
 Vector Mouse::getPoint( ) const {

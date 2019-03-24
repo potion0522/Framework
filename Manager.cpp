@@ -22,11 +22,16 @@ _screen_height( DEFAULT_GRAPH_HEIGHT ),
 _draw_screen( DX_SCREEN_BACK ),
 _camera_near( DEFAULT_CAMERA_NEAR ),
 _camera_far( DEFAULT_CAMERA_FAR ) {
-	ChangeWindowMode( TRUE );
 	SetGraphMode( _screen_width, _screen_height, 32 );
-	SetWindowSize( _window_width, _window_height );
 	SetDoubleStartValidFlag( TRUE );
 	SetAlwaysRunFlag( TRUE );
+
+	#ifdef FULLSCREEN
+		ChangeWindowMode( FALSE );
+		SetFullScreenResolutionMode( DX_FSRESOLUTIONMODE_NATIVE );
+	#else
+		ChangeWindowMode( TRUE );
+	#endif
 
 	DxLib_Init( );
 	initializeDxlib( );
@@ -98,12 +103,6 @@ BasePtr Manager::getTask( std::string tag ) {
 	}
 
 	return _tasks[ tag ];
-}
-
-void Manager::changeWindowMode( bool flag ) {
-	_window_mode = ( flag ? TRUE : FALSE );
-	ChangeWindowMode( _window_mode );
-	initializeDxlib( );
 }
 
 void Manager::setWindowSize( int width, int height ) {

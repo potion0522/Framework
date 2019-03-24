@@ -8,7 +8,7 @@ CameraPtr Camera::getTask( ) {
 
 Camera::Camera( ) {
 	_camera_up = Vector( 0, 1, 0 );
-	setNearFar( 0.1f, 100.0f );
+	setNearFar( 0.2f, 15.0f );
 }
 
 Camera::~Camera( ) {

@@ -23,6 +23,7 @@ private:
 	void updateClickingRight( const int& mouse_data );
 
 public:
+	void setMouseDraw( bool flag );
 	Vector getPoint( ) const;
 	bool isClickDownLeft( ) const;
 	bool isClickDownRight( ) const;
