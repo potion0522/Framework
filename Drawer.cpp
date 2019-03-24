@@ -82,6 +82,30 @@ void Drawer::drawFormatString( float x, float y, unsigned int color, const char*
 	DrawStringF( x, y, buf, color );
 }
 
+void Drawer::drawFormatString( float x, float y, unsigned int color, int font_size, const char* str, ... ) {
+	const int BUF_MAX = 1024;
+	char buf[ BUF_MAX ] = { };
+
+	va_list ap;
+	// strより後ろの引数を格納
+	va_start( ap, str );
+
+	// 格納した引数をbufに追加
+	vsprintf_s( buf, BUF_MAX, str, ap );
+
+	// リストをクリア
+	va_end( ap );
+
+	// サイズ変更
+	int font_handle;
+	if ( _font_handles.count( font_size ) == 0 ) {
+		_font_handles[ font_size ] = CreateFontToHandle( NULL, font_size, -1, DX_FONTTYPE_NORMAL );
+	}
+	font_handle = _font_handles[ font_size ];
+
+	DrawStringFToHandle( x, y, buf, color, font_handle );
+}
+
 void Drawer::drawFormatStringCenter( float x, float y, unsigned int color, const char* str, ... ) {
 	const int BUF_MAX = 1024;
 	char buf[ BUF_MAX ] = { };
@@ -99,6 +123,32 @@ void Drawer::drawFormatStringCenter( float x, float y, unsigned int color, const
 	int len = ( int )strlen( buf );
 	float gap_x = GetDrawStringWidth( buf, len ) / 2.0f;
 	DrawStringF( x - gap_x, y, buf, color );
+}
+
+void Drawer::drawFormatStringCenter( float x, float y, unsigned int color, int font_size, const char* str, ... ) {
+	const int BUF_MAX = 1024;
+	char buf[ BUF_MAX ] = { };
+
+	va_list ap;
+	// strより後ろの引数を格納
+	va_start( ap, str );
+
+	// 格納した引数をbufに追加
+	vsprintf_s( buf, BUF_MAX, str, ap );
+
+	// リストをクリア
+	va_end( ap );
+
+	// サイズ変更
+	int font_handle;
+	if ( _font_handles.count( font_size ) == 0 ) {
+		_font_handles[ font_size ] = CreateFontToHandle( NULL, font_size, -1, DX_FONTTYPE_NORMAL );
+	}
+	font_handle = _font_handles[ font_size ];
+
+	int len = ( int )strlen( buf );
+	float gap_x = GetDrawStringWidthToHandle( buf, len, font_handle ) / 2.0f;
+	DrawStringFToHandle( x - gap_x, y, buf, color, font_handle );
 }
 
 void Drawer::drawSphere( const Vector& pos, float radius, int div_num, unsigned int color, bool fillflag ) {
