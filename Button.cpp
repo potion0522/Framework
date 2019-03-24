@@ -3,12 +3,14 @@
 #include "Image.h"
 #include "Drawer.h"
 
-Button::Button( ) :
+Button::Button( const char* tag, std::function< void( const char* ) > callback ) :
+TAG( tag ),
 _state( STATE_NONE ),
 _pos( ),
 _mat_rot( ),
 _width( 0 ),
-_height( 0 ) {
+_height( 0 ),
+_callback( callback ) {
 }
 
 Button::~Button( ) {
@@ -62,6 +64,7 @@ void Button::updatePush( ) {
 
 void Button::updateClicked( ) {
 	_state = STATE_NONE;
+	_callback( TAG );
 }
 
 void Button::draw( ) const {
@@ -164,10 +167,6 @@ bool Button::onButton( ) const {
 	}
 
 	return true;
-}
-
-bool Button::isClicked( ) const {
-	return ( _state == STATE_CLICKED );
 }
 
 void Button::drawCollider( ) const {

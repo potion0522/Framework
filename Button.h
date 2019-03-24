@@ -1,6 +1,7 @@
 #pragma once
 #include "Mathematics.h"
 #include "smart_ptr.h"
+#include <functional>
 
 PTR( Image );
 
@@ -14,7 +15,7 @@ public:
 	};
 
 public:
-	Button( );
+	Button( const char* tag, std::function< void( const char* ) > callback );
 	virtual ~Button( );
 
 public:
@@ -45,14 +46,15 @@ private:
 	// mouseがボタン上にあるかどうか
 	bool onButton( ) const;
 
-public:
-	bool isClicked( ) const;
+private:
+	const char* TAG;
 
 private:
 	STATE _state;
 	Vector _pos;
 	int _width;
 	int _height;
+	std::function< void( const char* ) > _callback;
 	// メモリ削減のため必要なタイミングのみ保有
 	std::shared_ptr< Matrix > _mat_rot;
 
