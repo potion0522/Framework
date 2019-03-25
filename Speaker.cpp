@@ -35,3 +35,7 @@ void Speaker::setVolume( float ratio ) {
 void Speaker::setLoop( bool loop ) {
 	_loop = loop;
 }
+
+bool Speaker::isPlaying( ) const {
+	return ( CheckSoundMem( _handle ) == 1 );
+}

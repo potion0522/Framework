@@ -11,6 +11,7 @@ public:
 	// 0.0 - 1.0
 	void setVolume( float ratio );
 	void setLoop( bool loop );
+	bool isPlaying( ) const;
 
 private:
 	int _handle;
