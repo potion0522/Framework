@@ -36,6 +36,7 @@ void Model::setVertex( int vertex_num, Vertex in_vertex ) {
 	vertex.u = in_vertex.u;
 	vertex.v = in_vertex.v;
 	vertex.norm = norm;
+	vertex.spc = GetColorU8( 255, 255, 255, 255 );
 	vertex.dif = GetColorU8( 255, 255, 255, 255 );
 
 	_model->origin[ vertex_num ] = vertex;
@@ -54,18 +55,16 @@ void Model::draw( const Vector &pos, const Matrix &mat ) const {
 	Matrix trans_matrix = Matrix::makeTransformTranslation( pos );
 	Matrix all_matrix   = mat * trans_matrix;
 
-	MATRIX trans_matrix_dxlib;
 	MATRIX all_matrix_dxlib;
 	for ( int i = 0; i < 4; i++ ) {
 		for ( int j = 0; j < 4; j++ ) {
-			trans_matrix_dxlib.m[ i ][ j ] = ( float )trans_matrix.matrix[ i ][ j ];
 			all_matrix_dxlib.m[ i ][ j ]   = ( float )all_matrix.matrix[ i ][ j ];
 		}
 	}
 
 	for ( int i = 0; i < ( int )_model->_polygon_num * 3; i++ ) {
 		VectorTransform( &_model->view[ i ].pos , &_model->origin[ i ].pos , &all_matrix_dxlib );
-		VectorTransform( &_model->view[ i ].norm, &_model->origin[ i ].norm, &trans_matrix_dxlib );
+		VectorTransform( &_model->view[ i ].norm, &_model->origin[ i ].norm, &all_matrix_dxlib );
 	}
 
 	draw( );
