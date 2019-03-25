@@ -4,6 +4,8 @@
 #include "Model.h"
 #include "Mouse.h"
 #include "Camera.h"
+#include "Sound.h"
+#include "Speaker.h"
 #include "Mathematics.h"
 
 #include <string>
@@ -29,7 +31,7 @@ public:
 		const int DIV_NUM = 50;
 		_model = ModelPtr( new Model );
 		_model->alloc( DIV_NUM * DIV_NUM * 4 );
-		_model->setTexture( Drawer::getTask( )->getImage( "Test/texture.png" ) );
+		_model->setTexture( Drawer::getTask( )->getImage( "texture.png" ) );
 
 		// èc
 		for ( int i = 0; i < DIV_NUM; i++ ) {
@@ -66,9 +68,19 @@ public:
 
 			}
 		}
+
+		SoundPtr sound = Sound::getTask( );
+		_speaker = sound->load( "test.mp3" );
 	}
 
 	void update( ) {
+		// speaker
+		if ( Mouse::getTask( )->isClickDownLeft( ) ) {
+			_speaker->play( );
+		}
+
+
+		// draw
 		_model->draw( );
 
 		DrawerPtr drawer = Drawer::getTask( );
@@ -78,6 +90,7 @@ public:
 
 private:
 	ModelPtr _model;
+	SpeakerPtr _speaker;
 };
 
 
@@ -90,6 +103,7 @@ int main( ) {
 	manager->add( Mouse::getTag( ), BasePtr( new Mouse ) );
 	manager->add( Camera::getTag( ), BasePtr( new Camera ) );
 	manager->add( Test::getTag( ), BasePtr( new Test ) );
+	manager->add( Sound::getTag( ), BasePtr( new Sound( "." ) ) );
 
 	return 0;
 }

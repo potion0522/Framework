@@ -37,6 +37,7 @@
     <ClInclude Include="Server.h" />
     <ClInclude Include="smart_ptr.h" />
     <ClInclude Include="Sound.h" />
+    <ClInclude Include="Speaker.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Button.cpp" />
@@ -51,6 +52,7 @@
     <ClCompile Include="Random.cpp" />
     <ClCompile Include="Server.cpp" />
     <ClCompile Include="Sound.cpp" />
+    <ClCompile Include="Speaker.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

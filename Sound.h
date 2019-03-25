@@ -1,9 +1,9 @@
 #pragma once
 #include "Base.h"
 #include <string>
-#include <unordered_map>
 
 PTR( Sound );
+PTR( Speaker );
 
 class Sound : public Base {
 public:
@@ -11,24 +11,17 @@ public:
 	static std::string getTag( ) { return "SOUND"; }
 
 public:
-	Sound( std::string sound_path );
+	Sound( const char* folder_path );
 	virtual ~Sound( );
 
 public:
-	void initialize( );
-	void finalize( );
-	void update( );
+	void initialize( ) { };
+	void finalize( ) { };
+	void update( ) { };
 
 public:
-	bool isPlaying( int handle );
-	void play( int handle, bool loop = false, bool top = false, int volume = -1 );
-	void stop( int handle );
-
-public:
-	int load( std::string file_name );
-	void checkHandle( int handle );
+	SpeakerPtr load( const char* file_path ) const;
 
 private:
-	std::string _sound_path;
-	std::unordered_map< std::string, int > _sound_handles;
+	const char* FOLDER_PATH;
 };

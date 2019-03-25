@@ -19,6 +19,7 @@
     <ClInclude Include="Mathematics.h" />
     <ClInclude Include="Random.h" />
     <ClInclude Include="LoadCSV.h" />
+    <ClInclude Include="Speaker.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp" />
@@ -34,5 +35,6 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Random.cpp" />
+    <ClCompile Include="Speaker.cpp" />
   </ItemGroup>
 </Project>
