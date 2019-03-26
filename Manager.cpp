@@ -25,6 +25,7 @@ _camera_far( DEFAULT_CAMERA_FAR ) {
 	SetGraphMode( _screen_width, _screen_height, 32 );
 	SetDoubleStartValidFlag( TRUE );
 	SetAlwaysRunFlag( TRUE );
+	Set3DSoundOneMetre( 1.0f ); // 1.0‚Å1m
 
 	#ifdef FULLSCREEN
 		ChangeWindowMode( FALSE );

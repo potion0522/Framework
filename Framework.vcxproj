@@ -38,6 +38,8 @@
     <ClInclude Include="smart_ptr.h" />
     <ClInclude Include="Sound.h" />
     <ClInclude Include="Speaker.h" />
+    <ClInclude Include="Speaker2D.h" />
+    <ClInclude Include="Speaker3D.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Button.cpp" />
@@ -53,6 +55,8 @@
     <ClCompile Include="Server.cpp" />
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="Speaker.cpp" />
+    <ClCompile Include="Speaker2D.cpp" />
+    <ClCompile Include="Speaker3D.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

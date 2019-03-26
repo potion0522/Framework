@@ -1,4 +1,5 @@
 #pragma once
+
 class Speaker {
 public:
 	Speaker( int handle );
@@ -13,7 +14,7 @@ public:
 	void setLoop( bool loop );
 	bool isPlaying( ) const;
 
-private:
+protected:
 	int _handle;
 	bool _play_top;
 	bool _loop;

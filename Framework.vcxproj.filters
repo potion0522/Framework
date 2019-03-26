@@ -20,6 +20,8 @@
     <ClInclude Include="Random.h" />
     <ClInclude Include="LoadCSV.h" />
     <ClInclude Include="Speaker.h" />
+    <ClInclude Include="Speaker2D.h" />
+    <ClInclude Include="Speaker3D.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp" />
@@ -36,5 +38,7 @@
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Random.cpp" />
     <ClCompile Include="Speaker.cpp" />
+    <ClCompile Include="Speaker2D.cpp" />
+    <ClCompile Include="Speaker3D.cpp" />
   </ItemGroup>
 </Project>
