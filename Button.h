@@ -2,6 +2,11 @@
 #include "Mathematics.h"
 #include "smart_ptr.h"
 #include <functional>
+/*******************************************
+
+ボタン機能をまとめたクラス
+
+*******************************************/
 
 PTR( Image );
 

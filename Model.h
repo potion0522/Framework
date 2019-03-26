@@ -2,16 +2,15 @@
 #include "smart_ptr.h"
 #include "Mathematics.h"
 
+/*******************************************
+
+	頂点を直打ちしてポリゴンを描画するクラス
+
+*******************************************/
+
 PTR( Model );
 PTR( Image );
 PTR( ModelData );
-
-/*
-
-	modelの数によってDrawPolygon3Dが重いかもしれない
-	10000ポリゴン描画するのに、1回DrawPolygon3Dを呼ぶのと、10000回DrawPolygon3Dを呼ぶとでは後者の方が重いため
-
-*/
 
 class Model {
 public:

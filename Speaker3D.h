@@ -1,6 +1,11 @@
 #pragma once
 #include "Speaker.h"
 #include "Mathematics.h"
+/*******************************************
+
+3Dサウンドを鳴らすためのクラス
+
+*******************************************/
 
 class Speaker3D : public Speaker {
 public:

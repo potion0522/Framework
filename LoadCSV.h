@@ -1,6 +1,12 @@
 #pragma once
 #include <vector>
 #include <string>
+/*******************************************
+
+	CSVデータの読み込み、
+	読み込んだデータを保持
+
+*******************************************/
 
 struct CsvData {
 	std::vector< std::vector< std::string > > data;
