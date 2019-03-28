@@ -42,6 +42,9 @@ public:
 	void setDefaultImage( const char* path );
 	void setPushImage( const char* path );
 
+	// ó‘Ô‚ÌƒŠƒtƒŒƒbƒVƒ…
+	void refreshState( );
+
 private:
 	void updateDefault( );
 	void updatePush( );

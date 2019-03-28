@@ -111,6 +111,10 @@ void Button::setPushImage( const char* path ) {
 	setCollisionSize( _push_image->getImageWidth( ), _push_image->getImageHeight( ) );
 }
 
+void Button::refreshState( ) {
+	_state = STATE_NONE;
+}
+
 void Button::setCollisionSize( int width, int height ) {
 	_width  = width;
 	_height = height;

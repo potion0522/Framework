@@ -63,8 +63,8 @@ void Model::draw( const Vector &pos, const Matrix &mat ) const {
 	}
 
 	for ( int i = 0; i < ( int )_model->_polygon_num * 3; i++ ) {
-		VectorTransform( &_model->view[ i ].pos , &_model->origin[ i ].pos , &all_matrix_dxlib );
-		VectorTransform( &_model->view[ i ].norm, &_model->origin[ i ].norm, &all_matrix_dxlib );
+		_model->view[ i ].pos  = VTransform( _model->origin[ i ].pos , all_matrix_dxlib );
+		_model->view[ i ].norm = VTransformSR( _model->origin[ i ].norm, all_matrix_dxlib );
 	}
 
 	draw( );

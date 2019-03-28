@@ -26,6 +26,7 @@ _camera_far( DEFAULT_CAMERA_FAR ) {
 	SetDoubleStartValidFlag( TRUE );
 	SetAlwaysRunFlag( TRUE );
 	Set3DSoundOneMetre( 1.0f ); // 1.0‚Å1m
+	SetEnableXAudioFlag( TRUE );
 
 	#ifdef FULLSCREEN
 		ChangeWindowMode( FALSE );
@@ -57,12 +58,12 @@ void Manager::finalize( ) {
 }
 
 void Manager::initializeDxlib( ) {
-	SetUseLighting( FALSE );
-	SetLightEnable( FALSE );
 	SetDoubleStartValidFlag( TRUE );
 	SetAlwaysRunFlag( TRUE );
 	SetDrawScreen( _draw_screen );
 	SetUseBackCulling( FALSE );
+	SetUseLighting( TRUE );
+	SetLightEnable( TRUE );
 }
 
 void Manager::startGame( ) {
