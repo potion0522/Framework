@@ -30,7 +30,7 @@ public:
 		Color( int in_r, int in_g, int in_b, int in_a ) :
 		r( in_r ),
 		g( in_g ),
-		b( in_g ),
+		b( in_b ),
 		a( in_a ) {
 		}
 	};
