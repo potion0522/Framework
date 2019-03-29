@@ -36,8 +36,8 @@ void Model::setVertex( int vertex_num, Vertex in_vertex ) {
 	vertex.u = in_vertex.u;
 	vertex.v = in_vertex.v;
 	vertex.norm = norm;
-	vertex.spc = GetColorU8( 255, 255, 255, 255 );
-	vertex.dif = GetColorU8( 255, 255, 255, 255 );
+	vertex.dif = GetColorU8( in_vertex.dif.r, in_vertex.dif.g, in_vertex.dif.b, in_vertex.dif.a );
+	vertex.spc = GetColorU8( in_vertex.spc.r, in_vertex.spc.g, in_vertex.spc.b, in_vertex.spc.a );
 
 	_model->origin[ vertex_num ] = vertex;
 	_model->view  [ vertex_num ] = vertex;

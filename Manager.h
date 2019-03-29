@@ -34,6 +34,8 @@ public:
 	void setWriteZBaffur( bool flag );
 	void setUseZBaffur( bool flag );
 	void setUseLighting( bool flag );
+	void setUseLightTypeDir( bool flag, float dir_x = 1.0f, float dir_y = -1.0f, float dir_z = 1.0f );
+	void setLightAmbient( float r, float g, float b );
 
 public:
 	int getWindowWidth ( ) const;

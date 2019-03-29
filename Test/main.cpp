@@ -8,6 +8,8 @@
 #include "Speaker.h"
 #include "Mathematics.h"
 
+#include "DxLib.h"
+
 #include <string>
 
 PTR( Test );
@@ -25,7 +27,7 @@ public:
 	void initialize( ) {
 		CameraPtr camera = Camera::getTask( );
 		camera->setCameraUp( Vector( 0, 1, 0 ) );
-		camera->setCamera( Vector( 0, 0, -3 ), Vector( ) );
+		camera->setCamera( Vector( 0, 0, -4 ), Vector( ) );
 
 		// model
 		const int DIV_NUM = 50;
@@ -68,20 +70,22 @@ public:
 
 			}
 		}
-
-		SoundPtr sound = Sound::getTask( );
-		_speaker = sound->load( "test.mp3" );
+		SetGlobalAmbientLight( GetColorF( 1.0f, 0.0f, 0.0f, 1.0f ) ) ;
 	}
 
 	void update( ) {
-		// speaker
-		if ( Mouse::getTask( )->isClickDownLeft( ) ) {
-			_speaker->play( );
-		}
+		static int cnt;
+		cnt++;
 
+
+		Vector pos = Vector( cnt * 10, 0, cnt * 10 ) * 0.001;
+		Camera::getTask( )->setCamera( pos - Vector( 0, 0, 4000 ) * 0.001, pos + Vector( 0, 0, 1 ) * 0.001 );
+
+		Vector light_pos = Vector( 0, 1000, -1000 ) * 0.001;
+		Vector dir = ( pos - light_pos ).normalize( );
 
 		// draw
-		_model->draw( );
+		_model->draw( pos );
 
 		DrawerPtr drawer = Drawer::getTask( );
 		drawer->drawSphere( Vector( ), 10, 100, 0xff0000 );
@@ -90,7 +94,6 @@ public:
 
 private:
 	ModelPtr _model;
-	SpeakerPtr _speaker;
 };
 
 

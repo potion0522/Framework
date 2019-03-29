@@ -22,6 +22,10 @@
     <ClInclude Include="Speaker.h" />
     <ClInclude Include="Speaker2D.h" />
     <ClInclude Include="Speaker3D.h" />
+    <ClInclude Include="Light.h" />
+    <ClInclude Include="DirectionalLight.h" />
+    <ClInclude Include="SpotLight.h" />
+    <ClInclude Include="PointLight.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp" />
@@ -40,5 +44,9 @@
     <ClCompile Include="Speaker.cpp" />
     <ClCompile Include="Speaker2D.cpp" />
     <ClCompile Include="Speaker3D.cpp" />
+    <ClCompile Include="Light.cpp" />
+    <ClCompile Include="DirectionalLight.cpp" />
+    <ClCompile Include="SpotLight.cpp" />
+    <ClCompile Include="PointLight.cpp" />
   </ItemGroup>
 </Project>

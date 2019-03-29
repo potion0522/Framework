@@ -61,6 +61,7 @@ void Manager::initializeDxlib( ) {
 	SetDoubleStartValidFlag( TRUE );
 	SetAlwaysRunFlag( TRUE );
 	SetDrawScreen( _draw_screen );
+
 	SetUseBackCulling( FALSE );
 	SetUseLighting( FALSE );
 	SetLightEnable( FALSE );
@@ -141,7 +142,27 @@ void Manager::setWriteZBaffur( bool flag ) {
 void Manager::setUseLighting( bool flag ) {
 	int flag_int = flag ? TRUE : FALSE;
 	SetUseLighting( flag_int );
+}
+
+void Manager::setUseLightTypeDir( bool flag, float dir_x, float dir_y, float dir_z ) {
+	int flag_int = flag ? TRUE : FALSE;
 	SetLightEnable( flag_int );
+	if ( flag ) {
+		ChangeLightTypeDir( VGet( dir_x, dir_y, dir_z ) );
+	}
+}
+
+void Manager::setLightAmbient( float r, float g, float b ) {
+	SetLightAmbColor( GetColorF( r, g, b, 1.0f ) );
+
+	// 白にセットする
+	MATERIALPARAM material;
+	material.Diffuse  = GetColorF( 1.0f, 1.0f, 1.0f, 1.0f );
+	material.Ambient  = GetColorF( 1.0f, 1.0f, 1.0f, 1.0f );
+	material.Specular = GetColorF( 0.0f, 0.0f, 0.0f, 0.0f );
+	material.Emissive = GetColorF( 0.0f, 0.0f, 0.0f, 0.0f );
+	material.Power    = 0.0f; // スぺキュラの強さ
+	SetMaterialParam( material );
 }
 
 int Manager::getWindowWidth ( ) const {
