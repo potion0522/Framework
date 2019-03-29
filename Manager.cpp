@@ -62,8 +62,8 @@ void Manager::initializeDxlib( ) {
 	SetAlwaysRunFlag( TRUE );
 	SetDrawScreen( _draw_screen );
 	SetUseBackCulling( FALSE );
-	SetUseLighting( TRUE );
-	SetLightEnable( TRUE );
+	SetUseLighting( FALSE );
+	SetLightEnable( FALSE );
 }
 
 void Manager::startGame( ) {
@@ -124,15 +124,24 @@ void Manager::setScreenSize( int width, int height ) {
 }
 
 void Manager::setUseBackCulling( bool flag ) {
-	SetUseBackCulling( flag );
+	int flag_int = flag ? TRUE : FALSE;
+	SetUseBackCulling( flag_int );
 }
 
 void Manager::setUseZBaffur( bool flag ) {
-	SetUseZBuffer3D( flag );
+	int flag_int = flag ? TRUE : FALSE;
+	SetUseZBuffer3D( flag_int );
 }
 
 void Manager::setWriteZBaffur( bool flag ) {
-	SetWriteZBuffer3D( flag );
+	int flag_int = flag ? TRUE : FALSE;
+	SetWriteZBuffer3D( flag_int );
+}
+
+void Manager::setUseLighting( bool flag ) {
+	int flag_int = flag ? TRUE : FALSE;
+	SetUseLighting( flag_int );
+	SetLightEnable( flag_int );
 }
 
 int Manager::getWindowWidth ( ) const {

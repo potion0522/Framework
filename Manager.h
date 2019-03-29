@@ -33,6 +33,7 @@ public:
 	void setUseBackCulling( bool flag );
 	void setWriteZBaffur( bool flag );
 	void setUseZBaffur( bool flag );
+	void setUseLighting( bool flag );
 
 public:
 	int getWindowWidth ( ) const;
