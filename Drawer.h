@@ -26,6 +26,7 @@ public:
 	void update( );
 
 public:
+	void setAlpha( int alpha );
 	void waitForSync( );
 	void drawFPS( );
 	void drawBox( float x1, float y1, float x2, float y2, int color, bool fillflag );
@@ -37,6 +38,9 @@ public:
 	// ’†‰›‘µ‚¦
 	void drawFormatStringCenter( float x, float y, unsigned int color, const char* str, ... );
 	void drawFormatStringCenter( float x, float y, unsigned int color, int font_size, const char* str, ... );
+
+	int getStringWidth( const char* str ) const;
+	int getStringWidth( const char* str, int font_size ) const;
 
 public:
 	void drawSphere( const Vector& pos, float radius, int div_num, unsigned int color = 0xff0000, bool fillflag = false );

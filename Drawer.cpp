@@ -35,6 +35,14 @@ void Drawer::update( ) {
 	_frame_count = ( _frame_count + 1 ) % FPS;
 }
 
+void Drawer::setAlpha( int alpha ) {
+	if ( alpha >= 255 ) {
+		SetDrawBlendMode( DX_BLENDMODE_NOBLEND, alpha );
+	} else {
+		SetDrawBlendMode( DX_BLENDMODE_ALPHA, alpha );
+	}
+}
+
 void Drawer::waitForSync( ) {
 	int now_time = GetNowCount( ); // 実際にかかった時間
 	int time = 1000 / FPS * _frame_count + _start_time; // 本来の時間
@@ -149,6 +157,24 @@ void Drawer::drawFormatStringCenter( float x, float y, unsigned int color, int f
 	int len = ( int )strlen( buf );
 	float gap_x = GetDrawStringWidthToHandle( buf, len, font_handle ) / 2.0f;
 	DrawStringFToHandle( x - gap_x, y, buf, color, font_handle );
+}
+
+int Drawer::getStringWidth( const char* str ) const {
+	int len = ( int )strlen( str );
+	return GetDrawStringWidth( str, len );
+}
+
+int Drawer::getStringWidth( const char* str, int font_size ) const {
+	// サイズ変更
+	int font_handle;
+	if ( _font_handles.count( font_size ) == 0 ) {
+		return 0; // フォントハンドルがない
+	}
+
+	font_handle = _font_handles.at( font_size );
+
+	int len = ( int )strlen( str );
+	return GetDrawStringWidthToHandle( str, len, font_handle );
 }
 
 void Drawer::drawSphere( const Vector& pos, float radius, int div_num, unsigned int color, bool fillflag ) {

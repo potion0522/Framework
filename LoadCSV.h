@@ -26,7 +26,7 @@ struct CsvData {
 		clear( );
 		
 		FILE* fp;
-		if ( fopen_s( &fp, file_path, "r" ) != 0 ) {
+		if ( fopen_s( &fp, file_path, "rb" ) != 0 ) {
 			// error
 			return;
 		}
