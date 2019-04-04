@@ -58,6 +58,7 @@ struct CsvData {
 
 			case EOF: // I—¹
 				loop = false;
+				row_data.push_back( word_data );
 				data.push_back( row_data );
 				break;
 
