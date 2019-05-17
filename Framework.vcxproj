@@ -23,13 +23,13 @@
     <ClInclude Include="Button.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Client.h" />
+    <ClInclude Include="CSV.h" />
     <ClInclude Include="Data.h" />
     <ClInclude Include="DirectionalLight.h" />
     <ClInclude Include="Drawer.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="Light.h" />
-    <ClInclude Include="LoadCSV.h" />
     <ClInclude Include="Manager.h" />
     <ClInclude Include="Mathematics.h" />
     <ClInclude Include="MersenneTwister.h" />

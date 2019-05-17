@@ -18,7 +18,6 @@
     <ClInclude Include="Base.h" />
     <ClInclude Include="Mathematics.h" />
     <ClInclude Include="Random.h" />
-    <ClInclude Include="LoadCSV.h" />
     <ClInclude Include="Speaker.h" />
     <ClInclude Include="Speaker2D.h" />
     <ClInclude Include="Speaker3D.h" />
@@ -26,6 +25,7 @@
     <ClInclude Include="DirectionalLight.h" />
     <ClInclude Include="SpotLight.h" />
     <ClInclude Include="PointLight.h" />
+    <ClInclude Include="CSV.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp" />
