@@ -27,7 +27,7 @@ public:
 
 public:
 	int getKeyState( const std::string& key ) const;
-	std::string getString( ) const;
+	std::string getKey( bool non_return_string = true ) const;
 	bool getKeyUp( const std::string& key ) const;
 	bool getKeyDown( const std::string& key ) const;
 

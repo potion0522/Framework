@@ -148,7 +148,7 @@ int Keyboard::getKeyState( const std::string& key ) const {
 	return result;
 }
 
-std::string Keyboard::getString( ) const {
+std::string Keyboard::getKey( bool non_return_string ) const {
 	int keycode = -1;
 	int count = -1;
 	for ( int i = 0; i < KEY_MAX; i++ ) {
@@ -180,13 +180,11 @@ std::string Keyboard::getString( ) const {
 				}
 			}
 		}
-
-		// ’P•¶šˆÈŠO‚Í•Ô‚³‚È‚¢
-		if ( input.length( ) != 1 ) {
-			input = "";
-		}
 	}
 
+	if ( non_return_string && input.length( ) > 1 ) {
+		return "";
+	}
 	return input;
 }
 
