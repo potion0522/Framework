@@ -26,6 +26,7 @@
     <ClInclude Include="SpotLight.h" />
     <ClInclude Include="PointLight.h" />
     <ClInclude Include="CSV.h" />
+    <ClInclude Include="InputString.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp" />
@@ -48,5 +49,6 @@
     <ClCompile Include="DirectionalLight.cpp" />
     <ClCompile Include="SpotLight.cpp" />
     <ClCompile Include="PointLight.cpp" />
+    <ClCompile Include="InputString.cpp" />
   </ItemGroup>
 </Project>

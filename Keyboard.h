@@ -10,6 +10,7 @@
 *******************************************/
 
 PTR( Keyboard );
+PTR( InputString );
 
 class Keyboard : public Base {
 public:
@@ -30,6 +31,8 @@ public:
 	std::string getKey( bool non_return_string = true ) const;
 	bool getKeyUp( const std::string& key ) const;
 	bool getKeyDown( const std::string& key ) const;
+
+	InputStringPtr getInputString( const int buf_size ) const;
 
 private:
 	// ƒL[ŒŸõBŒ©‚Â‚©‚Á‚½ê‡•ÏŠ·Œã‚Ì•¶š‚ª‘æ“ñˆø”‚É‘ã“ü‚³‚ê‚é

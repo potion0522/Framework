@@ -7,6 +7,8 @@
 #include "Sound.h"
 #include "Speaker.h"
 #include "Mathematics.h"
+#include "Keyboard.h"
+#include "InputString.h"
 
 #include "DxLib.h"
 
@@ -71,6 +73,10 @@ public:
 			}
 		}
 		SetGlobalAmbientLight( GetColorF( 1.0f, 0.0f, 0.0f, 1.0f ) ) ;
+
+
+		// ƒL[
+		_input = Keyboard::getTask( )->getInputString( 256 );
 	}
 
 	void update( ) {
@@ -87,13 +93,23 @@ public:
 		// draw
 		_model->draw( pos );
 
+		_input->draw( 20, 20 );
+		std::string str =  _input->getStr( );
+		if ( !_input->isActive( ) ) {
+			_input.reset( );
+			_input = Keyboard::getTask( )->getInputString( 256 );
+			_input->setStr( str.c_str( ) );
+		}
+
 		DrawerPtr drawer = Drawer::getTask( );
 		drawer->drawSphere( Vector( ), 10, 100, 0xff0000 );
+		drawer->drawFormatString( 20, 100, 0xffffff, str.c_str( ) );
 		drawer->flip( );
 	}
 
 private:
 	ModelPtr _model;
+	InputStringPtr _input;
 };
 
 
@@ -101,8 +117,10 @@ int main( ) {
 	Manager* manager = Manager::getInstance( );
 	manager->setUseZBaffur( true );
 	manager->setWriteZBaffur( true );
+	manager->setScreenSize( 1280, 720 );
 
 	manager->add( Drawer::getTag( ), BasePtr( new Drawer( "." ) ) );
+	manager->add( Keyboard::getTag( ), BasePtr( new Keyboard ) );
 	manager->add( Mouse::getTag( ), BasePtr( new Mouse ) );
 	manager->add( Camera::getTag( ), BasePtr( new Camera ) );
 	manager->add( Test::getTag( ), BasePtr( new Test ) );

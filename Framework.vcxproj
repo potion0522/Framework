@@ -28,6 +28,7 @@
     <ClInclude Include="DirectionalLight.h" />
     <ClInclude Include="Drawer.h" />
     <ClInclude Include="Image.h" />
+    <ClInclude Include="InputString.h" />
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="Manager.h" />
@@ -52,6 +53,7 @@
     <ClCompile Include="DirectionalLight.cpp" />
     <ClCompile Include="Drawer.cpp" />
     <ClCompile Include="Image.cpp" />
+    <ClCompile Include="InputString.cpp" />
     <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="Manager.cpp" />

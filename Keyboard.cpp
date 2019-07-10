@@ -1,8 +1,8 @@
 #include "Keyboard.h"
 #include "DxLib.h"
 #include "Manager.h"
-#include <errno.h>
-#include <assert.h>
+#include "InputString.h"
+
 #include <algorithm>
 
 const int KEY_MAX = 256;
@@ -243,6 +243,10 @@ bool Keyboard::getKeyDown( const std::string& key ) const {
 	}
 
 	return key_down;
+}
+
+InputStringPtr Keyboard::getInputString( const int buf_size ) const {
+	return InputStringPtr( new InputString( buf_size ) );
 }
 
 bool Keyboard::isExistKeyCode( const std::string& find_key, std::string& output ) const {
