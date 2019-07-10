@@ -17,6 +17,7 @@ public:
 	void setStr( const char* str );
 	const char* getStr( ) const;
 	bool isActive( ) const;
+	bool isInputtingIME( ) const;
 	void draw( int x, int y ) const;
 
 private:

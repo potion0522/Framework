@@ -1,6 +1,6 @@
 #include "InputString.h"
 #include "DxLib.h"
-#include <string.h>
+#include <string>
 
 InputString::InputString( const int buf_size ) :
 BUF_SIZE( buf_size + 1 ) {
@@ -46,6 +46,17 @@ bool InputString::isActive( ) const {
 	}
 
 	return result;
+}
+
+bool InputString::isInputtingIME( ) const {
+	char buf[ 256 ] = { };
+	const IMEINPUTDATA* data = GetIMEInputData( );
+
+	if ( data ) {
+		sprintf_s( buf, 256, data->InputString );
+	}
+
+	return ( ( int )strlen( buf ) != 0 );
 }
 
 void InputString::draw( int x, int y ) const {
