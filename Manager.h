@@ -1,5 +1,5 @@
 #pragma once
-#include "Base.h"
+#include "Task.h"
 #include <map>
 
 /*******************************************
@@ -19,8 +19,8 @@ public:
 public:
 	void startGame( );
 	void finalize( );
-	void add( std::string tag, BasePtr ptr );
-	BasePtr getTask( std::string tag );
+	void add( std::string tag, TaskPtr ptr );
+	TaskPtr getTask( std::string tag );
 
 private:
 	void initializeDxlib( );
@@ -46,7 +46,7 @@ public:
 
 private:
 	static Manager* _instance;
-	std::map< std::string, BasePtr > _tasks;
+	std::map< std::string, TaskPtr > _tasks;
 	
 	int _window_mode;
 	int _window_width;

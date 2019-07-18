@@ -15,7 +15,6 @@
     <ClInclude Include="Client.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Button.h" />
-    <ClInclude Include="Base.h" />
     <ClInclude Include="Mathematics.h" />
     <ClInclude Include="Random.h" />
     <ClInclude Include="Speaker.h" />
@@ -27,6 +26,7 @@
     <ClInclude Include="PointLight.h" />
     <ClInclude Include="CSV.h" />
     <ClInclude Include="InputString.h" />
+    <ClInclude Include="Task.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp" />

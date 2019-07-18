@@ -1,5 +1,5 @@
 #pragma once
-#include "Base.h"
+#include "Task.h"
 #include "Mathematics.h"
 #include <string>
 #include <unordered_map>
@@ -13,7 +13,7 @@
 PTR( Drawer );
 PTR( Image );
 
-class Drawer : public Base {
+class Drawer : public Task {
 public:
 	static DrawerPtr getTask( );
 	static std::string getTag( ) { return "DRAWER"; }

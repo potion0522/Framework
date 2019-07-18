@@ -1,5 +1,5 @@
 #pragma once
-#include "Base.h"
+#include "Task.h"
 #include <string>
 #include <array>
 /*******************************************
@@ -11,7 +11,7 @@
 PTR( Server );
 PTR( Data );
 
-class Server : public Base {
+class Server : public Task {
 public:
 	static const int MAX_MACHINES = 2;
 

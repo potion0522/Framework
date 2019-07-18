@@ -1,5 +1,5 @@
 #pragma once
-#include "Base.h"
+#include "Task.h"
 #include "Mathematics.h"
 #include <string>
 /*******************************************
@@ -10,7 +10,7 @@
 
 PTR( Mouse );
 
-class Mouse : public Base {
+class Mouse : public Task {
 public:
 	static MousePtr getTask( );
 	static std::string getTag( ) { return "MOUSE"; }

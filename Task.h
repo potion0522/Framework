@@ -1,12 +1,12 @@
 #pragma once
 #include "smart_ptr.h"
 
-PTR( Base );
+PTR( Task );
 
-class Base {
+class Task {
 public:
-	Base( ) { };
-	virtual ~Base( ) { };
+	Task( ) { };
+	virtual ~Task( ) { };
 
 	virtual void finalize( ) { };
 	virtual void initialize( ) { };

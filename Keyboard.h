@@ -1,5 +1,5 @@
 #pragma once
-#include "Base.h"
+#include "Task.h"
 #include <unordered_map>
 #include <string>
 #include <vector>
@@ -12,7 +12,7 @@
 PTR( Keyboard );
 PTR( InputString );
 
-class Keyboard : public Base {
+class Keyboard : public Task {
 public:
 	static KeyboardPtr getTask( );
 	static std::string getTag( ) { return "KEYBOARD"; }

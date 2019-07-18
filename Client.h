@@ -1,5 +1,5 @@
 #pragma once
-#include "Base.h"
+#include "Task.h"
 #include <string>
 /*******************************************
 
@@ -10,7 +10,7 @@
 PTR( Client );
 PTR( Data );
 
-class Client : public Base {
+class Client : public Task {
 private:
 	enum PHASE {
 		PHASE_READY,

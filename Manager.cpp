@@ -1,5 +1,5 @@
 #include "Manager.h"
-#include "Base.h"
+#include "Task.h"
 #include "DxLib.h"
 
 Manager* Manager::_instance = nullptr;
@@ -76,7 +76,7 @@ void Manager::startGame( ) {
 			break;	
 		}
 
-		for ( std::pair< std::string, BasePtr > task : _tasks ) {
+		for ( std::pair< std::string, TaskPtr > task : _tasks ) {
 			task.second->update( );
 		}
 	}
@@ -85,24 +85,24 @@ void Manager::startGame( ) {
 }
 
 void Manager::initializeTasks( ) {
-	for ( std::pair< std::string, BasePtr > task : _tasks ) {
+	for ( std::pair< std::string, TaskPtr > task : _tasks ) {
 		task.second->initialize( );
 	}
 }
 
 void Manager::finalizeTasks( ) {
-	for ( std::pair< std::string, BasePtr > task : _tasks ) {
+	for ( std::pair< std::string, TaskPtr > task : _tasks ) {
 		task.second->finalize( );
 	}
 }
 
-void Manager::add( std::string tag, BasePtr ptr ) {
+void Manager::add( std::string tag, TaskPtr ptr ) {
 	_tasks[ tag ] = ptr;
 }
 
-BasePtr Manager::getTask( std::string tag ) {
+TaskPtr Manager::getTask( std::string tag ) {
 	if ( _tasks.count( tag ) < 1 ) {
-		return BasePtr( );
+		return TaskPtr( );
 	}
 
 	return _tasks[ tag ];

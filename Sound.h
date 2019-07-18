@@ -1,5 +1,5 @@
 #pragma once
-#include "Base.h"
+#include "Task.h"
 #include "Mathematics.h"
 #include <string>
 /***************************************************
@@ -13,7 +13,7 @@ PTR( Sound );
 PTR( Speaker2D );
 PTR( Speaker3D );
 
-class Sound : public Base {
+class Sound : public Task {
 public:
 	static SoundPtr getTask( );
 	static std::string getTag( ) { return "SOUND"; }

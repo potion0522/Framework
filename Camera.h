@@ -1,5 +1,5 @@
 #pragma once
-#include "Base.h"
+#include "Task.h"
 #include "smart_ptr.h"
 #include "Mathematics.h"
 #include <string>
@@ -11,7 +11,7 @@
 
 PTR( Camera );
 
-class Camera : public Base {
+class Camera : public Task {
 public:
 	static CameraPtr getTask( );
 	static std::string getTag( ) { return "CAMERA"; }

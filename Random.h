@@ -1,5 +1,5 @@
 #pragma once
-#include "Base.h"
+#include "Task.h"
 #include <string>
 
 /*******************************************
@@ -11,7 +11,7 @@
 
 PTR( Random );
 
-class Random : public Base {
+class Random : public Task {
 public:
 	static RandomPtr getTask( );
 	static std::string getTag( ) { return "RANDOM"; }
