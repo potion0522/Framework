@@ -8,7 +8,6 @@
 #include "Speaker.h"
 #include "Mathematics.h"
 #include "Keyboard.h"
-#include "InputString.h"
 
 #include "DxLib.h"
 
@@ -16,7 +15,7 @@
 
 PTR( Test );
 
-class Test : public Base {
+class Test : public Task {
 public:
 	static TestPtr getTask( ) { return std::dynamic_pointer_cast< Test >( Manager::getInstance( )->getTask( getTag( ) ) ); }
 	static std::string getTag( ) { return "TEST"; }
@@ -29,102 +28,110 @@ public:
 	void initialize( ) {
 		CameraPtr camera = Camera::getTask( );
 		camera->setCameraUp( Vector( 0, 1, 0 ) );
-		camera->setCamera( Vector( 0, 0, -4 ), Vector( ) );
+		camera->setCamera( Vector( 2, 2, -1 ), Vector( ) );
 
-		// model
-		const int DIV_NUM = 50;
-		_model = ModelPtr( new Model );
-		_model->alloc( DIV_NUM * DIV_NUM * 4 );
-		_model->setTexture( Drawer::getTask( )->getImage( "texture.png" ) );
+		{
+			_floor = ModelPtr( new Model );
+			_floor->alloc( 2 );
 
-		// 縦
-		for ( int i = 0; i < DIV_NUM; i++ ) {
-			Vector r1 = Matrix::makeTransformRotation( Vector( 1, 0, 0 ), PI2 / DIV_NUM * ( ( i + 0 ) % DIV_NUM ) ).multiply( Vector( 0, 1000.0, 0 ) );
-			Vector r2 = Matrix::makeTransformRotation( Vector( 1, 0, 0 ), PI2 / DIV_NUM * ( ( i + 1 ) % DIV_NUM ) ).multiply( Vector( 0, 1000.0, 0 ) );
+			Vector vert_pos[ 4 ] = {
+				Vector( -1000, 0,  1000 ) * 0.001,
+				Vector(  1000, 0,  1000 ) * 0.001,
+				Vector( -1000, 0, -1000 ) * 0.001,
+				Vector(  1000, 0, -1000 ) * 0.001,
+			};
+			Model::Vertex vert[ 4 ] = {
+				Model::Vertex( vert_pos[ 0 ], 0, 0, Vector( 0, 1, 0 ) ),
+				Model::Vertex( vert_pos[ 1 ], 1, 0, Vector( 0, 1, 0 ) ),
+				Model::Vertex( vert_pos[ 2 ], 0, 1, Vector( 0, 1, 0 ) ),
+				Model::Vertex( vert_pos[ 3 ], 1, 1, Vector( 0, 1, 0 ) ),
+			};
 
-			// 横
-			for ( int j = 0; j < DIV_NUM * 2; j++ ) {
-				Matrix rot1 = Matrix::makeTransformRotation( Vector( 0, 1, 0 ), PI2 / DIV_NUM * 2 * ( ( j + 0 ) % ( DIV_NUM * 2 ) ) );
-				Matrix rot2 = Matrix::makeTransformRotation( Vector( 0, 1, 0 ), PI2 / DIV_NUM * 2 * ( ( j + 1 ) % ( DIV_NUM * 2 ) ) );
+			_floor->setVertex( 0, vert[ 0 ] );
+			_floor->setVertex( 1, vert[ 1 ] );
+			_floor->setVertex( 2, vert[ 2 ] );
 
-				Vector ver_pos[ 4 ] = {
-					rot1.multiply( r1 ) * 0.001, // 左上
-					rot2.multiply( r1 ) * 0.001, // 右上
-					rot1.multiply( r2 ) * 0.001, // 左下
-					rot2.multiply( r2 ) * 0.001, // 右下
-				};
+			_floor->setVertex( 3, vert[ 1 ] );
+			_floor->setVertex( 4, vert[ 3 ] );
+			_floor->setVertex( 5, vert[ 2 ] );
 
-				Model::Vertex ver[ 4 ] = {
-					Model::Vertex( ver_pos[ 0 ], 0, 0, ver_pos[ 0 ] ),
-					Model::Vertex( ver_pos[ 1 ], 0, 0, ver_pos[ 1 ] ),
-					Model::Vertex( ver_pos[ 2 ], 0, 0, ver_pos[ 2 ] ),
-					Model::Vertex( ver_pos[ 3 ], 0, 0, ver_pos[ 3 ] ),
-				};
-
-				int idx = ( i * DIV_NUM * 2 + j ) * 6;
-				_model->setVertex( idx + 0, ver[ 0 ] );
-				_model->setVertex( idx + 1, ver[ 1 ] );
-				_model->setVertex( idx + 2, ver[ 2 ] );
-
-				_model->setVertex( idx + 3, ver[ 1 ] );
-				_model->setVertex( idx + 4, ver[ 3 ] );
-				_model->setVertex( idx + 5, ver[ 2 ] );
-
-			}
+			_floor->setTexture( Drawer::getTask( )->getImage( "texture.png" ) );
 		}
-		SetGlobalAmbientLight( GetColorF( 1.0f, 0.0f, 0.0f, 1.0f ) ) ;
 
+		{
+			_obj = ModelPtr( new Model );
+			_obj->alloc( 2 );
 
-		// キー
-		_input = Keyboard::getTask( )->getInputString( 256 );
+			Vector vert_pos[ 4 ] = {
+				( Vector( -250,  250, 0 ) ) * 0.001,
+				( Vector(  250,  250, 0 ) ) * 0.001,
+				( Vector( -250, -250, 0 ) ) * 0.001,
+				( Vector(  250, -250, 0 ) ) * 0.001,
+			};
+			Model::Vertex vert[ 4 ] = {
+				Model::Vertex( vert_pos[ 0 ], 0, 0, Vector( 0, 1, 0 ) ),
+				Model::Vertex( vert_pos[ 1 ], 1.0f / 3, 0, Vector( 0, 1, 0 ) ),
+				Model::Vertex( vert_pos[ 2 ], 0, 1.0f / 4, Vector( 0, 1, 0 ) ),
+				Model::Vertex( vert_pos[ 3 ], 1.0f / 3, 1.0f / 4, Vector( 0, 1, 0 ) ),
+			};
+
+			_obj->setVertex( 0, vert[ 0 ] );
+			_obj->setVertex( 1, vert[ 1 ] );
+			_obj->setVertex( 2, vert[ 2 ] );
+
+			_obj->setVertex( 3, vert[ 1 ] );
+			_obj->setVertex( 4, vert[ 3 ] );
+			_obj->setVertex( 5, vert[ 2 ] );
+
+			_obj->setTexture( Drawer::getTask( )->getImage( "hone.png" ) );
+		}
+
+		_shadow_map_handle = MakeShadowMap( 512, 512 );
+		SetShadowMapLightDirection( _shadow_map_handle, VGet( 0, -1, 1 ) );
+		SetShadowMapDrawArea( _shadow_map_handle, VGet( -1, -1, -1 ), VGet( 1, 1, 1 ) );
 	}
 
 	void update( ) {
-		static int cnt;
+		static int cnt = 0;
 		cnt++;
+		Vector pos = Vector( 1000 - cnt, 250, -0 ) * 0.001;
 
 
-		Vector pos = Vector( cnt * 10, 0, cnt * 10 ) * 0.001;
-		Camera::getTask( )->setCamera( pos - Vector( 0, 0, 4000 ) * 0.001, pos + Vector( 0, 0, 1 ) * 0.001 );
+		ShadowMap_DrawSetup( _shadow_map_handle );
+		_obj->draw( pos );
+		ShadowMap_DrawEnd( );
 
-		Vector light_pos = Vector( 0, 1000, -1000 ) * 0.001;
-		Vector dir = ( pos - light_pos ).normalize( );
-
-		// draw
-		_model->draw( pos );
-
-		_input->draw( 20, 20 );
-		std::string str =  _input->getStr( );
-		if ( !_input->isActive( ) ) {
-			_input.reset( );
-			_input = Keyboard::getTask( )->getInputString( 256 );
-			_input->setStr( str.c_str( ) );
-		}
+		SetUseShadowMap( 0, _shadow_map_handle );
+		_obj->draw( pos );
+		_floor->draw( );
+		SetUseShadowMap( 0, -1 );
 
 		DrawerPtr drawer = Drawer::getTask( );
-		drawer->drawSphere( Vector( ), 10, 100, 0xff0000 );
-		drawer->drawFormatString( 20, 100, 0xffffff, str.c_str( ) );
+		drawer->drawSphere( Vector( ), 0.1f, 50, 0xff0000, true );
 		drawer->flip( );
 	}
 
 private:
-	ModelPtr _model;
-	InputStringPtr _input;
+	ModelPtr _obj;
+	ModelPtr _floor;
+	int _shadow_map_handle;
 };
 
 
 int main( ) {
 	Manager* manager = Manager::getInstance( );
+	manager->setScreenSize( 1280, 720 );
 	manager->setUseZBaffur( true );
 	manager->setWriteZBaffur( true );
-	manager->setScreenSize( 1280, 720 );
+	manager->setUseLighting( true );
+	manager->setUseLightTypeDir( true, 0, -1, 0 );
 
-	manager->add( Drawer::getTag( ), BasePtr( new Drawer( "." ) ) );
-	manager->add( Keyboard::getTag( ), BasePtr( new Keyboard ) );
-	manager->add( Mouse::getTag( ), BasePtr( new Mouse ) );
-	manager->add( Camera::getTag( ), BasePtr( new Camera ) );
-	manager->add( Test::getTag( ), BasePtr( new Test ) );
-	manager->add( Sound::getTag( ), BasePtr( new Sound( "." ) ) );
+	manager->add( Drawer::getTag( )  , TaskPtr( new Drawer( "." ) ) );
+	manager->add( Keyboard::getTag( ), TaskPtr( new Keyboard ) );
+	manager->add( Mouse::getTag( )   , TaskPtr( new Mouse ) );
+	manager->add( Camera::getTag( )  , TaskPtr( new Camera ) );
+	manager->add( Test::getTag( )    , TaskPtr( new Test ) );
+	manager->add( Sound::getTag( )   , TaskPtr( new Sound( "." ) ) );
 
 	return 0;
 }
