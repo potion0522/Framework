@@ -87,8 +87,11 @@ public:
 		}
 
 		_shadow_map_handle = MakeShadowMap( 512, 512 );
+		_shadow_map_handle_tmp = MakeShadowMap( 512, 512 );
 		SetShadowMapLightDirection( _shadow_map_handle, VGet( 0, -1, 1 ) );
+		SetShadowMapLightDirection( _shadow_map_handle_tmp, VGet( 0, -1, 1 ) );
 		SetShadowMapDrawArea( _shadow_map_handle, VGet( -1, -1, -1 ), VGet( 1, 1, 1 ) );
+		SetShadowMapDrawArea( _shadow_map_handle_tmp, VGet( -1, -1, -1 ), VGet( 1, 1, 1 ) );
 	}
 
 	void update( ) {
@@ -101,13 +104,20 @@ public:
 		_obj->draw( pos );
 		ShadowMap_DrawEnd( );
 
-		SetUseShadowMap( 0, _shadow_map_handle );
+		DrawerPtr drawer = Drawer::getTask( );
+		ShadowMap_DrawSetup( _shadow_map_handle_tmp );
+		drawer->drawSphere( Vector( ), 0.1f, 50, 0xff0000, true );
+		ShadowMap_DrawEnd( );
+
 		_obj->draw( pos );
+
+		SetUseShadowMap( 0, _shadow_map_handle );
+		_floor->draw( );
+		SetUseShadowMap( 0, -1 );
+		SetUseShadowMap( 0, _shadow_map_handle_tmp );
 		_floor->draw( );
 		SetUseShadowMap( 0, -1 );
 
-		DrawerPtr drawer = Drawer::getTask( );
-		drawer->drawSphere( Vector( ), 0.1f, 50, 0xff0000, true );
 		drawer->flip( );
 	}
 
@@ -115,6 +125,7 @@ private:
 	ModelPtr _obj;
 	ModelPtr _floor;
 	int _shadow_map_handle;
+	int _shadow_map_handle_tmp;
 };
 
 

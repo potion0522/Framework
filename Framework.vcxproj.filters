@@ -27,6 +27,7 @@
     <ClInclude Include="CSV.h" />
     <ClInclude Include="InputString.h" />
     <ClInclude Include="Task.h" />
+    <ClInclude Include="ShadowDrawer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp" />
@@ -50,5 +51,6 @@
     <ClCompile Include="SpotLight.cpp" />
     <ClCompile Include="PointLight.cpp" />
     <ClCompile Include="InputString.cpp" />
+    <ClCompile Include="ShadowDrawer.cpp" />
   </ItemGroup>
 </Project>

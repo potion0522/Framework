@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ShadowDrawer.h" />
     <ClInclude Include="Task.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="Camera.h" />
@@ -62,6 +63,7 @@
     <ClCompile Include="PointLight.cpp" />
     <ClCompile Include="Random.cpp" />
     <ClCompile Include="Server.cpp" />
+    <ClCompile Include="ShadowDrawer.cpp" />
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="Speaker.cpp" />
     <ClCompile Include="Speaker2D.cpp" />
