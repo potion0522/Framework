@@ -87,7 +87,9 @@ public:
 			_obj->setTexture( Drawer::getTask( )->getImage( "hone.png" ) );
 		}
 
-		ShadowDrawer::getTask( )->setLightDir( ShadowDrawer::MAP_TYPE_DYNAMIC_OBJ, Vector( 0, -1, 1 ) );
+		ShadowDrawerPtr shadow = ShadowDrawer::getTask( );
+		shadow->setLightDir( ShadowDrawer::MAP_1, Vector( 0, -1, 1 ) );
+		shadow->setLightDir( ShadowDrawer::MAP_2, Vector( 0, -1, -1 ) );
 	}
 
 	void update( ) {
@@ -95,17 +97,24 @@ public:
 		cnt++;
 		Vector pos = Vector( 1000 - cnt, 250, -0 ) * 0.001;
 		ShadowDrawerPtr shadow = ShadowDrawer::getTask( );
-		shadow->setDrawArea( ShadowDrawer::MAP_TYPE_DYNAMIC_OBJ, Vector( -1, -1, -1 ), Vector( 1, 1, 1 ) );
+		shadow->setDrawArea( ShadowDrawer::MAP_1, Vector( -1, -1, -1 ), Vector( 1, 1, 1 ) );
+		shadow->setDrawArea( ShadowDrawer::MAP_2, Vector( -1, -1, -1 ), Vector( 1, 1, 1 ) );
 
-		shadow->setUpDrawShadowMap( ShadowDrawer::MAP_TYPE_DYNAMIC_OBJ );
+		shadow->setUpDrawShadowMap( ShadowDrawer::MAP_1 );
 		_obj->draw( pos );
 		shadow->endDrawShadowMap( );
 
-		shadow->useShadowMap( ShadowDrawer::MAP_TYPE_DYNAMIC_OBJ );
+		shadow->setUpDrawShadowMap( ShadowDrawer::MAP_2 );
+		_obj->draw( pos );
+		shadow->endDrawShadowMap( );
+
+
+		shadow->useShadowMap( );
+
 		_floor->draw( );
 		shadow->endUseShadowMap( );
-		_obj->draw( pos );
 
+		_obj->draw( pos );
 
 		DrawerPtr drawer = Drawer::getTask( );
 		drawer->drawSphere( Vector( ), 0.1f, 50, 0xff0000, true );
@@ -115,8 +124,6 @@ public:
 private:
 	ModelPtr _obj;
 	ModelPtr _floor;
-	int _shadow_map_handle;
-	int _shadow_map_handle_tmp;
 };
 
 
@@ -134,7 +141,7 @@ int main( ) {
 	manager->add( Camera::getTag( )  , TaskPtr( new Camera ) );
 	manager->add( Test::getTag( )    , TaskPtr( new Test ) );
 	manager->add( Sound::getTag( )   , TaskPtr( new Sound( "." ) ) );
-	manager->add( ShadowDrawer::getTag( )   , TaskPtr( new ShadowDrawer( Vector( 512, 512 ) ) ) );
+	manager->add( ShadowDrawer::getTag( )   , TaskPtr( new ShadowDrawer( Vector( 512, 512 ), Vector( 512, 512 ) ) ) );
 
 	return 0;
 }

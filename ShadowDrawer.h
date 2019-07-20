@@ -19,8 +19,8 @@ PTR( ShadowDrawer );
 class ShadowDrawer : public Task {
 public:
 	enum MAP_TYPE {
-		MAP_TYPE_DYNAMIC_OBJ,
-		MAP_TYPE_STATIC_OBJ,
+		MAP_1,
+		MAP_2,
 		MAP_TYPE_NONE,
 		MAX_MAP_TYPE
 	};
@@ -42,11 +42,10 @@ public:
 	void setDrawArea( MAP_TYPE type, const Vector& min, const Vector& max );
 	void setUpDrawShadowMap( MAP_TYPE type );
 	void endDrawShadowMap( );
-	void useShadowMap( MAP_TYPE type );
+	void useShadowMap( );
 	void endUseShadowMap( );
 
 private:
-	void setUseType( MAP_TYPE type );
 	void assertSetUpDrawShadowMap( );
 	void assertUseShadowMap( );
 
