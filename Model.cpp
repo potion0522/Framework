@@ -51,6 +51,13 @@ void Model::setTransparent( bool flag ) {
 	_transparent = flag;
 }
 
+void Model::setAlpha( int alpha ) {
+	for ( int i = 0; i < ( int )_model->_polygon_num * 3; i++ ) {
+		_model->origin[ i ].dif.a = alpha;
+		_model->view  [ i ].dif.a = alpha;
+	}
+}
+
 void Model::draw( const Vector &pos, const Matrix &mat ) const {
 	Matrix trans_matrix = Matrix::makeTransformTranslation( pos );
 	Matrix all_matrix   = mat * trans_matrix;

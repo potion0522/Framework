@@ -21,7 +21,12 @@ _screen_width( DEFAULT_GRAPH_WIDTH ),
 _screen_height( DEFAULT_GRAPH_HEIGHT ),
 _draw_screen( DX_SCREEN_BACK ),
 _camera_near( DEFAULT_CAMERA_NEAR ),
-_camera_far( DEFAULT_CAMERA_FAR ) {
+_camera_far( DEFAULT_CAMERA_FAR ),
+_use_back_culling( FALSE ),
+_use_lighting( FALSE ),
+_enable_lighting( FALSE ),
+_use_z_buffer( FALSE ),
+_write_z_buffer( FALSE ) {
 	SetGraphMode( _screen_width, _screen_height, 32 );
 	SetDoubleStartValidFlag( TRUE );
 	SetAlwaysRunFlag( TRUE );
@@ -62,9 +67,9 @@ void Manager::initializeDxlib( ) {
 	SetAlwaysRunFlag( TRUE );
 	SetDrawScreen( _draw_screen );
 
-	SetUseBackCulling( FALSE );
-	SetUseLighting( FALSE );
-	SetLightEnable( FALSE );
+	SetUseBackCulling( _use_back_culling );
+	SetUseLighting( _use_lighting );
+	SetLightEnable( _enable_lighting );
 }
 
 void Manager::startGame( ) {
@@ -116,6 +121,12 @@ void Manager::setWindowSize( int width, int height ) {
 }
 
 void Manager::setScreenSize( int width, int height ) {
+	/*************************************
+	
+		ライトの向きはリセットされる
+
+	*************************************/
+
 	_screen_width  = width;
 	_screen_height = height;
 
@@ -125,29 +136,29 @@ void Manager::setScreenSize( int width, int height ) {
 }
 
 void Manager::setUseBackCulling( bool flag ) {
-	int flag_int = flag ? TRUE : FALSE;
-	SetUseBackCulling( flag_int );
+	_use_back_culling = flag ? TRUE : FALSE;
+	SetUseBackCulling( _use_back_culling );
 }
 
 void Manager::setUseZBaffur( bool flag ) {
-	int flag_int = flag ? TRUE : FALSE;
-	SetUseZBuffer3D( flag_int );
+	_use_z_buffer = flag ? TRUE : FALSE;
+	SetUseZBuffer3D( _use_z_buffer );
 }
 
 void Manager::setWriteZBaffur( bool flag ) {
-	int flag_int = flag ? TRUE : FALSE;
-	SetWriteZBuffer3D( flag_int );
+	_write_z_buffer = flag ? TRUE : FALSE;
+	SetWriteZBuffer3D( _write_z_buffer );
 }
 
 void Manager::setUseLighting( bool flag ) {
-	int flag_int = flag ? TRUE : FALSE;
-	SetUseLighting( flag_int );
+	_use_lighting = flag ? TRUE : FALSE;
+	SetUseLighting( _use_lighting );
 }
 
 void Manager::setUseLightTypeDir( bool flag, float dir_x, float dir_y, float dir_z ) {
-	int flag_int = flag ? TRUE : FALSE;
-	SetLightEnable( flag_int );
-	if ( flag ) {
+	_enable_lighting = flag ? TRUE : FALSE;
+	SetLightEnable( _enable_lighting );
+	if ( _enable_lighting ) {
 		ChangeLightTypeDir( VGet( dir_x, dir_y, dir_z ) );
 	}
 }

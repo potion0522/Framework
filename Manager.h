@@ -54,6 +54,11 @@ private:
 	int _screen_width;
 	int _screen_height;
 	int _draw_screen;
+	int _use_back_culling;
+	int _use_z_buffer;
+	int _write_z_buffer;
+	int _use_lighting;
+	int _enable_lighting;
 	float _camera_near;
 	float _camera_far;
 };

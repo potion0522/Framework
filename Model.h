@@ -71,6 +71,7 @@ public:
 	void setVertex( int vertex_num, Vertex in_vertex );
 	void setTexture( ImageConstPtr texture );
 	void setTransparent( bool flag );
+	void setAlpha( int alpha );
 
 public:
 	void draw( const Vector &pos, const Matrix &mat = Matrix( ) ) const;
