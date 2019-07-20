@@ -108,9 +108,7 @@ public:
 		_obj->draw( pos );
 		shadow->endDrawShadowMap( );
 
-
 		shadow->useShadowMap( );
-
 		_floor->draw( );
 		shadow->endUseShadowMap( );
 

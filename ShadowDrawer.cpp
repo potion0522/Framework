@@ -19,6 +19,9 @@ _use_shadow_map( false ) {
 }
 
 ShadowDrawer::~ShadowDrawer( ) {
+	for ( int i = 0; i < MAX_MAP_TYPE; i++ ) {
+		DeleteShadowMap( _handles[ i ] );
+	}
 }
 
 void ShadowDrawer::initialize( ) {
