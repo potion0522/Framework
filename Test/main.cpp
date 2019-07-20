@@ -8,6 +8,7 @@
 #include "Speaker.h"
 #include "Mathematics.h"
 #include "Keyboard.h"
+#include "ShadowDrawer.h"
 
 #include "DxLib.h"
 
@@ -86,38 +87,28 @@ public:
 			_obj->setTexture( Drawer::getTask( )->getImage( "hone.png" ) );
 		}
 
-		_shadow_map_handle = MakeShadowMap( 512, 512 );
-		_shadow_map_handle_tmp = MakeShadowMap( 512, 512 );
-		SetShadowMapLightDirection( _shadow_map_handle, VGet( 0, -1, 1 ) );
-		SetShadowMapLightDirection( _shadow_map_handle_tmp, VGet( 0, -1, 1 ) );
-		SetShadowMapDrawArea( _shadow_map_handle, VGet( -1, -1, -1 ), VGet( 1, 1, 1 ) );
-		SetShadowMapDrawArea( _shadow_map_handle_tmp, VGet( -1, -1, -1 ), VGet( 1, 1, 1 ) );
+		ShadowDrawer::getTask( )->setLightDir( ShadowDrawer::MAP_TYPE_DYNAMIC_OBJ, Vector( 0, -1, 1 ) );
 	}
 
 	void update( ) {
 		static int cnt = 0;
 		cnt++;
 		Vector pos = Vector( 1000 - cnt, 250, -0 ) * 0.001;
+		ShadowDrawerPtr shadow = ShadowDrawer::getTask( );
+		shadow->setDrawArea( ShadowDrawer::MAP_TYPE_DYNAMIC_OBJ, Vector( -1, -1, -1 ), Vector( 1, 1, 1 ) );
 
-
-		ShadowMap_DrawSetup( _shadow_map_handle );
+		shadow->setUpDrawShadowMap( ShadowDrawer::MAP_TYPE_DYNAMIC_OBJ );
 		_obj->draw( pos );
-		ShadowMap_DrawEnd( );
+		shadow->endDrawShadowMap( );
+
+		shadow->useShadowMap( ShadowDrawer::MAP_TYPE_DYNAMIC_OBJ );
+		_floor->draw( );
+		shadow->endUseShadowMap( );
+		_obj->draw( pos );
+
 
 		DrawerPtr drawer = Drawer::getTask( );
-		ShadowMap_DrawSetup( _shadow_map_handle_tmp );
 		drawer->drawSphere( Vector( ), 0.1f, 50, 0xff0000, true );
-		ShadowMap_DrawEnd( );
-
-		_obj->draw( pos );
-
-		SetUseShadowMap( 0, _shadow_map_handle );
-		_floor->draw( );
-		SetUseShadowMap( 0, -1 );
-		SetUseShadowMap( 0, _shadow_map_handle_tmp );
-		_floor->draw( );
-		SetUseShadowMap( 0, -1 );
-
 		drawer->flip( );
 	}
 
@@ -143,6 +134,7 @@ int main( ) {
 	manager->add( Camera::getTag( )  , TaskPtr( new Camera ) );
 	manager->add( Test::getTag( )    , TaskPtr( new Test ) );
 	manager->add( Sound::getTag( )   , TaskPtr( new Sound( "." ) ) );
+	manager->add( ShadowDrawer::getTag( )   , TaskPtr( new ShadowDrawer( Vector( 512, 512 ) ) ) );
 
 	return 0;
 }

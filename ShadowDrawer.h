@@ -34,8 +34,8 @@ public:
 	virtual ~ShadowDrawer( );
 
 public:
-	void initialize( ) override;
-	void update( ) override;
+	virtual void initialize( ) override;
+	virtual void update( ) override;
 
 public:
 	void setLightDir( MAP_TYPE type, const Vector& dir );

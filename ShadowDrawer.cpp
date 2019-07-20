@@ -9,7 +9,9 @@ ShadowDrawerPtr ShadowDrawer::getTask( ) {
 }
 
 ShadowDrawer::ShadowDrawer( const Vector& dynamic_obj_map_size, const Vector& static_obj_map_size ) :
-_last_use_type( MAP_TYPE_NONE ) {
+_last_use_type( MAP_TYPE_NONE ),
+_set_up_draw_shadow_map( false ),
+_use_shadow_map( false ) {
 	_handles[ MAP_TYPE_DYNAMIC_OBJ ] = MakeShadowMap( ( int )dynamic_obj_map_size.x, ( int )dynamic_obj_map_size.y );
 	_handles[ MAP_TYPE_STATIC_OBJ  ] = MakeShadowMap( ( int )static_obj_map_size.x , ( int )static_obj_map_size.y );
 	setLightDir( MAP_TYPE_DYNAMIC_OBJ, Vector( 0, -1, 0 ) );
