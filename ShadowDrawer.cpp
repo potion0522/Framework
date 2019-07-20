@@ -78,7 +78,9 @@ void ShadowDrawer::useShadowMap( ) {
 }
 
 void ShadowDrawer::endUseShadowMap( ) {
-	SetUseShadowMap( _last_use_type, -1 );
+	for ( int i = 0; i < MAX_MAP_TYPE; i++ ) {
+		SetUseShadowMap( i, -1 );
+	}
 	_use_shadow_map = false;
 }
 

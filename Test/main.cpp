@@ -38,8 +38,8 @@ public:
 			Vector vert_pos[ 4 ] = {
 				Vector( -1000, 0,  1000 ) * 0.001,
 				Vector(  1000, 0,  1000 ) * 0.001,
-				Vector( -1000, 0, -1000 ) * 0.001,
-				Vector(  1000, 0, -1000 ) * 0.001,
+				Vector( -1000, 0,     0 ) * 0.001,
+				Vector(  1000, 0,     0 ) * 0.001,
 			};
 			Model::Vertex vert[ 4 ] = {
 				Model::Vertex( vert_pos[ 0 ], 0, 0, Vector( 0, 1, 0 ) ),
@@ -57,6 +57,34 @@ public:
 			_floor->setVertex( 5, vert[ 2 ] );
 
 			_floor->setTexture( Drawer::getTask( )->getImage( "texture.png" ) );
+		}
+
+		{
+			_floor2 = ModelPtr( new Model );
+			_floor2->alloc( 2 );
+
+			Vector vert_pos[ 4 ] = {
+				Vector( -1000, 0,     0 ) * 0.001,
+				Vector(  1000, 0,     0 ) * 0.001,
+				Vector( -1000, 0, -1000 ) * 0.001,
+				Vector(  1000, 0, -1000 ) * 0.001,
+			};
+			Model::Vertex vert[ 4 ] = {
+				Model::Vertex( vert_pos[ 0 ], 0, 0, Vector( 0, 1, 0 ), Model::Color( 200, 0, 0, 255 ) ),
+				Model::Vertex( vert_pos[ 1 ], 1, 0, Vector( 0, 1, 0 ), Model::Color( 200, 0, 0, 255 ) ),
+				Model::Vertex( vert_pos[ 2 ], 0, 1, Vector( 0, 1, 0 ), Model::Color( 200, 0, 0, 255 ) ),
+				Model::Vertex( vert_pos[ 3 ], 1, 1, Vector( 0, 1, 0 ), Model::Color( 200, 0, 0, 255 ) ),
+			};
+
+			_floor2->setVertex( 0, vert[ 0 ] );
+			_floor2->setVertex( 1, vert[ 1 ] );
+			_floor2->setVertex( 2, vert[ 2 ] );
+
+			_floor2->setVertex( 3, vert[ 1 ] );
+			_floor2->setVertex( 4, vert[ 3 ] );
+			_floor2->setVertex( 5, vert[ 2 ] );
+
+			_floor2->setTexture( Drawer::getTask( )->getImage( "texture.png" ) );
 		}
 
 		{
@@ -109,7 +137,12 @@ public:
 		shadow->endDrawShadowMap( );
 
 		shadow->useShadowMap( );
+
 		_floor->draw( );
+		shadow->endUseShadowMap( );
+
+		shadow->useShadowMap( );
+		_floor2->draw( );
 		shadow->endUseShadowMap( );
 
 		_obj->draw( pos );
@@ -122,6 +155,7 @@ public:
 private:
 	ModelPtr _obj;
 	ModelPtr _floor;
+	ModelPtr _floor2;
 };
 
 
