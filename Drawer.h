@@ -39,6 +39,7 @@ public:
 	void drawFormatStringCenter( float x, float y, unsigned int color, const char* str, ... );
 	void drawFormatStringCenter( float x, float y, unsigned int color, int font_size, const char* str, ... );
 
+	float getFps( ) const;
 	int getStringWidth( const char* str ) const;
 	int getStringWidth( const char* str, int font_size ) const;
 

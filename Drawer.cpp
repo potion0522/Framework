@@ -159,6 +159,10 @@ void Drawer::drawFormatStringCenter( float x, float y, unsigned int color, int f
 	DrawStringFToHandle( x - gap_x, y, buf, color, font_handle );
 }
 
+float Drawer::getFps( ) const {
+	return _fps;
+}
+
 int Drawer::getStringWidth( const char* str ) const {
 	int len = ( int )strlen( str );
 	return GetDrawStringWidth( str, len );
