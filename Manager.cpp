@@ -14,6 +14,8 @@ const float DEFAULT_CAMERA_NEAR = 1.0f;
 const float DEFAULT_CAMERA_FAR  = 50.0f;
 
 Manager::Manager( ) :
+_past_milli_time( 0 ),
+_delta_time( 0 ),
 _window_mode( TRUE ),
 _window_width( DEFAULT_SCREEN_WIDTH ),
 _window_height( DEFAULT_SCREEN_HEIGHT ),
@@ -84,6 +86,10 @@ void Manager::startGame( ) {
 		for ( std::pair< std::string, TaskPtr > task : _tasks ) {
 			task.second->update( );
 		}
+
+		int now_time = GetNowCount( );
+		_delta_time = now_time - _past_milli_time;
+		_past_milli_time = now_time;
 	}
 
 	finalizeTasks( );
@@ -194,4 +200,8 @@ int Manager::getScreenHeight( ) const {
 
 int Manager::getNowCount( ) const {
 	return GetNowCount( );
+}
+
+int Manager::getDeltaTime( ) const {
+	return _delta_time;
 }

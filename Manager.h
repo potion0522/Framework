@@ -43,11 +43,15 @@ public:
 	int getScreenWidth ( ) const;
 	int getScreenHeight( ) const;
 	int getNowCount( ) const; // ƒ~ƒŠ•b‚ð•Ô‚·
+	int getDeltaTime( ) const; // ƒ~ƒŠ•b‚ð•Ô‚·
 
 private:
 	static Manager* _instance;
 	std::map< std::string, TaskPtr > _tasks;
 	
+	int _past_milli_time;
+	int _delta_time;
+
 	int _window_mode;
 	int _window_width;
 	int _window_height;
