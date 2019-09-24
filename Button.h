@@ -5,6 +5,7 @@
 /*******************************************
 
 ボタン機能をまとめたクラス
+※事前にDrawerとMouseをManagerにaddしておく必要がある
 
 *******************************************/
 
@@ -35,7 +36,7 @@ public:
 	void setAlpha( unsigned char alpha );
 	void setRotate( double radian );
 
-	// 当たり判定の幅
+	// 当たり判定の幅(Defaultは画像サイズ)
 	void setCollisionSize( int width, int height );
 
 	// ボタンイメージ
