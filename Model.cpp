@@ -58,6 +58,15 @@ void Model::setAlpha( int alpha ) {
 	}
 }
 
+void Model::setUV( int vertex_num, float u, float v ) {
+	VERTEX3D vertex = _model->origin[ vertex_num ];
+	vertex.u = u;
+	vertex.v = v;
+
+	_model->origin[ vertex_num ] = vertex;
+	_model->view  [ vertex_num ] = vertex;
+}
+
 void Model::draw( const Vector &pos, const Matrix &mat ) const {
 	Matrix trans_matrix = Matrix::makeTransformTranslation( pos );
 	Matrix all_matrix   = mat * trans_matrix;
