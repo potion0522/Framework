@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ModelMV1.h" />
     <ClInclude Include="ShadowDrawer.h" />
     <ClInclude Include="Task.h" />
     <ClInclude Include="Button.h" />
@@ -59,6 +60,7 @@
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="Manager.cpp" />
     <ClCompile Include="Model.cpp" />
+    <ClCompile Include="ModelMV1.cpp" />
     <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="PointLight.cpp" />
     <ClCompile Include="Random.cpp" />
