@@ -44,6 +44,8 @@ _write_z_buffer( FALSE ) {
 
 	DxLib_Init( );
 	initializeDxlib( );
+
+	_past_milli_time = getNowCount( );
 }
 
 Manager::~Manager( ) {
@@ -202,6 +204,6 @@ int Manager::getNowCount( ) const {
 	return GetNowCount( );
 }
 
-int Manager::getDeltaTime( ) const {
+int Manager::getDeltaMilliTime( ) const {
 	return _delta_time;
 }

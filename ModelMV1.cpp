@@ -45,6 +45,10 @@ void ModelMV1::setRotate( const Vector& radian ) {
 	MV1SetRotationXYZ( _handle, VGet( ( float )radian.x, ( float )radian.y, ( float )radian.z ) );
 }
 
+void ModelMV1::setDifMaterialColor( int mat_idx, float r, float g, float b, float a ) {
+	MV1SetMaterialDifColor( _handle, mat_idx, GetColorF( r, g, b, a ) );
+}
+
 void ModelMV1::draw( ) const {
 	MV1DrawModel( _handle );
 }

@@ -10,6 +10,8 @@
 
 #include <string>
 
+#include "Book.h"
+
 PTR( Test );
 
 class Test : public Task {
@@ -24,31 +26,27 @@ public:
 public:
 	void initialize( ) {
 		CameraPtr camera = Camera::getTask( );
-		camera->setCameraUp( Vector( 0, 1, 0 ) );
-		camera->setCamera( Vector( 0, 1, -3 ), Vector( ) );
+		camera->setCameraUp( Vector( 0, 0, 1 ) );
+		camera->setCamera( Vector( 0, 1, -2 ), Vector( ) );
 		camera->setNearFar( 0.1f, 500.0f );
 
-		_model = ModelMV1Ptr( new ModelMV1 );
-		_model->load( "model/old_wooden_table.mv1" );
-		_model->setTexture( "texture/owt_bump.png", 0 );
-		_model->setScale( Vector( 0.01, 0.01, 0.01 ) );
+		_book = BookPtr( new Book );
 	}
 
 	void update( ) {
 		static int c = 0;
 		c++;
-		_model->setRotate( Vector( PI2 * 0.01 * c, PI2 * 0.01 * c, PI2 * 0.01 * c ) );
-		_model->setPos( Vector( c * 0.001, 0, 0 ) );
-		_model->draw( );
+		_book->update( );
+		_book->draw( );
 
 		DrawerPtr drawer = Drawer::getTask( );
 		drawer->drawSphere( Vector( ), 10.0f, 50, 0xff0000, false );
-		drawer->drawSphere( Vector( ), 0.1f, 50, 0x00ff00, true );
+		drawer->drawSphere( Vector( ), 0.5f , 50, 0x00ff00, true );
 		drawer->flip( );
 	}
 
 private:
-	ModelMV1Ptr _model;
+	BookPtr _book;
 };
 
 
@@ -57,8 +55,8 @@ int main( ) {
 	manager->setScreenSize( 1280, 720 );
 	manager->setUseZBaffur( true );
 	manager->setWriteZBaffur( true );
-	manager->setUseLighting( true );
-	manager->setUseLightTypeDir( true, 0, -1, 0 );
+	//manager->setUseLighting( true );
+	//manager->setUseLightTypeDir( true, 0, -1, 0 );
 
 	manager->add( Drawer::getTag( )  , TaskPtr( new Drawer( "." ) ) );
 	manager->add( Keyboard::getTag( ), TaskPtr( new Keyboard ) );

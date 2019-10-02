@@ -43,7 +43,7 @@ public:
 	int getScreenWidth ( ) const;
 	int getScreenHeight( ) const;
 	int getNowCount( ) const; // ƒ~ƒŠ•b‚ğ•Ô‚·
-	int getDeltaTime( ) const; // ƒ~ƒŠ•b‚ğ•Ô‚·
+	int getDeltaMilliTime( ) const; // ƒ~ƒŠ•b‚ğ•Ô‚·
 
 private:
 	static Manager* _instance;

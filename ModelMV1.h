@@ -15,6 +15,7 @@ public:
 	void setPos( const Vector& pos );
 	void setScale( const Vector& scale );
 	void setRotate( const Vector& radian );
+	void setDifMaterialColor( int mat_idx, float r, float g, float b, float a );
 	void draw( ) const;
 
 private:
