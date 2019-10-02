@@ -19,7 +19,9 @@ _time( 0 ) {
 		_book_left = ModelMV1Ptr( new ModelMV1 );
 		_book_left->load( BOOK_MODEL_LEFT );
 		_book_left->setTexture( BOOK_TEXTURE, 0 );
-		_book_left->setScale( Vector( SCALE, SCALE, SCALE ) );
+		Vector size = _book_left->getOriginMeterSize( ) * 1000;
+		Vector adjust = Vector( 2000 / size.x, 1, 3000 / size.z );
+		_book_left->setScale( adjust );
 		_book_left->setDifMaterialColor( 0, 1, 1, 1, 1 );
 	}
 
@@ -27,7 +29,9 @@ _time( 0 ) {
 		_book_right = ModelMV1Ptr( new ModelMV1 );
 		_book_right->load( BOOK_MODEL_RIGHT );
 		_book_right->setTexture( BOOK_TEXTURE, 0 );
-		_book_right->setScale( Vector( SCALE, SCALE, SCALE ) );
+		Vector size = _book_right->getOriginMeterSize( ) * 1000;
+		Vector adjust = Vector( 2000 / size.x, 1, 3000 / size.z );
+		_book_right->setScale( adjust );
 		_book_right->setRotate( Vector( 0, 0, PI ) );
 		_book_right->setPos( Vector( 0, ADJUST_OPEN_BOOK_Y, 0 ) * 0.001 );
 		_book_right->setDifMaterialColor( 0, 1, 1, 1, 1 );
@@ -103,6 +107,10 @@ void Book::setClose( ) {
 
 void Book::setOpen( ) {
 	setAnim( ANIM_OPENING );
+}
+
+Vector Book::getSize( ) const {
+	return _book_left->getOriginMeterSize( );
 }
 
 void Book::setAnim( ANIM anim ) {

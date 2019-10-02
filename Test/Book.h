@@ -1,5 +1,6 @@
 #pragma once
 #include "smart_ptr.h"
+#include "Mathematics.h"
 
 PTR( Book );
 PTR( ModelMV1 );
@@ -28,6 +29,7 @@ public:
 	void draw( ) const;
 	void setClose( );
 	void setOpen( );
+	Vector getSize( ) const;
 
 private:
 	void actOnClosing( );

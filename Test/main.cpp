@@ -27,7 +27,7 @@ public:
 	void initialize( ) {
 		CameraPtr camera = Camera::getTask( );
 		camera->setCameraUp( Vector( 0, 0, 1 ) );
-		camera->setCamera( Vector( 0, 1, -2 ), Vector( ) );
+		camera->setCamera( Vector( 0, 5, 0 ), Vector( ) );
 		camera->setNearFar( 0.1f, 500.0f );
 
 		_book = BookPtr( new Book );
@@ -40,8 +40,21 @@ public:
 		_book->draw( );
 
 		DrawerPtr drawer = Drawer::getTask( );
+		Vector size = _book->getSize( );
+
+		drawer->drawFormatString( 20, 20, 0xff0000, "%f,%f,%f", size.x, size.y, size.z );
 		drawer->drawSphere( Vector( ), 10.0f, 50, 0xff0000, false );
-		drawer->drawSphere( Vector( ), 0.5f , 50, 0x00ff00, true );
+
+		drawer->drawSphere( Vector( -size.x, 0,  size.z / 2 ), 0.5f, 50, 0x0000ff, true );
+		drawer->drawSphere( Vector(       0, 0,  size.z / 2 ), 0.5f, 50, 0x0000ff, true );
+		drawer->drawSphere( Vector( -size.x, 0, -size.z / 2 ), 0.5f, 50, 0x0000ff, true );
+		drawer->drawSphere( Vector(       0, 0, -size.z / 2 ), 0.5f, 50, 0x0000ff, true );
+
+		drawer->drawSphere( Vector( -2000, 0,  1500 ) * 0.001, 0.5f, 50, 0xff00ff, true );
+		drawer->drawSphere( Vector(     0, 0,  1500 ) * 0.001, 0.5f, 50, 0xff00ff, true );
+		drawer->drawSphere( Vector( -2000, 0, -1500 ) * 0.001, 0.5f, 50, 0xff00ff, true );
+		drawer->drawSphere( Vector(     0, 0, -1500 ) * 0.001, 0.5f, 50, 0xff00ff, true );
+
 		drawer->flip( );
 	}
 

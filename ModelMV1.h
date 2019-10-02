@@ -16,9 +16,11 @@ public:
 	void setScale( const Vector& scale );
 	void setRotate( const Vector& radian );
 	void setDifMaterialColor( int mat_idx, float r, float g, float b, float a );
+	Vector getOriginMeterSize( ) const;
 	void draw( ) const;
 
 private:
 	int _handle;
+	Vector _size;
 };
 
