@@ -14,14 +14,12 @@ const int ANIM_COMPLETE_MILLI_TIME = 1000 * 3;
 Book::Book( ) :
 _anim( ANIM_NONE ),
 _time( 0 ) {
+	_rotate = Matrix::makeTransformRotation( Vector( 0, 1, 0 ), PI / 2 );
 
 	{ // ¶‘¤
 		_book_left = ModelMV1Ptr( new ModelMV1 );
 		_book_left->load( BOOK_MODEL_LEFT );
 		_book_left->setTexture( BOOK_TEXTURE, 0 );
-		Vector size = _book_left->getOriginMeterSize( ) * 1000;
-		Vector adjust = Vector( 2000 / size.x, 1, 3000 / size.z );
-		_book_left->setScale( adjust );
 		_book_left->setDifMaterialColor( 0, 1, 1, 1, 1 );
 	}
 
@@ -29,11 +27,6 @@ _time( 0 ) {
 		_book_right = ModelMV1Ptr( new ModelMV1 );
 		_book_right->load( BOOK_MODEL_RIGHT );
 		_book_right->setTexture( BOOK_TEXTURE, 0 );
-		Vector size = _book_right->getOriginMeterSize( ) * 1000;
-		Vector adjust = Vector( 2000 / size.x, 1, 3000 / size.z );
-		_book_right->setScale( adjust );
-		_book_right->setRotate( Vector( 0, 0, PI ) );
-		_book_right->setPos( Vector( 0, ADJUST_OPEN_BOOK_Y, 0 ) * 0.001 );
 		_book_right->setDifMaterialColor( 0, 1, 1, 1, 1 );
 	}
 
@@ -69,8 +62,8 @@ void Book::actOnClosing( ) {
 		z_rotate = PI;
 	}
 
-	_book_right->setPos( Vector( 0, y_pos, 0 ) * 0.001 );
-	_book_right->setRotate( Vector( 0, 0, z_rotate ) );
+	_book_right_pos = Vector( 0, y_pos, 0 );
+	_page_open_matrix = _rotate.multiply( Matrix::makeTransformRotation( Vector( 1, 0, 0 ), z_rotate ) );
 
 	if ( _time > ANIM_COMPLETE_MILLI_TIME ) {
 		setAnim( ANIM_NONE );
@@ -88,8 +81,8 @@ void Book::actOnOpening( ) {
 		z_rotate = 0;
 	}
 
-	_book_right->setPos( Vector( 0, y_pos, 0 ) * 0.001 );
-	_book_right->setRotate( Vector( 0, 0, z_rotate ) );
+	_book_right_pos = Vector( 0, y_pos, 0 );
+	_page_open_matrix = _rotate.multiply( Matrix::makeTransformRotation( Vector( 1, 0, 0 ), z_rotate ) );
 
 	if ( _time > ANIM_COMPLETE_MILLI_TIME ) {
 		setAnim( ANIM_CLOSING );
@@ -97,8 +90,19 @@ void Book::actOnOpening( ) {
 }
 
 void Book::draw( ) const {
-	_book_left->draw( );
-	_book_right->draw( );
+	{
+		Vector size = _book_left->getOriginMeterSize( ) * 1000;
+		Vector adjust = Vector( 2000 / size.x, 1, 3000 / size.z );
+		Matrix scale = Matrix::makeTransformScaling( adjust );
+		_book_left->draw( Vector( ), _rotate.multiply( scale ) );
+	}
+
+	{
+		Vector size = _book_right->getOriginMeterSize( ) * 1000;
+		Vector adjust = Vector( 2000 / size.x, 1, 3000 / size.z );
+		Matrix scale = Matrix::makeTransformScaling( adjust );
+		_book_right->draw( _book_right_pos * 0.001, _page_open_matrix.multiply( scale ) );
+	}
 }
 
 void Book::setClose( ) {

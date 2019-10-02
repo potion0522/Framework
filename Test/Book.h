@@ -41,6 +41,12 @@ private:
 	ANIM _anim;
 	int _time;
 
+	Matrix _rotate;
+	Matrix _page_open_matrix;
+
+	Vector _book_left_pos;
+	Vector _book_right_pos;
+
 	ModelMV1Ptr _book_left;
 	ModelMV1Ptr _book_right;
 };

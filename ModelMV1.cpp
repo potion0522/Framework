@@ -41,24 +41,26 @@ void ModelMV1::setTexture( const char* path, int mat_idx ) {
 	MV1SetTextureGraphHandle( _handle, mat_idx, graph_handle, TRUE );
 }
 
-void ModelMV1::setPos( const Vector& pos ) {
-	MV1SetPosition( _handle, VGet( ( float )pos.x, ( float )pos.y, ( float )pos.z ) );
-}
-
-void ModelMV1::setScale( const Vector& scale ) {
-	MV1SetScale( _handle, VGet( ( float )scale.x, ( float )scale.y, ( float )scale.z ) );
-}
-
-void ModelMV1::setRotate( const Vector& radian ) {
-	MV1SetRotationXYZ( _handle, VGet( ( float )radian.x, ( float )radian.y, ( float )radian.z ) );
-}
-
 void ModelMV1::setDifMaterialColor( int mat_idx, float r, float g, float b, float a ) {
 	MV1SetMaterialDifColor( _handle, mat_idx, GetColorF( r, g, b, a ) );
 }
 
 Vector ModelMV1::getOriginMeterSize( ) const {
 	return _size;
+}
+
+void ModelMV1::draw( const Vector& pos, const Matrix& mat ) const {
+	Matrix all_matrix = mat.multiply( Matrix::makeTransformTranslation( pos ) );
+	MATRIX dxlib_matrix;
+	for ( int i = 0; i < 4; i++ ) {
+		for ( int j = 0; j < 4; j++ ) {
+			dxlib_matrix.m[ i ][ j ] = ( float )all_matrix.matrix[ i ][ j ];
+		}
+	}
+
+	MV1SetMatrix( _handle, dxlib_matrix );
+
+	draw( );
 }
 
 void ModelMV1::draw( ) const {

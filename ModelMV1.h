@@ -12,11 +12,9 @@ public:
 public:
 	void load( const char* path );
 	void setTexture( const char* path, int mat_idx = 0 );
-	void setPos( const Vector& pos );
-	void setScale( const Vector& scale );
-	void setRotate( const Vector& radian );
 	void setDifMaterialColor( int mat_idx, float r, float g, float b, float a );
 	Vector getOriginMeterSize( ) const;
+	void draw( const Vector& pos, const Matrix& mat ) const;
 	void draw( ) const;
 
 private:
