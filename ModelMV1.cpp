@@ -45,6 +45,10 @@ void ModelMV1::setDifMaterialColor( int mat_idx, float r, float g, float b, floa
 	MV1SetMaterialDifColor( _handle, mat_idx, GetColorF( r, g, b, a ) );
 }
 
+void ModelMV1::setAmbMaterialColor( int mat_idx, float r, float g, float b, float a ) {
+	MV1SetMaterialAmbColor( _handle, mat_idx, GetColorF( r, g, b, a ) );
+}
+
 Vector ModelMV1::getOriginMeterSize( ) const {
 	return _size;
 }

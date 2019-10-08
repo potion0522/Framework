@@ -35,6 +35,54 @@ public:
 		}
 	};
 
+	struct ColorF {
+		float r;
+		float g;
+		float b;
+		float a;
+
+		ColorF( ) :
+		r( 1.0f ),
+		g( 1.0f ),
+		b( 1.0f ),
+		a( 1.0f ) {
+		}
+
+		ColorF( float r, float g, float b, float a ) :
+		r( r ),
+		g( g ),
+		b( b ),
+		a( a ) {
+		}
+	};
+
+	struct Material {
+		ColorF dif;
+		ColorF amb;
+		ColorF spc;
+		ColorF emi;
+
+		Material( ) :
+		dif( ColorF( 0.2f, 0.2f, 0.2f, 1.0f ) ),
+		amb( ColorF( 1.0f, 1.0f, 1.0f, 1.0f ) ),
+		spc( ColorF( 0.0f, 0.0f, 0.0f, 1.0f ) ),
+		emi( ColorF( 0.5f, 0.5f, 0.5f, 1.0f ) ) {
+		}
+
+		void setDifColor( ColorF dif ) {
+			this->dif = dif;
+		}
+		void setAmbColor( ColorF amb ) {
+			this->amb = amb;
+		}
+		void setSpcColor( ColorF spc ) {
+			this->spc = spc;
+		}
+		void setEmiColor( ColorF emi ) {
+			this->emi = emi;
+		}
+	};
+
 	struct Vertex {
 		Vector pos;
 		Vector norm;
@@ -73,13 +121,16 @@ public:
 	void setTransparent( bool flag );
 	void setAlpha( int alpha );
 	void setUV( int vertex_num, float u, float v );
+	void setMaterial( const Material& material );
 
 public:
 	void draw( const Vector &pos, const Matrix &mat = Matrix( ) ) const;
 	void draw( ) const;
 
 private:
+	bool _set_material;
 	bool _transparent;
+	Material _material;
 	ImageConstPtr _texture;
 	ModelDataPtr _model;
 };

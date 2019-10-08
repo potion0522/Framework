@@ -3,6 +3,8 @@
 #include "Image.h"
 #include <array>
 
+STRUCT_PTR( MaterialScope );
+
 class ModelData {
 public:
 	unsigned int _polygon_num;
@@ -12,8 +14,32 @@ public:
 	VERTEX3D* view;
 };
 
+struct MaterialScope {
+	MaterialScope( ) { };
+	~MaterialScope( ) {
+		MATERIALPARAM param;
+		Model::Material mat;
+		param.Diffuse  = GetColorF( mat.dif.r, mat.dif.g, mat.dif.b, mat.dif.a );
+		param.Ambient  = GetColorF( mat.amb.r, mat.amb.g, mat.amb.b, mat.amb.a );
+		param.Specular = GetColorF( mat.spc.r, mat.spc.g, mat.spc.b, mat.spc.a );
+		param.Emissive = GetColorF( mat.emi.r, mat.emi.g, mat.emi.b, mat.emi.a );
+		SetMaterialParam( param );
+	}
+
+	void set( const Model::Material& mat ) {
+		MATERIALPARAM param;
+		param.Diffuse  = GetColorF( mat.dif.r, mat.dif.g, mat.dif.b, mat.dif.a );
+		param.Ambient  = GetColorF( mat.amb.r, mat.amb.g, mat.amb.b, mat.amb.a );
+		param.Specular = GetColorF( mat.spc.r, mat.spc.g, mat.spc.b, mat.spc.a );
+		param.Emissive = GetColorF( mat.emi.r, mat.emi.g, mat.emi.b, mat.emi.a );
+		SetMaterialParam( param );
+	}
+};
+
 Model::Model( ) :
-_transparent( true ) {
+_transparent( true ),
+_set_material( false ),
+_material( Model::Material( ) ) {
 	_model = ModelDataPtr( new ModelData );
 }
 
@@ -67,6 +93,11 @@ void Model::setUV( int vertex_num, float u, float v ) {
 	_model->view  [ vertex_num ] = vertex;
 }
 
+void Model::setMaterial( const Material& material ) {
+	_material = material;
+	_set_material = true;
+}
+
 void Model::draw( const Vector &pos, const Matrix &mat ) const {
 	Matrix trans_matrix = Matrix::makeTransformTranslation( pos );
 	Matrix all_matrix   = mat * trans_matrix;
@@ -87,5 +118,11 @@ void Model::draw( const Vector &pos, const Matrix &mat ) const {
 }
 
 void Model::draw( ) const {
+	MaterialScopePtr scope;
+	if ( _set_material ) {
+		scope = MaterialScopePtr( new MaterialScope );
+		scope->set( _material );
+	}
+
 	DrawPolygon3D( _model->view, _model->_polygon_num, _texture->getHandle( ), _transparent );
 }
