@@ -11,9 +11,10 @@ ShadowDrawerPtr ShadowDrawer::getTask( ) {
 ShadowDrawer::ShadowDrawer( const Vector& dynamic_obj_map_size, const Vector& static_obj_map_size ) :
 _last_use_type( MAP_TYPE_NONE ),
 _set_up_draw_shadow_map( false ),
-_use_shadow_map( false ) {
+_use_shadow_map( false ),
+_enable( true ) {
 	_handles[ MAP_1 ] = MakeShadowMap( ( int )dynamic_obj_map_size.x, ( int )dynamic_obj_map_size.y );
-	_handles[ MAP_2  ] = MakeShadowMap( ( int )static_obj_map_size.x , ( int )static_obj_map_size.y );
+	_handles[ MAP_2 ] = MakeShadowMap( ( int )static_obj_map_size.x , ( int )static_obj_map_size.y );
 	setLightDir( MAP_1, Vector( 0, -1, 0 ) );
 	setLightDir( MAP_2 , Vector( 0, -1, 0 ) );
 }
@@ -51,6 +52,9 @@ void ShadowDrawer::setUpDrawShadowMap( MAP_TYPE type ) {
 	assertSetUpDrawShadowMap( );
 	assertUseShadowMap( );
 #endif
+	if ( !_enable ) {
+		return;
+	}
 
 	ShadowMap_DrawSetup( _handles[ type ] );
 	_last_use_type = type;
@@ -58,6 +62,9 @@ void ShadowDrawer::setUpDrawShadowMap( MAP_TYPE type ) {
 }
 
 void ShadowDrawer::endDrawShadowMap( ) {
+	if ( !_enable ) {
+		return;
+	}
 	ShadowMap_DrawEnd( );
 	_last_use_type = MAP_TYPE_NONE;
 	_set_up_draw_shadow_map = false;
@@ -68,6 +75,9 @@ void ShadowDrawer::useShadowMap( ) {
 	assertSetUpDrawShadowMap( );
 #endif
 
+	if ( !_enable ) {
+		return;
+	}
 	for ( int i = 0; i < MAX_MAP_TYPE; i++ ) {
 		if ( _handles[ i ] == -1 ) {
 			continue;
@@ -78,10 +88,17 @@ void ShadowDrawer::useShadowMap( ) {
 }
 
 void ShadowDrawer::endUseShadowMap( ) {
+	if ( !_enable ) {
+		return;
+	}
 	for ( int i = 0; i < MAX_MAP_TYPE; i++ ) {
 		SetUseShadowMap( i, -1 );
 	}
 	_use_shadow_map = false;
+}
+
+void ShadowDrawer::setEnable( bool flag ) {
+	_enable = flag;
 }
 
 void ShadowDrawer::assertSetUpDrawShadowMap( ) {

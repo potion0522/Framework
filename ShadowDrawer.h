@@ -44,12 +44,14 @@ public:
 	void endDrawShadowMap( );
 	void useShadowMap( );
 	void endUseShadowMap( );
+	void setEnable( bool flag );
 
 private:
 	void assertSetUpDrawShadowMap( );
 	void assertUseShadowMap( );
 
 private:
+	bool _enable; // シャドウを適用するかどうか
 	bool _set_up_draw_shadow_map;
 	bool _use_shadow_map;
 	MAP_TYPE _last_use_type;
