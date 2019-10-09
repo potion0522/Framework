@@ -29,6 +29,7 @@
     <ClInclude Include="Task.h" />
     <ClInclude Include="ShadowDrawer.h" />
     <ClInclude Include="ModelMV1.h" />
+    <ClInclude Include="BezierLine.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp" />
@@ -54,5 +55,6 @@
     <ClCompile Include="InputString.cpp" />
     <ClCompile Include="ShadowDrawer.cpp" />
     <ClCompile Include="ModelMV1.cpp" />
+    <ClCompile Include="BezierLine.cpp" />
   </ItemGroup>
 </Project>

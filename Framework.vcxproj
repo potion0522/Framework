@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BezierLine.h" />
     <ClInclude Include="ModelMV1.h" />
     <ClInclude Include="ShadowDrawer.h" />
     <ClInclude Include="Task.h" />
@@ -49,6 +50,7 @@
     <ClInclude Include="SpotLight.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BezierLine.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Client.cpp" />
