@@ -11,6 +11,7 @@
 PTR( Model );
 PTR( Image );
 PTR( ModelData );
+STRUCT_PTR( MaterialData );
 
 class Model {
 public:
@@ -27,11 +28,11 @@ public:
 		a( 255 ) {
 		}
 
-		Color( int in_r, int in_g, int in_b, int in_a ) :
-		r( in_r ),
-		g( in_g ),
-		b( in_b ),
-		a( in_a ) {
+		Color( int r, int g, int b, int a ) :
+		r( r ),
+		g( g ),
+		b( b ),
+		a( a ) {
 		}
 	};
 
@@ -128,10 +129,8 @@ public:
 	void draw( ) const;
 
 private:
-	bool _set_material;
 	bool _transparent;
-	Material _material;
+	MaterialDataPtr _material;
 	ImageConstPtr _texture;
 	ModelDataPtr _model;
 };
-

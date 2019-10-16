@@ -14,32 +14,47 @@ public:
 	VERTEX3D* view;
 };
 
+struct MaterialData {
+friend MaterialScope;
+
+private:
+	Model::Material mat;
+
+public:
+	MaterialData( const Model::Material& mat ) :
+	mat( mat ) {
+	}
+};
+
 struct MaterialScope {
-	MaterialScope( ) { };
-	~MaterialScope( ) {
-		MATERIALPARAM param;
-		Model::Material mat;
-		param.Diffuse  = GetColorF( mat.dif.r, mat.dif.g, mat.dif.b, mat.dif.a );
-		param.Ambient  = GetColorF( mat.amb.r, mat.amb.g, mat.amb.b, mat.amb.a );
-		param.Specular = GetColorF( mat.spc.r, mat.spc.g, mat.spc.b, mat.spc.a );
-		param.Emissive = GetColorF( mat.emi.r, mat.emi.g, mat.emi.b, mat.emi.a );
-		SetMaterialParam( param );
+private:
+	MaterialDataConstPtr data;
+
+public:
+	MaterialScope( MaterialDataConstPtr mat ) :
+	data( mat ) {
 	}
 
-	void set( const Model::Material& mat ) {
+	~MaterialScope( ) {
+		SetMaterialUseVertDifColor( FALSE );
+		SetMaterialUseVertSpcColor( FALSE );
+	}
+
+	void apply( ) {
 		MATERIALPARAM param;
-		param.Diffuse  = GetColorF( mat.dif.r, mat.dif.g, mat.dif.b, mat.dif.a );
-		param.Ambient  = GetColorF( mat.amb.r, mat.amb.g, mat.amb.b, mat.amb.a );
-		param.Specular = GetColorF( mat.spc.r, mat.spc.g, mat.spc.b, mat.spc.a );
-		param.Emissive = GetColorF( mat.emi.r, mat.emi.g, mat.emi.b, mat.emi.a );
+		param.Diffuse  = GetColorF( data->mat.dif.r, data->mat.dif.g, data->mat.dif.b, data->mat.dif.a );
+		param.Ambient  = GetColorF( data->mat.amb.r, data->mat.amb.g, data->mat.amb.b, data->mat.amb.a );
+		param.Specular = GetColorF( data->mat.spc.r, data->mat.spc.g, data->mat.spc.b, data->mat.spc.a );
+		param.Emissive = GetColorF( data->mat.emi.r, data->mat.emi.g, data->mat.emi.b, data->mat.emi.a );
+
+		SetMaterialUseVertDifColor( TRUE );
+		SetMaterialUseVertSpcColor( TRUE );
 		SetMaterialParam( param );
 	}
 };
 
 Model::Model( ) :
-_transparent( true ),
-_set_material( false ),
-_material( Model::Material( ) ) {
+_transparent( true ) {
 	_model = ModelDataPtr( new ModelData );
 }
 
@@ -94,8 +109,7 @@ void Model::setUV( int vertex_num, float u, float v ) {
 }
 
 void Model::setMaterial( const Material& material ) {
-	_material = material;
-	_set_material = true;
+	_material = MaterialDataPtr( new MaterialData( material ) );
 }
 
 void Model::draw( const Vector &pos, const Matrix &mat ) const {
@@ -118,10 +132,10 @@ void Model::draw( const Vector &pos, const Matrix &mat ) const {
 }
 
 void Model::draw( ) const {
-	MaterialScopePtr scope;
-	if ( _set_material ) {
-		scope = MaterialScopePtr( new MaterialScope );
-		scope->set( _material );
+	MaterialScopePtr mat_scope;
+	if ( _material ) {
+		mat_scope = MaterialScopePtr( new MaterialScope( _material ) );
+		mat_scope->apply( );
 	}
 
 	DrawPolygon3D( _model->view, _model->_polygon_num, _texture->getHandle( ), _transparent );
