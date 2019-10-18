@@ -36,8 +36,8 @@ public:
 	}
 
 	~MaterialScope( ) {
-		SetMaterialUseVertDifColor( FALSE );
-		SetMaterialUseVertSpcColor( FALSE );
+		SetMaterialUseVertDifColor( TRUE );
+		SetMaterialUseVertSpcColor( TRUE );
 	}
 
 	void apply( ) {
@@ -47,8 +47,8 @@ public:
 		param.Specular = GetColorF( data->mat.spc.r, data->mat.spc.g, data->mat.spc.b, data->mat.spc.a );
 		param.Emissive = GetColorF( data->mat.emi.r, data->mat.emi.g, data->mat.emi.b, data->mat.emi.a );
 
-		SetMaterialUseVertDifColor( TRUE );
-		SetMaterialUseVertSpcColor( TRUE );
+		SetMaterialUseVertDifColor( FALSE );
+		SetMaterialUseVertSpcColor( FALSE );
 		SetMaterialParam( param );
 	}
 };
