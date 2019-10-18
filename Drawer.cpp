@@ -24,6 +24,7 @@ Drawer::~Drawer( ) {
 }
 
 void Drawer::update( ) {
+	// 規定値分の処理が終わった時の時間を計算(30フレーム)
 	if ( _frame_count == 0 ) {
 		int now_time = GetNowCount( );
 		int time = now_time - _start_time;
