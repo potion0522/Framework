@@ -46,14 +46,15 @@ public:
 	// 状態のリフレッシュ
 	void refreshState( );
 
+	// mouseがボタン上にあるかどうか
+	bool isMouseOnButton( ) const;
+	Vector getColliderSize( ) const;
+
 private:
 	void updateDefault( );
 	void updatePush( );
 	void updateClicked( );
 
-private:
-	// mouseがボタン上にあるかどうか
-	bool onButton( ) const;
 
 private:
 	const char* TAG;

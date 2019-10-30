@@ -29,8 +29,11 @@ public:
 	void setNearFar( float camera_near, float camera_far );
 	void setCameraUp( Vector up );
 	void setCamera( Vector pos, Vector target );
+	Vector getCameraForwardDir( ) const;
 
 private:
 	Vector _camera_up;
+	Vector _pos;
+	Vector _target;
 };
 

@@ -41,7 +41,7 @@ void Button::updateDefault( ) {
 		return;
 	}
 
-	if ( !onButton( ) ) {
+	if ( !isMouseOnButton( ) ) {
 		return;
 	}
 
@@ -54,7 +54,7 @@ void Button::updatePush( ) {
 		return;
 	}
 
-	if ( !onButton( ) ) {
+	if ( !isMouseOnButton( ) ) {
 		_state = STATE_NONE;
 		return;
 	}
@@ -125,7 +125,7 @@ void Button::setAlpha( unsigned char alpha ) {
 	_push_image->setBlendMode( alpha );
 }
 
-bool Button::onButton( ) const {
+bool Button::isMouseOnButton( ) const {
 	MousePtr mouse = Mouse::getTask( );
 	Vector mouse_pos = mouse->getPoint( );
 	int half_width = _width / 2;
@@ -171,6 +171,10 @@ bool Button::onButton( ) const {
 	}
 
 	return true;
+}
+
+Vector Button::getColliderSize( ) const {
+	return Vector( _width, _height );
 }
 
 void Button::drawCollider( ) const {
