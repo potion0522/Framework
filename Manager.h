@@ -28,6 +28,7 @@ private:
 	void finalizeTasks( );
 
 public:
+	void end( );
 	void setWindowSize( int width, int height );
 	void setScreenSize( int width, int height );
 	void setUseBackCulling( bool flag );
@@ -49,6 +50,8 @@ private:
 	static Manager* _instance;
 	std::map< std::string, TaskPtr > _tasks;
 	
+	bool _run;
+
 	int _past_milli_time;
 	int _delta_time;
 

@@ -30,6 +30,7 @@ private:
 public:
 	void setMouseDraw( bool flag );
 	Vector getPoint( ) const;
+	Vector get3DPoint( float z ) const; // zÇÕ0Å`1
 	bool isClickDownLeft( ) const;
 	bool isClickDownRight( ) const;
 	bool isClickUpLeft( ) const;

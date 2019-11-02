@@ -14,6 +14,7 @@ const float DEFAULT_CAMERA_NEAR = 1.0f;
 const float DEFAULT_CAMERA_FAR  = 50.0f;
 
 Manager::Manager( ) :
+_run( true ),
 _past_milli_time( 0 ),
 _delta_time( 0 ),
 _window_mode( TRUE ),
@@ -80,10 +81,11 @@ void Manager::startGame( ) {
 	initializeTasks( );
 
 	// main loop
-	while ( !CheckHitKey( KEY_INPUT_ESCAPE ) ) {
+	while ( _run ) {
 		if ( ProcessMessage( ) != 0 ) {
 			break;	
 		}
+		_run = !CheckHitKey( KEY_INPUT_ESCAPE );
 
 		for ( std::pair< std::string, TaskPtr > task : _tasks ) {
 			task.second->update( );
@@ -119,6 +121,10 @@ TaskPtr Manager::getTask( std::string tag ) {
 	}
 
 	return _tasks[ tag ];
+}
+
+void Manager::end( ) {
+	_run = false;
 }
 
 void Manager::setWindowSize( int width, int height ) {

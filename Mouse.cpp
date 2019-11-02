@@ -74,6 +74,16 @@ Vector Mouse::getPoint( ) const {
 	return Vector( x, y );
 }
 
+Vector Mouse::get3DPoint( float z ) const {
+	VECTOR v;
+	Vector point = getPoint( ) + Vector( 0, 0, z );
+	v.x = ( float )point.x;
+	v.y = ( float )point.y;
+	v.z = ( float )point.z;
+	VECTOR result = ConvScreenPosToWorldPos( v );
+	return Vector( result.x, result.y, result.z );
+}
+
 bool Mouse::isClickDownLeft( ) const {
 	if ( _click_left == 1 ) {
 		return true;
