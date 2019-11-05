@@ -26,6 +26,7 @@ public:
 	void update( ) { };
 
 public:
+	// near ‚Í 0.1‚æ‚è‘å‚«‚­
 	void setNearFar( float camera_near, float camera_far );
 	void setCameraUp( Vector up );
 	void setCamera( Vector pos, Vector target );

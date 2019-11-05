@@ -12,6 +12,7 @@
 
 PTR( Drawer );
 PTR( Image );
+PTR( Movie );
 
 class Drawer : public Task {
 public:
@@ -51,6 +52,7 @@ public:
 
 public:
 	ImagePtr getImage( const char* file_name );
+	MoviePtr getMovie( const char* file_name );
 
 private:
 	std::string _directory;

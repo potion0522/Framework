@@ -9,7 +9,7 @@ public:
 	virtual ~Movie( );
 
 public:
-	void load( const char* path );
+	bool load( const char* path );
 	void replay( );
 	void play( );
 	void pause( );

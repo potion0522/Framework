@@ -8,8 +8,9 @@ _handle( -1 ) {
 Movie::~Movie( ) {
 }
 
-void Movie::load( const char* path ) {
+bool Movie::load( const char* path ) {
 	_handle = LoadGraph( path );
+	return ( _handle != -1 );
 }
 
 void Movie::replay( ) {

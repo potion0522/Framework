@@ -2,6 +2,7 @@
 #include "DxLib.h"
 #include "Manager.h"
 #include "Image.h"
+#include "Movie.h"
 #include <errno.h>
 #include <assert.h>
 #include <stdarg.h>
@@ -202,4 +203,16 @@ ImagePtr Drawer::getImage( const char* file_name ) {
 	assert( load_imagefile );
 
 	return image;
+}
+
+MoviePtr Drawer::getMovie( const char* file_name ) {
+	MoviePtr movie = MoviePtr( new Movie );
+
+	std::string path = _directory + "/" + file_name;
+
+	// ファイルがうまく読み込めなかったらエラーを出す
+	errno_t load_imagefile = movie->load( path.c_str( ) );
+	assert( load_imagefile );
+
+	return movie;
 }
