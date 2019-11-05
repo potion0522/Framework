@@ -30,6 +30,8 @@
     <ClInclude Include="ShadowDrawer.h" />
     <ClInclude Include="ModelMV1.h" />
     <ClInclude Include="BezierLine.h" />
+    <ClInclude Include="Movie.h" />
+    <ClInclude Include="Screen.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp" />
@@ -56,5 +58,7 @@
     <ClCompile Include="ShadowDrawer.cpp" />
     <ClCompile Include="ModelMV1.cpp" />
     <ClCompile Include="BezierLine.cpp" />
+    <ClCompile Include="Movie.cpp" />
+    <ClCompile Include="Screen.cpp" />
   </ItemGroup>
 </Project>

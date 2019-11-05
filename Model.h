@@ -10,10 +10,17 @@
 
 PTR( Model );
 PTR( Image );
+PTR( Screen );
 PTR( ModelData );
 STRUCT_PTR( MaterialData );
 
 class Model {
+private:
+	enum TEXTURE_TYPE {
+		TEXTURE_TYPE_IMAGE,
+		TEXTURE_TYPE_SCREEN
+	};
+
 public:
 	struct Color {
 		int r;
@@ -119,6 +126,7 @@ public:
 	void alloc( int polygon_num );
 	void setVertex( int vertex_num, Vertex in_vertex );
 	void setTexture( ImageConstPtr texture );
+	void setTexture( ScreenConstPtr texture );
 	void setTransparent( bool flag );
 	void setAlpha( int alpha );
 	void setUV( int vertex_num, float u, float v );
@@ -129,8 +137,10 @@ public:
 	void draw( ) const;
 
 private:
+	TEXTURE_TYPE _texture_type;
 	bool _transparent;
+	ScreenConstPtr _screen;
+	ImageConstPtr _image;
 	MaterialDataPtr _material;
-	ImageConstPtr _texture;
 	ModelDataPtr _model;
 };

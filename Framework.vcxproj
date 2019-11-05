@@ -21,6 +21,8 @@
   <ItemGroup>
     <ClInclude Include="BezierLine.h" />
     <ClInclude Include="ModelMV1.h" />
+    <ClInclude Include="Movie.h" />
+    <ClInclude Include="Screen.h" />
     <ClInclude Include="ShadowDrawer.h" />
     <ClInclude Include="Task.h" />
     <ClInclude Include="Button.h" />
@@ -64,8 +66,10 @@
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="ModelMV1.cpp" />
     <ClCompile Include="Mouse.cpp" />
+    <ClCompile Include="Movie.cpp" />
     <ClCompile Include="PointLight.cpp" />
     <ClCompile Include="Random.cpp" />
+    <ClCompile Include="Screen.cpp" />
     <ClCompile Include="Server.cpp" />
     <ClCompile Include="ShadowDrawer.cpp" />
     <ClCompile Include="Sound.cpp" />

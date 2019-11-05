@@ -1,6 +1,7 @@
 #include "Model.h"
 #include "DxLib.h"
 #include "Image.h"
+#include "Screen.h"
 #include <array>
 
 STRUCT_PTR( MaterialScope );
@@ -54,7 +55,8 @@ public:
 };
 
 Model::Model( ) :
-_transparent( true ) {
+_transparent( true ),
+_texture_type( TEXTURE_TYPE_IMAGE ) {
 	_model = ModelDataPtr( new ModelData );
 }
 
@@ -85,7 +87,13 @@ void Model::setVertex( int vertex_num, Vertex in_vertex ) {
 }
 
 void Model::setTexture( ImageConstPtr texture ) {
-	_texture = texture;
+	_image = texture;
+	_texture_type = TEXTURE_TYPE_IMAGE;
+}
+
+void Model::setTexture( ScreenConstPtr texture ) {
+	_screen = texture;
+	_texture_type = TEXTURE_TYPE_SCREEN;
 }
 
 void Model::setTransparent( bool flag ) {
@@ -138,5 +146,9 @@ void Model::draw( ) const {
 		mat_scope->apply( );
 	}
 
-	DrawPolygon3D( _model->view, _model->_polygon_num, _texture->getHandle( ), _transparent );
+	DrawPolygon3D( 
+		_model->view,
+		_model->_polygon_num,
+		( _texture_type == TEXTURE_TYPE_IMAGE ? _image->getHandle( ) : _screen->getHandle( ) ),
+		_transparent );
 }
