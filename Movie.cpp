@@ -6,6 +6,9 @@ _handle( -1 ) {
 }
 
 Movie::~Movie( ) {
+	if ( _handle != -1 ) {
+		DeleteGraph( _handle );
+	}
 }
 
 bool Movie::load( const char* path ) {
