@@ -7,7 +7,12 @@ _loop( false ) {
 }
 
 Speaker::~Speaker( ) {
-	DeleteSoundMem( _handle );
+	if ( _handle ) {
+		if ( isPlaying( ) ) {
+			stop( );
+		}
+		DeleteSoundMem( _handle );
+	}
 }
 
 void Speaker::play( ) {
