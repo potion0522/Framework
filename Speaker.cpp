@@ -3,7 +3,8 @@
 
 Speaker::Speaker( int handle ) :
 _handle( handle ),
-_loop( false ) {
+_loop( false ),
+_play_top( true ) {
 }
 
 Speaker::~Speaker( ) {
@@ -17,7 +18,7 @@ Speaker::~Speaker( ) {
 
 void Speaker::play( ) {
 	int play_type = ( _loop ? DX_PLAYTYPE_LOOP : DX_PLAYTYPE_BACK );
-	int play_top  = ( _play_top ? FALSE : TRUE );
+	int play_top  = ( _play_top ? TRUE : FALSE );
 
 	PlaySoundMem( _handle, play_type, play_top );
 }
