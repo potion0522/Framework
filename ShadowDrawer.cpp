@@ -11,8 +11,7 @@ ShadowDrawerPtr ShadowDrawer::getTask( ) {
 ShadowDrawer::ShadowDrawer( const Vector& dynamic_obj_map_size, const Vector& static_obj_map_size ) :
 _last_use_type( MAP_TYPE_NONE ),
 _set_up_draw_shadow_map( false ),
-_use_shadow_map( false ),
-_enable( true ) {
+_use_shadow_map( false ) {
 	_handles[ MAP_1 ] = MakeShadowMap( ( int )dynamic_obj_map_size.x, ( int )dynamic_obj_map_size.y );
 	_handles[ MAP_2 ] = MakeShadowMap( ( int )static_obj_map_size.x , ( int )static_obj_map_size.y );
 	setLightDir( MAP_1, Vector( 0, -1, 0 ) );
@@ -30,7 +29,7 @@ void ShadowDrawer::initialize( ) {
 
 void ShadowDrawer::update( ) {
 #ifdef _DEBUG
-	assertSetUpDrawShadowMap( );
+	assertSetupDrawShadowMap( );
 	assertUseShadowMap( );
 #endif
 }
@@ -47,24 +46,17 @@ void ShadowDrawer::setDrawArea( MAP_TYPE type, const Vector& min, const Vector& 
 	);
 }
 
-void ShadowDrawer::setUpDrawShadowMap( MAP_TYPE type ) {
+void ShadowDrawer::setupDrawShadowMap( MAP_TYPE type ) {
 #ifdef _DEBUG
-	assertSetUpDrawShadowMap( );
+	assertSetupDrawShadowMap( );
 	assertUseShadowMap( );
 #endif
-	if ( !_enable ) {
-		return;
-	}
-
 	ShadowMap_DrawSetup( _handles[ type ] );
 	_last_use_type = type;
 	_set_up_draw_shadow_map = true;
 }
 
 void ShadowDrawer::endDrawShadowMap( ) {
-	if ( !_enable ) {
-		return;
-	}
 	ShadowMap_DrawEnd( );
 	_last_use_type = MAP_TYPE_NONE;
 	_set_up_draw_shadow_map = false;
@@ -72,12 +64,8 @@ void ShadowDrawer::endDrawShadowMap( ) {
 
 void ShadowDrawer::useShadowMap( ) {
 #ifdef _DEBUG
-	assertSetUpDrawShadowMap( );
+	assertSetupDrawShadowMap( );
 #endif
-
-	if ( !_enable ) {
-		return;
-	}
 	for ( int i = 0; i < MAX_MAP_TYPE; i++ ) {
 		if ( _handles[ i ] == -1 ) {
 			continue;
@@ -88,20 +76,20 @@ void ShadowDrawer::useShadowMap( ) {
 }
 
 void ShadowDrawer::endUseShadowMap( ) {
-	if ( !_enable ) {
-		return;
-	}
 	for ( int i = 0; i < MAX_MAP_TYPE; i++ ) {
 		SetUseShadowMap( i, -1 );
 	}
 	_use_shadow_map = false;
 }
 
-void ShadowDrawer::setEnable( bool flag ) {
-	_enable = flag;
+void ShadowDrawer::clearShadow( ) {
+	for ( int i = 0; i < MAX_MAP_TYPE; i++ ) {
+		setupDrawShadowMap( ( MAP_TYPE )i );
+		endDrawShadowMap( );
+	}
 }
 
-void ShadowDrawer::assertSetUpDrawShadowMap( ) {
+void ShadowDrawer::assertSetupDrawShadowMap( ) {
 	if ( _set_up_draw_shadow_map ) {
 		errno_t not_endDrawShadowMap = 0;
 		assert( not_endDrawShadowMap );

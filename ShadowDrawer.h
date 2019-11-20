@@ -40,18 +40,17 @@ public:
 public:
 	void setLightDir( MAP_TYPE type, const Vector& dir );
 	void setDrawArea( MAP_TYPE type, const Vector& min, const Vector& max );
-	void setUpDrawShadowMap( MAP_TYPE type );
+	void setupDrawShadowMap( MAP_TYPE type );
 	void endDrawShadowMap( );
 	void useShadowMap( );
 	void endUseShadowMap( );
-	void setEnable( bool flag );
+	void clearShadow( );
 
 private:
-	void assertSetUpDrawShadowMap( );
+	void assertSetupDrawShadowMap( );
 	void assertUseShadowMap( );
 
 private:
-	bool _enable; // シャドウを適用するかどうか
 	bool _set_up_draw_shadow_map;
 	bool _use_shadow_map;
 	MAP_TYPE _last_use_type;
