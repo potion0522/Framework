@@ -10,6 +10,7 @@
 *******************************************/
 
 PTR( Image );
+PTR( Button );
 
 class Button {
 public:
