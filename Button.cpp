@@ -10,7 +10,9 @@ _pos( ),
 _mat_rot( ),
 _width( 0 ),
 _height( 0 ),
-_callback( callback ) {
+_callback( callback ),
+_scale_x( 1.0 ),
+_scale_y( 1.0 ) {
 }
 
 Button::~Button( ) {
@@ -91,6 +93,15 @@ void Button::setRotate( double radian ) {
 
 	_default_image->setRotate( radian );
 	_push_image   ->setRotate( radian );
+}
+
+void Button::setExtendRate( double scale_x, double scale_y ) {
+	_scale_x = scale_x;
+	_scale_y = scale_y;
+	_default_image->setExtendRate( _scale_x, _scale_y );
+	_push_image->setExtendRate( _scale_x, _scale_y );
+	_default_image->setRect( 0, 0, _width, _height );
+	_push_image->setRect( 0, 0, _width, _height );
 }
 
 void Button::setDefaultImage( const char* path ) {
@@ -175,6 +186,10 @@ bool Button::isMouseOnButton( ) const {
 
 Vector Button::getColliderSize( ) const {
 	return Vector( _width, _height );
+}
+
+Vector Button::getExtendRate( ) const {
+	return Vector( _scale_x, _scale_y );
 }
 
 void Button::drawCollider( ) const {

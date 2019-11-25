@@ -36,6 +36,7 @@ public:
 	void setPos( const Vector& pos );
 	void setAlpha( unsigned char alpha );
 	void setRotate( double radian );
+	void setExtendRate( double scale_x, double scale_y );
 
 	// 当たり判定の幅(Defaultは画像サイズ)
 	void setCollisionSize( int width, int height );
@@ -50,6 +51,7 @@ public:
 	// mouseがボタン上にあるかどうか
 	bool isMouseOnButton( ) const;
 	Vector getColliderSize( ) const;
+	Vector getExtendRate( ) const;
 
 private:
 	void updateDefault( );
@@ -65,6 +67,8 @@ private:
 	Vector _pos;
 	int _width;
 	int _height;
+	double _scale_x;
+	double _scale_y;
 	std::function< void( const char* ) > _callback;
 	// メモリ削減のため必要なタイミングのみ保有
 	std::shared_ptr< Matrix > _mat_rot;
