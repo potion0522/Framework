@@ -81,10 +81,7 @@ void Manager::startGame( ) {
 	initializeTasks( );
 
 	// main loop
-	while ( _run ) {
-		if ( ProcessMessage( ) != 0 ) {
-			break;	
-		}
+	while ( ProcessMessage( ) == 0 && _run ) {
 		_run = !CheckHitKey( KEY_INPUT_ESCAPE );
 
 		for ( std::pair< std::string, TaskPtr > task : _tasks ) {
