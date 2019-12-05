@@ -181,6 +181,14 @@ void Manager::setUseLightTypeDir( bool flag, float dir_x, float dir_y, float dir
 	}
 }
 
+void Manager::setLightDifColor( float r, float g, float b ) {
+	COLOR_F color;
+	color.r = r;
+	color.g = g;
+	color.b = b;
+	SetLightDifColor( color );
+}
+
 void Manager::setLightAmbient( float r, float g, float b ) {
 	SetLightAmbColor( GetColorF( r, g, b, 1.0f ) );
 
